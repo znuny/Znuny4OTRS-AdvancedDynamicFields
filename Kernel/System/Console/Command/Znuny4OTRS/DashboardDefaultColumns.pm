@@ -1,5 +1,4 @@
 # --
-# Kernel/System/Console/Command/Znuny4OTRS/DashboardDefaultColumns.pm - Updates the 'DefaultColumns' config of all Dashboard configs accordingly
 # Copyright (C) 2012-2016 Znuny GmbH, http://znuny.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -16,6 +15,7 @@ use base qw(Kernel::System::Console::BaseCommand);
 
 our @ObjectDependencies = (
     'Kernel::Config',
+    'Kernel::System::SysConfig',
 );
 
 sub Configure {
@@ -28,7 +28,7 @@ sub Configure {
         Description => 'Name of the attribute that should get added or updated.',
         Required    => 1,
         HasValue    => 1,
-        ValueRegex => qr/.*/smx,
+        ValueRegex  => qr/.*/smx,
     );
 
     $Self->AddArgument(
@@ -36,7 +36,7 @@ sub Configure {
         Description => 'The attribute state Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.',
         Required    => 1,
         HasValue    => 1,
-        ValueRegex => qr/.*/smx,
+        ValueRegex  => qr/.*/smx,
     );
 
     return;
@@ -55,16 +55,16 @@ sub Run {
     my $DashboardBackendConfigs = $ConfigObject->Get('DashboardBackend');
 
     BACKEND:
-    for my $BackendName ( sort keys %{ $DashboardBackendConfigs } ) {
+    for my $BackendName ( sort keys %{$DashboardBackendConfigs} ) {
 
-        my $BackendConfig = $DashboardBackendConfigs->{ $BackendName };
+        my $BackendConfig = $DashboardBackendConfigs->{$BackendName};
 
         next BACKEND if ref $BackendConfig->{DefaultColumns} ne 'HASH';
 
-        $BackendConfig->{DefaultColumns}->{ $AttributeName } = $AttributeState;
+        $BackendConfig->{DefaultColumns}->{$AttributeName} = $AttributeState;
 
         $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
-            Key   => 'DashboardBackend###'. $BackendName,
+            Key   => 'DashboardBackend###' . $BackendName,
             Value => $BackendConfig,
             Valid => 1,
         );
