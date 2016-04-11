@@ -4,14 +4,26 @@ Viele Aufgaben die bei einer Einrichtung oder Aktualisierung eines Kundensystems
 
 ## Verwaltung von Dashboard DefaultColumns
 
-Um im OTRS Standard Ticket Attribute in allen Dashboard SysConfig Konfigurationen hinzuzufügen oder zu bearbeiten muss jeder Konfigurationseintrag manuell über die SysConfig Oberfläche angepasst werden. Das neue OTRS Konsolenkommando "Znuny4OTRS::DashboardDefaultColumns" erleichtert diese Arbeit, indem das übergebene Ticket Attribut in allen entsprechenden Dashboard Konfigurationen mit dem übergebenen Wert gesetzt wird.
+Um im OTRS Standard Ticket Attribute in allen Dashboard SysConfig Konfigurationen hinzuzufügen, bearbeiten oder zu löschen muss jeder Konfigurationseintrag manuell über die SysConfig Oberfläche angepasst werden. Das neue OTRS Konsolenkommando "Znuny4OTRS::DashboardColumn::Add" erleichtert diese Arbeit, indem das übergebene Ticket Attribut in allen entsprechenden Dashboard Konfigurationen mit dem übergebenen Wert gesetzt wird.
 
 Die Hilfe kann wie folgt ausgegeben werden:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DashboardDefaultColumns
+./bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add
 ```
 
 Beispielaufruf:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DashboardDefaultColumns DynamicField_Test 2
+./bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add DynamicField_Test 2
+```
+
+Zum Löschen kann das Konsolenkommando "Znuny4OTRS::DashboardColumn::Remove" analog verwendet werden.
+
+Die Hilfe kann wie folgt ausgegeben werden:
+```
+./bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove
+```
+
+Beispielaufruf:
+```
+./bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove DynamicField_Test
 ```

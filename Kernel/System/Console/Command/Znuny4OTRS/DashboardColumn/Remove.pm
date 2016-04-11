@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::System::Console::Command::Znuny4OTRS::DashboardDefaultColumns;
+package Kernel::System::Console::Command::Znuny4OTRS::DashboardColumn::Remove;
 
 use strict;
 use warnings;
@@ -31,26 +31,18 @@ sub Configure {
         ValueRegex  => qr/.*/smx,
     );
 
-    $Self->AddArgument(
-        Name        => 'state',
-        Description => 'The attribute state Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.',
-        Required    => 1,
-        HasValue    => 1,
-        ValueRegex  => qr/.*/smx,
-    );
-
     return;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-
-    $Self->Print("<yellow>Updating the 'DefaultColumns' config of all Dashboard SysConfigs...</yellow>");
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
 
     my $AttributeName  = $Self->GetArgument('attribute');
-    my $AttributeState = $Self->GetArgument('state');
+
+    $Self->Print("<yellow>Updating the 'DefaultColumns' config of all Dashboard SysConfigs for $AttributeName...</yellow>");
 
     my $DashboardBackendConfigs = $ConfigObject->Get('DashboardBackend');
 
@@ -61,9 +53,9 @@ sub Run {
 
         next BACKEND if ref $BackendConfig->{DefaultColumns} ne 'HASH';
 
-        $BackendConfig->{DefaultColumns}->{$AttributeName} = $AttributeState;
+        delete $BackendConfig->{DefaultColumns}->{$AttributeName};
 
-        $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
+        $SysConfigObject->ConfigItemUpdate(
             Key   => 'DashboardBackend###' . $BackendName,
             Value => $BackendConfig,
             Valid => 1,

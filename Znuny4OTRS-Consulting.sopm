@@ -10,6 +10,7 @@
     <Description Lang="en">This package contains the functionality to make the life of the Znuny Consultants easier.</Description>
     <Description Lang="de">Dieses Paket enthält die Funktionalität um Znuny Consultants das Leben zu erleichtern.</Description>
     <Filelist>
-        <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DashboardDefaultColumns.pm"/>
+        <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DashboardColumn/Add.pm"/>
+        <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DashboardColumn/Remove.pm"/>
     </Filelist>
 </otrs_package>
