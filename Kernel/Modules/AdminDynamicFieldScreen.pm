@@ -134,10 +134,25 @@ sub Run {
         # update all dynamic fields
         my $Success = $ZnunyHelperObject->_DynamicFieldsScreenEnable(%Screens);
 
-        # redirect to overview
+        # redirect to the same view
         return $LayoutObject->Redirect( OP => "Action=$Self->{Action};Subaction=Edit;DynamicFieldScreen=$DynamicFieldScreen" );
     }
 
+    # ------------------------------------------------------------ #
+    # ActvityDialogEditAction
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'Reset' ) {
+
+        my $DynamicFieldScreen = $ParamObject->GetParam( Param => 'DynamicFieldScreen' );
+        my $ResetConfig = "Ticket::Frontend::$DynamicFieldScreen###DynamicField";
+
+        $SysConfigObject->ConfigItemReset(
+            Name => $ResetConfig,
+        );
+
+        # redirect to the same view
+        return $LayoutObject->Redirect( OP => "Action=$Self->{Action};Subaction=Edit;DynamicFieldScreen=$DynamicFieldScreen" );
+    }
     # ------------------------------------------------------------ #
     # Error
     # ------------------------------------------------------------ #
