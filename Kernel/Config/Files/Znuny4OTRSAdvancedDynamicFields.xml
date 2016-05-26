@@ -34,32 +34,47 @@
             <Hash>
                 <Item Key="AgentTicketClose">Frontend::Agent::Ticket::ViewClose</Item>
                 <Item Key="AgentTicketCompose">Frontend::Agent::Ticket::ViewCompose</Item>
-                <Item Key="AgentTicketEmail"></Item>
-                <Item Key="AgentTicketEmailOutbound"></Item>
-                <Item Key="AgentTicketForward"></Item>
-                <Item Key="AgentTicketFreeText"></Item>
+                <Item Key="AgentTicketEmail">Frontend::Agent::Ticket::ViewEmailNew</Item>
+                <Item Key="AgentTicketEmailOutbound">Frontend::Agent::Ticket::ViewEmailOutbound</Item>
+                <Item Key="AgentTicketForward">Frontend::Agent::Ticket::ViewForward</Item>
+                <Item Key="AgentTicketFreeText">Frontend::Agent::Ticket::ViewFreeText></Item>
                 <Item Key="AgentTicketMove">Frontend::Agent::Ticket::ViewMove</Item>
                 <Item Key="AgentTicketNote">Frontend::Agent::Ticket::ViewNote</Item>
-                <Item Key="AgentTicketOwner"></Item>
-                <Item Key="AgentTicketPending"></Item>
-                <Item Key="AgentTicketPhone"></Item>
-                <Item Key="AgentTicketPhoneInbound"></Item>
-                <Item Key="AgentTicketPhoneOutbound"></Item>
-                <Item Key="AgentTicketPrint"></Item>
-                <Item Key="AgentTicketPriority"></Item>
-                <Item Key="AgentTicketResponsible"></Item>
-                <Item Key="AgentTicketSearch"></Item>
+                <Item Key="AgentTicketOwner">Frontend::Agent::Ticket::ViewOwner</Item>
+                <Item Key="AgentTicketPending">Frontend::Agent::Ticket::ViewPending</Item>
+                <Item Key="AgentTicketPhone">Frontend::Agent::Ticket::ViewPhoneNew</Item>
+                <Item Key="AgentTicketPhoneInbound">Frontend::Agent::Ticket::ViewPhoneInbound</Item>
+                <Item Key="AgentTicketPhoneOutbound">Frontend::Agent::Ticket::ViewPhoneOutbound</Item>
+                <Item Key="AgentTicketPrint">Frontend::Agent::Ticket::ViewPrint</Item>
+                <Item Key="AgentTicketPriority">Frontend::Agent::Ticket::ViewPriority</Item>
+                <Item Key="AgentTicketResponsible">Frontend::Agent::Ticket::ViewResponsible</Item>
+                <Item Key="AgentTicketSearch">Frontend::Agent::Ticket::ViewSearch</Item>
                 <Item Key="AgentTicketZoom">Frontend::Agent::Ticket::ViewZoom</Item>
-                <Item Key="CustomerTicketMessage"></Item>
-                <Item Key="CustomerTicketPrint"></Item>
-                <Item Key="CustomerTicketSearch"></Item>
-                <Item Key="CustomerTicketZoom"></Item>
-                <Item Key="OverviewMedium"></Item>
-                <Item Key="OverviewPreview"></Item>
-                <Item Key="OverviewSmall"></Item>
-                <Item Key="CustomerTicketOverview"></Item>
+                <Item Key="CustomerTicketMessage">Frontend::Customer::Ticket::ViewNew</Item>
+                <Item Key="CustomerTicketPrint">Frontend::Customer::Ticket::ViewPrint</Item>
+                <Item Key="CustomerTicketSearch">Frontend::Customer::Ticket::ViewSearch</Item>
+                <Item Key="CustomerTicketZoom">Frontend::Customer::Ticket::ViewZoom</Item>
+                <Item Key="OverviewMedium">Frontend::Agent::TicketOverview</Item>
+                <Item Key="OverviewPreview">Frontend::Agent::TicketOverview</Item>
+                <Item Key="OverviewSmall">Frontend::Agent::TicketOverview</Item>
+                <Item Key="CustomerTicketOverview">Frontend::Customer::TicketOverview</Item>
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Znuny4OTRSAdvancedDynamicFields::DefaultColumns" Required="1" Valid="1">
+        <Description Translatable="1">This configuration defines all possible Screens to enable or disable dynamic fields.</Description>
+        <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
+        <SubGroup>DynamicFieldScreen</SubGroup>
+        <Setting>
+            <Hash>
 
+                <Item Key="Ticket::Frontend::AgentTicketQueue">Frontend::Agent::Ticket::ViewQueue</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <!--
+    DefaultColumns
+
+
+-->
 </otrs_config>
