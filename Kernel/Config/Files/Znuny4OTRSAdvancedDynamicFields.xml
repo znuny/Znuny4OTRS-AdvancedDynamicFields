@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="1.0" init="Config">
+    <ConfigItem Name="Frontend::Module###AdminDynamicFieldScreen" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
+        <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>admin</Group>
+                <Description>Manage dynamic field in screens.</Description>
+                <Title Translatable="1">DynamicFieldScreen</Title>
+                <NavBarName>Admin</NavBarName>
+                <NavBarModule>
+                    <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>
+                    <Name Translatable="1">Dynamic Fields Screens</Name>
+                    <Description Translatable="1">Manage dynamic field in screens.</Description>
+                    <Block>Ticket</Block>
+                    <Prio>1005</Prio>
+                </NavBarModule>
+                <Loader>
+                    <CSS>Core.AllocationList.css</CSS>
+                    <JavaScript>Core.UI.AllocationList.js</JavaScript>
+                    <JavaScript>Core.UI.Table.js</JavaScript>
+                    <JavaScript>Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen.js</JavaScript>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens" Required="1" Valid="1">
+        <Description Translatable="1">This configuration defines all possible Screens to enable or disable dynamic fields.</Description>
+        <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
+        <SubGroup>DynamicFieldScreen</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="AgentTicketClose">Frontend::Agent::Ticket::ViewClose</Item>
+                <Item Key="AgentTicketCompose">Frontend::Agent::Ticket::ViewCompose</Item>
+                <Item Key="AgentTicketEmail"></Item>
+                <Item Key="AgentTicketEmailOutbound"></Item>
+                <Item Key="AgentTicketForward"></Item>
+                <Item Key="AgentTicketFreeText"></Item>
+                <Item Key="AgentTicketMove">Frontend::Agent::Ticket::ViewMove</Item>
+                <Item Key="AgentTicketNote">Frontend::Agent::Ticket::ViewNote</Item>
+                <Item Key="AgentTicketOwner"></Item>
+                <Item Key="AgentTicketPending"></Item>
+                <Item Key="AgentTicketPhone"></Item>
+                <Item Key="AgentTicketPhoneInbound"></Item>
+                <Item Key="AgentTicketPhoneOutbound"></Item>
+                <Item Key="AgentTicketPrint"></Item>
+                <Item Key="AgentTicketPriority"></Item>
+                <Item Key="AgentTicketResponsible"></Item>
+                <Item Key="AgentTicketSearch"></Item>
+                <Item Key="AgentTicketZoom">Frontend::Agent::Ticket::ViewZoom</Item>
+                <Item Key="CustomerTicketMessage"></Item>
+                <Item Key="CustomerTicketPrint"></Item>
+                <Item Key="CustomerTicketSearch"></Item>
+                <Item Key="CustomerTicketZoom"></Item>
+                <Item Key="OverviewMedium"></Item>
+                <Item Key="OverviewPreview"></Item>
+                <Item Key="OverviewSmall"></Item>
+                <Item Key="CustomerTicketOverview"></Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+</otrs_config>

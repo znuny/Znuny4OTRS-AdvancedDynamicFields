@@ -1,0 +1,158 @@
+# --
+# AdminDynamicFieldScreen.tt - provides HTML for AdminDynamicFieldScreen
+# Copyright (C) 2012-2015 Znuny GmbH, http://znuny.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1>[% Translate("Dynamic Field Screen Management") | html %]</h1>
+
+    <div class="SidebarColumn">
+        <div class="WidgetSimple">
+[% RenderBlockStart("ActionList") %]
+            <div class="Header">
+                <h2>[% Translate("Actions") | html %]</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+[% RenderBlockStart("ActionOverview") %]
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Go to overview") | html %]</span></a>
+                    </li>
+[% RenderBlockEnd("ActionOverview") %]
+                </ul>
+            </div>
+[% RenderBlockEnd("ActionList") %]
+        </div>
+    </div>
+
+    <div class="ContentColumn">
+        <div class="WidgetSimple">
+[% RenderBlockStart("Overview") %]
+            <div class="Header">
+                <h2>[% Translate("List") | html %]</h2>
+            </div>
+            <div class="Content">
+
+                <table class="DataTable">
+                    <thead>
+                        <tr>
+                            <th>[% Translate("Name") | html %]</th>
+                            <!-- <th>[% Translate("Edit") | html %]</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+[% RenderBlockStart("NoDataFoundMsg") %]
+                        <tr>
+                            <td colspan="5">
+                                [% Translate("No data found.") | html %]
+                            </td>
+                        </tr>
+[% RenderBlockEnd("NoDataFoundMsg") %]
+[% RenderBlockStart("OverviewRow") %]
+                        <tr>
+                            <td title="[% Data.DynamicFieldScreen | html %]"><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;DynamicFieldScreen=[% Data.DynamicFieldScreen | uri %]">[% Data.DynamicFieldScreen | truncate(80) | html %]</a></td>
+<!--                             <td class="Center">
+                                <a class="TrashCan" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;DynamicFieldScreen=[% Data.DynamicFieldScreen | uri %];[% Env("ChallengeTokenParam") | html %]" title="[% Translate("Edit this dynamic field screen") | html %]">
+                                    [% Translate("Edit this dynamic field screen") | html %]
+                                    <i class="fa fa-pencil-square-o"></i>
+                                </a>
+                            </td>
+ -->
+                        </tr>
+[% RenderBlockEnd("OverviewRow") %]
+                    </tbody>
+                </table>
+            </div>
+[% RenderBlockEnd("Overview") %]
+[% RenderBlockStart("Edit") %]
+            <div class="ContentColumn">
+                <form id='Form' action="[% Env("CGIHandle") %]" method="post" class="Validate PreventMultipleSubmits">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                    <input type="hidden" name="Subaction" value="EditAction"/>
+                    <input type="hidden" name="DynamicFieldScreen" value="[% Data.DynamicFieldScreen | html %]"/>
+                    <input type="hidden" name="Fields" value=""/>
+
+                    <div class="WidgetSimple Expanded">
+                        <div class="Header">
+                            <h2>[% Translate("Dynamic Fields for Screen") | html %] - <a href="[% Env("Baselink") %]Action=AdminSysConfig;Subaction=Edit;SysConfigSubGroup=[% Data.SysConfigSubGroup | uri %];SysConfigGroup=Ticket" target="_blank">[% Data.DynamicFieldScreen | truncate(80) | html %]</a>
+                            </h2>
+                        </div>
+                        <div class="Content">
+                            <div class="LayoutGrid">
+                                <div class="Size1of1 SpacingBottom">
+                                    <p>
+                            [% Translate("You can assign Fields to this Screen by dragging the elements with the mouse from the left list to the right list.") | html %]
+                            [% Translate("Ordering the elements within the list is also possible by drag 'n' drop.") | html %]
+                                    </p>
+                                </div>
+                                <div class="Size1of3">
+                                    <input type="text" id="FilterAvailableFields" class="W75pc" name="FilterAvailableFields" value="" title="[% Translate("Filter available fields") | html %]" placeholder="[% Translate("Filter available fields") | html %]..." />
+                                    <ul class="Tablelike W90pc SpacingTop">
+                                        <li class="Header">
+                                [% Translate("Available Fields") | html %]
+                                        </li>
+                                    </ul>
+                                    <ul class="AllocationList Tablelike W90pc" id="AvailableFields">
+[% RenderBlockStart("AvailableFieldRow") %]
+                                        <li title="[% Translate(Data.Label) | html %]">
+                                [% Translate(Data.Label) | html %]
+                                            <input type="hidden" name="AvailableFields" value="[% Data.Field | html %]">
+                                        </li>
+[% RenderBlockEnd("AvailableFieldRow") %]
+                                    </ul>
+                                </div>
+                                <div class="Size1of3">
+                                    <ul class="Tablelike W90pc">
+                                        <li class="Header">
+                                [% Translate("Assigned Fields") | html %]
+                                        </li>
+                                    </ul>
+                                    <ul class="AllocationList Tablelike W90pc" id="AssignedFields">
+[% RenderBlockStart("AssignedFieldRow") %]
+                                        <li title="[% Translate(Data.Label) | html %]">
+                                [% Translate(Data.Label) | html %]
+                                            <input type="hidden" name="AssignedFields" value="[% Data.Field | html %]">
+                                        </li>
+[% RenderBlockEnd("AssignedFieldRow") %]
+                                    </ul>
+                                </div>
+                                <div class="Size1of3">
+                                    <ul class="Tablelike W90pc">
+                                        <li class="Header">
+                                [% Translate("Assigned Required Fields") | html %]
+                                        </li>
+                                    </ul>
+                                     <ul class="AllocationList Tablelike W90pc" id="AssignedRequiredFields">
+[% RenderBlockStart("AssignedRequiredFieldRow") %]
+                                        <li title="[% Translate(Data.Label) | html %]">
+                                [% Translate(Data.Label) | html %]
+                                            <input type="hidden" name="AssignedRequiredFields" value="[% Data.Field | html %]">
+                                        </li>
+[% RenderBlockEnd("AssignedRequiredFieldRow") %]
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="Field SpacingTop" style="text-align: center;">
+                                <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
+                                [% Translate("or") | html %]
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
+                            </div>
+                            <div class="Clear"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen.Init();
+//]]></script>
+[% END %]
+[% RenderBlockEnd("Edit") %]
+        </div>
+    </div>
+    <div class="Clear"></div>
+</div>
