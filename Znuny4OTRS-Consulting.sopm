@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_package version="1.0">
+    <Name>Znuny4OTRS-Consulting</Name>
+    <Version>1.0.1</Version>
+    <ChangeLog Version="1.0.1" Date="2016-04-12 14:37:40 UTC">Initial release.</ChangeLog>
+    <Framework>5.0.x</Framework>
+    <PackageRequired Version="3.0.26">Znuny4OTRS-Repo</PackageRequired>
+    <Vendor>Znuny GmbH</Vendor>
+    <URL>http://znuny.com/</URL>
+    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
+    <Description Lang="en">This package contains the functionality to make the life of the Znuny Consultants easier.</Description>
+    <Description Lang="de">Dieses Paket enthält die Funktionalität um Znuny Consultants das Leben zu erleichtern.</Description>
+    <Filelist>
+        <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DashboardColumn/Add.pm"/>
+        <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DashboardColumn/Remove.pm"/>
+    </Filelist>
+</otrs_package>
