@@ -65,12 +65,10 @@
                 <h2>[% Translate("List") | html %]</h2>
             </div>
             <div class="Content">
-
                 <table class="DataTable">
                     <thead>
                         <tr>
                             <th>[% Translate("Name") | html %]</th>
-                            <!-- <th>[% Translate("Edit") | html %]</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -84,13 +82,6 @@
 [% RenderBlockStart("OverviewRow") %]
                         <tr>
                             <td title="[% Data.DynamicFieldScreen | html %]"><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;DynamicFieldScreen=[% Data.DynamicFieldScreen | uri %]">[% Data.DynamicFieldScreen | truncate(80) | html %]</a></td>
-<!--                             <td class="Center">
-                                <a class="TrashCan" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;DynamicFieldScreen=[% Data.DynamicFieldScreen | uri %];[% Env("ChallengeTokenParam") | html %]" title="[% Translate("Edit this dynamic field screen") | html %]">
-                                    [% Translate("Edit this dynamic field screen") | html %]
-                                    <i class="fa fa-pencil-square-o"></i>
-                                </a>
-                            </td>
- -->
                         </tr>
 [% RenderBlockEnd("OverviewRow") %]
                     </tbody>
@@ -98,82 +89,82 @@
             </div>
 [% RenderBlockEnd("Overview") %]
 [% RenderBlockStart("Edit") %]
-            <div class="ContentColumn">
+
+            <div class="Header">
+                <h2>[% Translate("Dynamic Fields for Screen") | html %] - <a href="[% Env("Baselink") %]Action=AdminSysConfig;Subaction=Edit;SysConfigSubGroup=[% Data.SysConfigSubGroup | uri %];SysConfigGroup=Ticket" target="_blank">[% Data.DynamicFieldScreen | truncate(80) | html %]</a>
+                </h2>
+            </div>
+            <div class="Content">
                 <form id='Form' action="[% Env("CGIHandle") %]" method="post" class="Validate PreventMultipleSubmits">
                     <input type="hidden" name="Action" value="[% Env("Action") %]"/>
                     <input type="hidden" name="Subaction" value="EditAction"/>
                     <input type="hidden" name="DynamicFieldScreen" value="[% Data.DynamicFieldScreen | html %]"/>
                     <input type="hidden" name="Fields" value=""/>
-
-                    <div class="WidgetSimple Expanded">
-                        <div class="Header">
-                            <h2>[% Translate("Dynamic Fields for Screen") | html %] - <a href="[% Env("Baselink") %]Action=AdminSysConfig;Subaction=Edit;SysConfigSubGroup=[% Data.SysConfigSubGroup | uri %];SysConfigGroup=Ticket" target="_blank">[% Data.DynamicFieldScreen | truncate(80) | html %]</a>
-                            </h2>
+                    <div class="LayoutGrid">
+                        <div class="Size1of1 SpacingBottom">
+                            <p>
+                    [% Translate("You can assign Fields to this Screen by dragging the elements with the mouse from the left list to the right list.") | html %]
+                    [% Translate("Ordering the elements within the list is also possible by drag 'n' drop.") | html %]
+                            </p>
                         </div>
-                        <div class="Content">
-                            <div class="LayoutGrid">
-                                <div class="Size1of1 SpacingBottom">
-                                    <p>
-                            [% Translate("You can assign Fields to this Screen by dragging the elements with the mouse from the left list to the right list.") | html %]
-                            [% Translate("Ordering the elements within the list is also possible by drag 'n' drop.") | html %]
-                                    </p>
-                                </div>
-                                <div class="Size1of3">
-                                    <input type="text" id="FilterAvailableFields" class="W75pc" name="FilterAvailableFields" value="" title="[% Translate("Filter available fields") | html %]" placeholder="[% Translate("Filter available fields") | html %]..." />
-                                    <ul class="Tablelike W90pc SpacingTop">
-                                        <li class="Header">
-                                [% Translate("Available Fields") | html %]
-                                        </li>
-                                    </ul>
-                                    <ul class="AllocationList Tablelike W90pc" id="AvailableFields">
+                        <div class="Size1of3">
+                            <input type="text" id="FilterAvailableFields" class="W90pc" name="FilterAvailableFields" value="" title="[% Translate("Filter available fields") | html %]" placeholder="[% Translate("Filter available fields") | html %]..." />
+                            <ul class="Tablelike W90pc SpacingTop">
+                                <li class="Header">
+                        [% Translate("Available Fields") | html %]
+                                </li>
+                            </ul>
+                            <ul class="AllocationList Tablelike W90pc" id="AvailableFields">
 [% RenderBlockStart("AvailableFieldRow") %]
-                                        <li title="[% Translate(Data.Label) | html %]">
-                                [% Translate(Data.Label) | html %]
-                                            <input type="hidden" name="AvailableFields" value="[% Data.Field | html %]">
-                                        </li>
+                                <li title="[% Translate(Data.Label) | html %]">
+                        [% Translate(Data.Label) | html %]
+                                    <input type="hidden" name="AvailableFields" value="[% Data.Field | html %]">
+                                </li>
 [% RenderBlockEnd("AvailableFieldRow") %]
-                                    </ul>
-                                </div>
-                                <div class="Size1of3">
-                                    <ul class="Tablelike W90pc">
-                                        <li class="Header">
-                                [% Translate("Assigned Fields") | html %]
-                                        </li>
-                                    </ul>
-                                    <ul class="AllocationList Tablelike W90pc" id="AssignedFields">
+                            </ul>
+                        </div>
+                        <div class="Size1of3">
+                            <input type="text" id="FilterAssignedFields" class="W90pc" name="FilterAssignedFields" value="" title="[% Translate("Filter assigned fields") | html %]" placeholder="[% Translate("Filter assigned fields") | html %]..." />
+                            <ul class="Tablelike W90pc SpacingTop">
+                                <li class="Header">
+                        [% Translate("Assigned Fields") | html %]
+                                </li>
+                            </ul>
+                            <ul class="AllocationList Tablelike W90pc" id="AssignedFields">
 [% RenderBlockStart("AssignedFieldRow") %]
-                                        <li title="[% Translate(Data.Label) | html %]">
-                                [% Translate(Data.Label) | html %]
-                                            <input type="hidden" name="AssignedFields" value="[% Data.Field | html %]">
-                                        </li>
+                                <li title="[% Translate(Data.Label) | html %]">
+                        [% Translate(Data.Label) | html %]
+                                    <input type="hidden" name="AssignedFields" value="[% Data.Field | html %]">
+                                </li>
 [% RenderBlockEnd("AssignedFieldRow") %]
-                                    </ul>
-                                </div>
-                                <div class="Size1of3">
-                                    <ul class="Tablelike W90pc">
-                                        <li class="Header">
-                                [% Translate("Assigned Required Fields") | html %]
-                                        </li>
-                                    </ul>
-                                     <ul class="AllocationList Tablelike W90pc" id="AssignedRequiredFields">
+                            </ul>
+                        </div>
+                        <div class="Size1of3">
+                            <input type="text" id="FilterAssignedRequiredFields" class="W90pc" name="FilterAssignedRequiredFields" value="" title="[% Translate("Filter assigned required fields") | html %]" placeholder="[% Translate("Filter assigned required fields") | html %]..." />
+                            <ul class="Tablelike W90pc SpacingTop">
+                                <li class="Header">
+                        [% Translate("Assigned Required Fields") | html %]
+                                </li>
+                            </ul>
+                             <ul class="AllocationList Tablelike W90pc" id="AssignedRequiredFields">
 [% RenderBlockStart("AssignedRequiredFieldRow") %]
-                                        <li title="[% Translate(Data.Label) | html %]">
-                                [% Translate(Data.Label) | html %]
-                                            <input type="hidden" name="AssignedRequiredFields" value="[% Data.Field | html %]">
-                                        </li>
+                                <li title="[% Translate(Data.Label) | html %]">
+                        [% Translate(Data.Label) | html %]
+                                    <input type="hidden" name="AssignedRequiredFields" value="[% Data.Field | html %]">
+                                </li>
 [% RenderBlockEnd("AssignedRequiredFieldRow") %]
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="Field SpacingTop" style="text-align: center;">
-                                <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
-                                [% Translate("or") | html %]
-                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
-                            </div>
-                            <div class="Clear"></div>
+                            </ul>
                         </div>
                     </div>
+
+                    <div class="Field SpacingTop" style="text-align: center;">
+                        <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
+                        [% Translate("or") | html %]
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
+                        [% Translate("or") | html %]
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Reset;DynamicFieldScreen=[% Data.DynamicFieldScreen | uri %]">[% Translate("Reset") | html %]</a>
+                    </div>
+                    <div class="Clear"></div>
                 </form>
             </div>
 [% WRAPPER JSOnDocumentComplete %]
@@ -182,6 +173,7 @@
 //]]></script>
 [% END %]
 [% RenderBlockEnd("Edit") %]
+
         </div>
     </div>
     <div class="Clear"></div>
