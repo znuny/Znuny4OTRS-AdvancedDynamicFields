@@ -47,6 +47,9 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
 
         // Initialize list filter
         Core.UI.Table.InitTableFilter($('#FilterAvailableFields'), $('#AvailableFields'));
+        Core.UI.Table.InitTableFilter($('#FilterAssignedFields'), $('#AssignedFields'));
+        Core.UI.Table.InitTableFilter($('#FilterAssignedRequiredFields'), $('#AssignedRequiredFields'));
+        Core.UI.Table.InitTableFilter($('#FilterDynamicFieldScreen'), $('#DynamicFieldScreen'));
 
         // TODO:
         $('#Submit').bind('click', function() {
