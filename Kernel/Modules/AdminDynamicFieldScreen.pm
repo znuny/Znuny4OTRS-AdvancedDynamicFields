@@ -47,6 +47,7 @@ sub new {
     }
 
     $Self->{DynamicFieldScreens} = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens');
+    $Self->{DefaultColumns}      = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DefaultColumns');
 
     return $Self;
 }
@@ -60,8 +61,10 @@ sub Run {
     my $ParamObject       = $Kernel::OM->Get('Kernel::System::Web::Request');
     my $ConfigObject      = $Kernel::OM->Get('Kernel::Config');
     my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
+    my $SysConfigObject   = $Kernel::OM->Get('Kernel::System::SysConfig');
 
-    $Self->{Subaction} = $ParamObject->GetParam( Param => 'Subaction' ) || '';
+    $Self->{Subaction}      = $ParamObject->GetParam( Param => 'Subaction' ) || '';
+    my %DynamicFieldScreens = %{ $Self->{DynamicFieldScreens} };
 
     # ------------------------------------------------------------ #
     # Edit
