@@ -224,6 +224,18 @@ sub _ShowEdit {
     # show button
     $LayoutObject->Block( Name => 'ActionList' );
     $LayoutObject->Block( Name => 'ActionOverview' );
+    $LayoutObject->Block( Name => 'ActionOverviewList' );
+
+    for my $DynamicFieldScreen (sort keys %DynamicFieldScreens ) {
+
+        # output row
+        $LayoutObject->Block(
+            Name => 'ActionOverviewRow',
+            Data => {
+                DynamicFieldScreen => $DynamicFieldScreen,
+            }
+        );
+    }
 
     # output input page
     $LayoutObject->Block(
