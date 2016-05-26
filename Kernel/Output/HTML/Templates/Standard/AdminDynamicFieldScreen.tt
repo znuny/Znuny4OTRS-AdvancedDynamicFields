@@ -26,8 +26,38 @@
             </div>
 [% RenderBlockEnd("ActionList") %]
         </div>
+        <div class="WidgetSimple">
+[% RenderBlockStart("ActionOverviewList") %]
+            <div class="Header">
+                <h2>[% Translate("List") | html %]</h2>
+            </div>
+            <div class="Content">
+                <input type="text" id="FilterDynamicFieldScreen" class="W95pc" name="FilterDynamicFieldScreen" value="" title="[% Translate("Filter DynamicField Screen") | html %]" placeholder="[% Translate("Filter DynamicField Screen") | html %]..." />
+                <table class="DataTable SpacingTop" id="DynamicFieldScreen">
+                    <thead>
+                        <tr>
+                            <th>[% Translate("Name") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+[% RenderBlockStart("NoDataFoundMsg") %]
+                        <tr>
+                            <td colspan="5">
+                                [% Translate("No data found.") | html %]
+                            </td>
+                        </tr>
+[% RenderBlockEnd("NoDataFoundMsg") %]
+[% RenderBlockStart("ActionOverviewRow") %]
+                        <tr>
+                            <td title="[% Data.DynamicFieldScreen | html %]"><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;DynamicFieldScreen=[% Data.DynamicFieldScreen | uri %]">[% Data.DynamicFieldScreen | truncate(80) | html %]</a></td>
+                        </tr>
+[% RenderBlockEnd("ActionOverviewRow") %]
+                    </tbody>
+                </table>
+            </div>
+[% RenderBlockEnd("ActionOverviewList") %]
+        </div>
     </div>
-
     <div class="ContentColumn">
         <div class="WidgetSimple">
 [% RenderBlockStart("Overview") %]
