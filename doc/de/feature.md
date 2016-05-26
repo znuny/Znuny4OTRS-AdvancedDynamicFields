@@ -1,6 +1,21 @@
+# TODO
+
+## nur zugewiesene Felder
+AgentTicketZoom
+CustomerTicketZoom
+
+
 # Consultant Helfer
 
 Viele Aufgaben die bei einer Einrichtung oder Aktualisierung eines Kundensystems vorgenommen werden müssen sind aufgrund diverser Limitierungen sehr mühsam. Diese Erweiterung soll die Arbeiten an Kundensystemen erleichtern.
+
+# GUI
+
+
+
+...
+
+# Console
 
 ## Verwaltung von Dashboard DefaultColumns
 
