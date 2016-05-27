@@ -319,4 +319,87 @@ sub _ShowEdit {
     return $Output;
 }
 
+sub _GetDynamicFields {
+    my ( $Self, %Param ) = @_;
+
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    # check needed stuff
+    NEEDED:
+    for my $Needed ( qw(ConfigItem) ) {
+
+        next NEEDED if defined $Param{ $Needed };
+
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Parameter '$Needed' is needed!",
+        );
+        return;
+    }
+
+    my $ConfigItem = $Param{ConfigItem};
+    my $Config;
+    my %DynamicFields;
+    my @ConfigItemElements;
+
+    if( $Param{ConfigItem} =~ /###/ ){
+
+        @ConfigItemElements = split /###/, $Param{ConfigItem};
+        $Config = $ConfigObject->Get($ConfigItemElements[0]);
+
+        my %DefaultColumns = %{ $Config->{$ConfigItemElements[-1]}->{DefaultColumns} };
+
+        DYNAMICFIELD:
+        for my $DefaultColumn (sort keys %DefaultColumns){
+
+            next DYNAMICFIELD if $DefaultColumn !~ /DynamicField_/;
+
+            my $DynamicFieldName = $DefaultColumn;
+            $DynamicFieldName =~ s/DynamicField_//;
+            $DynamicFields{$DynamicFieldName} = $DefaultColumns{$DefaultColumn};
+        }
+
+        return %DynamicFields;
+    }
+    else{
+
+        $Config = $ConfigObject->Get($Param{ConfigItem});
+
+        if ($Config->{DefaultColumns}){
+            my %DefaultColumns = %{ $Config->{DefaultColumns} };
+
+            DYNAMICFIELD:
+            for my $DefaultColumn (sort keys %DefaultColumns){
+
+                next DYNAMICFIELD if $DefaultColumn !~ /DynamicField_/;
+
+                my $DynamicFieldName = $DefaultColumn;
+                $DynamicFieldName =~ s/DynamicField_//;
+                $DynamicFields{$DynamicFieldName} = $DefaultColumns{$DefaultColumn};
+            }
+        }
+        elsif ($Config->{DynamicField}){
+
+            %DynamicFields = %{ $Config->{DynamicField} };
+
+        }
+
+        return %DynamicFields;
+    }
+
+}
+
+sub _SetDynamicFields {
+    my ( $Self, %Param ) = @_;
+
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $Config = $Param{Config};
+
+    my $ScreenConfigs = $ConfigObject->Get($Config);
+
+
+
+}
+
+
 1;
