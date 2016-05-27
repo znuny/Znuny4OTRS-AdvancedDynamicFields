@@ -32,49 +32,52 @@
         <SubGroup>DynamicFieldScreen</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="AgentTicketClose">Frontend::Agent::Ticket::ViewClose</Item>
-                <Item Key="AgentTicketCompose">Frontend::Agent::Ticket::ViewCompose</Item>
-                <Item Key="AgentTicketEmail">Frontend::Agent::Ticket::ViewEmailNew</Item>
-                <Item Key="AgentTicketEmailOutbound">Frontend::Agent::Ticket::ViewEmailOutbound</Item>
-                <Item Key="AgentTicketForward">Frontend::Agent::Ticket::ViewForward</Item>
-                <Item Key="AgentTicketFreeText">Frontend::Agent::Ticket::ViewFreeText></Item>
-                <Item Key="AgentTicketMove">Frontend::Agent::Ticket::ViewMove</Item>
-                <Item Key="AgentTicketNote">Frontend::Agent::Ticket::ViewNote</Item>
-                <Item Key="AgentTicketOwner">Frontend::Agent::Ticket::ViewOwner</Item>
-                <Item Key="AgentTicketPending">Frontend::Agent::Ticket::ViewPending</Item>
-                <Item Key="AgentTicketPhone">Frontend::Agent::Ticket::ViewPhoneNew</Item>
-                <Item Key="AgentTicketPhoneInbound">Frontend::Agent::Ticket::ViewPhoneInbound</Item>
-                <Item Key="AgentTicketPhoneOutbound">Frontend::Agent::Ticket::ViewPhoneOutbound</Item>
-                <Item Key="AgentTicketPrint">Frontend::Agent::Ticket::ViewPrint</Item>
-                <Item Key="AgentTicketPriority">Frontend::Agent::Ticket::ViewPriority</Item>
-                <Item Key="AgentTicketResponsible">Frontend::Agent::Ticket::ViewResponsible</Item>
-                <Item Key="AgentTicketSearch">Frontend::Agent::Ticket::ViewSearch</Item>
-                <Item Key="AgentTicketZoom">Frontend::Agent::Ticket::ViewZoom</Item>
-                <Item Key="CustomerTicketMessage">Frontend::Customer::Ticket::ViewNew</Item>
-                <Item Key="CustomerTicketPrint">Frontend::Customer::Ticket::ViewPrint</Item>
-                <Item Key="CustomerTicketSearch">Frontend::Customer::Ticket::ViewSearch</Item>
-                <Item Key="CustomerTicketZoom">Frontend::Customer::Ticket::ViewZoom</Item>
-                <Item Key="OverviewMedium">Frontend::Agent::TicketOverview</Item>
-                <Item Key="OverviewPreview">Frontend::Agent::TicketOverview</Item>
-                <Item Key="OverviewSmall">Frontend::Agent::TicketOverview</Item>
-                <Item Key="CustomerTicketOverview">Frontend::Customer::TicketOverview</Item>
+                <Item Key="Ticket::Frontend::AgentTicketClose">Close</Item>
+                <Item Key="Ticket::Frontend::AgentTicketCompose">Compose</Item>
+                <Item Key="Ticket::Frontend::AgentTicketEmail">EmailNew</Item>
+                <Item Key="Ticket::Frontend::AgentTicketEmailOutbound">EmailOutbound</Item>
+                <Item Key="Ticket::Frontend::AgentTicketForward">Forward</Item>
+                <Item Key="Ticket::Frontend::AgentTicketFreeText">FreeText</Item>
+                <Item Key="Ticket::Frontend::AgentTicketMove">Move</Item>
+                <Item Key="Ticket::Frontend::AgentTicketNote">Note</Item>
+                <Item Key="Ticket::Frontend::AgentTicketOwner">Owner</Item>
+                <Item Key="Ticket::Frontend::AgentTicketPending">Pending</Item>
+                <Item Key="Ticket::Frontend::AgentTicketPhone">PhoneNew</Item>
+                <Item Key="Ticket::Frontend::AgentTicketPhoneInbound">PhoneInbound</Item>
+                <Item Key="Ticket::Frontend::AgentTicketPhoneOutbound">PhoneOutbound</Item>
+                <Item Key="Ticket::Frontend::AgentTicketPrint">Print</Item>
+                <Item Key="Ticket::Frontend::AgentTicketPriority">Priority</Item>
+                <Item Key="Ticket::Frontend::AgentTicketResponsible">Responsible</Item>
+                <Item Key="Ticket::Frontend::AgentTicketSearch">Search</Item>
+                <Item Key="Ticket::Frontend::AgentTicketZoom">Zoom</Item>
+                <Item Key="Ticket::Frontend::CustomerTicketMessage">Customer New</Item>
+                <Item Key="Ticket::Frontend::CustomerTicketPrint">Customer Print</Item>
+                <Item Key="Ticket::Frontend::CustomerTicketSearch">Customer Search</Item>
+                <Item Key="Ticket::Frontend::CustomerTicketZoom">Customer Zoom</Item>
+                <Item Key="Ticket::Frontend::OverviewMedium">OverviewMedium</Item>
+                <Item Key="Ticket::Frontend::OverviewPreview">OverviewPreview</Item>
+                <Item Key="Ticket::Frontend::OverviewSmall">OverviewSmall</Item>
+                <Item Key="Ticket::Frontend::CustomerTicketOverview">CustomerTicketOverview</Item>
+                <!-- DefaultColumns -->
+                <Item Key="Ticket::Frontend::AgentTicketStatusView"></Item>
+                <Item Key="Ticket::Frontend::AgentTicketQueue"></Item>
+                <Item Key="Ticket::Frontend::AgentTicketResponsibleView"></Item>
+                <Item Key="Ticket::Frontend::AgentTicketWatchView"></Item>
+                <Item Key="Ticket::Frontend::AgentTicketLockedView"></Item>
+                <Item Key="Ticket::Frontend::AgentTicketEscalationView"></Item>
+                <Item Key="Ticket::Frontend::AgentTicketSearch"></Item>
+                <Item Key="Ticket::Frontend::AgentTicketService"></Item>
+                <!-- DefaultColumns and Dashboard Widgets -->
+                <Item Key="DashboardBackend###0100-TicketPendingReminder">Dashboard Widget TicketPendingReminder</Item>
+                <Item Key="DashboardBackend###0110-TicketEscalation">Dashboard Widget TicketEscalation</Item>
+                <Item Key="DashboardBackend###0120-TicketNew">Dashboard Widget TicketNew</Item>
+                <Item Key="DashboardBackend###0130-TicketOpen">Dashboard Widget TicketOpen</Item>
+
+                <Item Key="AgentCustomerInformationCenter::Backend###0100-CIC-TicketPendingReminder">Dashboard Widget CIC TicketPendingReminder</Item>
+                <Item Key="AgentCustomerInformationCenter::Backend###0110-CIC-TicketEscalation">Dashboard Widget CIC TicketEscalation</Item>
+                <Item Key="AgentCustomerInformationCenter::Backend###0120-CIC-TicketNew">Dashboard Widget CIC TicketNew</Item>
+                <Item Key="AgentCustomerInformationCenter::Backend###0130-CIC-TicketOpen">Dashboard Widget CIC TicketOpen</Item>
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Znuny4OTRSAdvancedDynamicFields::DefaultColumns" Required="1" Valid="1">
-        <Description Translatable="1">This configuration defines all possible Screens to enable or disable dynamic fields.</Description>
-        <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
-        <SubGroup>DynamicFieldScreen</SubGroup>
-        <Setting>
-            <Hash>
-
-                <Item Key="Ticket::Frontend::AgentTicketQueue">Frontend::Agent::Ticket::ViewQueue</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <!--
-    DefaultColumns
-
-
--->
 </otrs_config>
