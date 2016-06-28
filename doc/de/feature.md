@@ -1,19 +1,24 @@
-# TODO
+# Advanced DynamicField
 
-## nur zugewiesene Felder
-AgentTicketZoom
-CustomerTicketZoom
+Diese Erweiterung erleichtet die Administration der dynamischen Felder im System.
 
-
-# Consultant Helfer
-
-Viele Aufgaben die bei einer Einrichtung oder Aktualisierung eines Kundensystems vorgenommen werden müssen sind aufgrund diverser Limitierungen sehr mühsam. Diese Erweiterung soll die Arbeiten an Kundensystemen erleichtern.
+Im OTRS Standard ist es nicht möglich zentral die Konfiguration der dynamischen Felder in den jeweiligen Oberflächen durchzuführen. Für jede Oberfläche muss die entsprechende SysConfig gesucht werden.
 
 # GUI
 
+Die Administration der dynamischen Felder über die GUI ist via Admin -> 'Dynamische Felder Oberflächen' durchzuführen.
 
+Die Oberfläche ist kategorisiert in 'DYNAMISCHE FELDER OBERFLÄCHEN', 'DEFAULTCOLUMNS OBERFLÄCHEN'  und 'DYNAMISCHE FELDER'.
 
-...
+'DYNAMISCHE FELDER OBERFLÄCHEN' beinhaltet alle Oberflächen in denen ein dynamisches Feld angezeigt werden kann.
+
+'DEFAULTCOLUMNS OBERFLÄCHEN' beinhaltet alle Oberflächen / Tabellen (Overviews) in denen ein dynamisches Feld als Spalte hinzugefügt werden kann.
+
+'DYNAMISCHE FELDER' beinhaltet alle dynamischen Felder die zu 'DYNAMISCHE FELDER OBERFLÄCHEN' oder 'DEFAULTCOLUMNS
+OBERFLÄCHEN' hinzugefügt werden können.
+
+Die Administration der einzelnen Elemente kann durch die simple 'drag and drop' Methode durchgeführt werden.
+
 
 # Console
 
@@ -89,4 +94,3 @@ Screen ist optional
 ./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2 --screen=AgentTicketNote --screen=AgentTicketZoom
 
 ```
-

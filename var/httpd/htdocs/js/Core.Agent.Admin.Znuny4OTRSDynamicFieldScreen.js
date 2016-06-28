@@ -1,6 +1,5 @@
 // --
-// Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen.js - provides the special module functions for the Dynamic Field Screen.
-// Copyright (C) 2012-2015 Znuny GmbH, http://znuny.com/
+// Copyright (C) 2012-2016 Znuny GmbH, http://znuny.com/
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -23,33 +22,33 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
 
     TargetNS.Init = function () {
 
-        function UpdateFields(Event, UI) {
+        function UpdateFields(UI) {
 
             var Target = $(UI.item).parent().attr('id');
 
-            // if the element was removed from the AssignedFields list, rename it to DF name
-            if (Target === 'AvailableFields') {
-                $(UI.item).find('input').attr('name', 'AvailableFields');
+            // if the element was removed from the AssignedElement list, rename it to DF name
+            if (Target === 'AvailableElements') {
+                $(UI.item).find('input').attr('name', 'AvailableElements');
             }
 
-            // rename it to AssignedFields
-            else if (Target === 'AssignedFields') {
-                $(UI.item).find('input').attr('name', 'AssignedFields');
+            // rename it to AssignedElements
+            else if (Target === 'AssignedElements') {
+                $(UI.item).find('input').attr('name', 'AssignedElements');
             }
 
-            // rename it to AssignedRequiredFields
-            else if (Target === 'AssignedRequiredFields') {
-                $(UI.item).find('input').attr('name', 'AssignedRequiredFields');
+            // rename it to AssignedRequiredElements
+            else if (Target === 'AssignedRequiredElements') {
+                $(UI.item).find('input').attr('name', 'AssignedRequiredElements');
             }
         }
         // Initialize Allocation List
-        Core.UI.AllocationList.Init("#AvailableFields, #AssignedFields, #AssignedRequiredFields", ".AllocationList", UpdateFields);
+        Core.UI.AllocationList.Init("#AvailableElements, #AssignedElements, #AssignedRequiredElements", ".AllocationList", UpdateFields);
 
         // Initialize list filter
-        Core.UI.Table.InitTableFilter($('#FilterAvailableFields'), $('#AvailableFields'));
-        Core.UI.Table.InitTableFilter($('#FilterAssignedFields'), $('#AssignedFields'));
-        Core.UI.Table.InitTableFilter($('#FilterAssignedRequiredFields'), $('#AssignedRequiredFields'));
-        Core.UI.Table.InitTableFilter($('#FilterDynamicFieldScreen'), $('#DynamicFieldScreen'));
+        Core.UI.Table.InitTableFilter($('#FilterAvailableElements'), $('#AvailableElements'));
+        Core.UI.Table.InitTableFilter($('#FilterAssignedElements'), $('#AssignedElements'));
+        Core.UI.Table.InitTableFilter($('#FilterAssignedRequiredElements'), $('#AssignedRequiredElements'));
+        Core.UI.Table.InitTableFilter($('#FilterElements'), $('#Elements'));
 
         // TODO:
         $('#Submit').bind('click', function() {
