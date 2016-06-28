@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2012-2015 Znuny GmbH, http://znuny.com/
+# Copyright (C) 2012-2016 Znuny GmbH, http://znuny.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,11 +12,14 @@ use strict;
 use warnings;
 
 our @ObjectDependencies = (
+    'Kernel::Config',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::DynamicField',
+    'Kernel::System::Log',
+    'Kernel::System::SysConfig',
     'Kernel::System::Web::Request',
+    'Kernel::System::ZnunyHelper',
 );
-
 
 use Kernel::System::VariableCheck qw(:all);
 
@@ -43,11 +46,11 @@ sub new {
         next DYNAMICFIELD if $DynamicField->{Name} eq 'ProcessManagementProcessID';
         next DYNAMICFIELD if $DynamicField->{Name} eq 'ProcessManagementActivityID';
 
-        $Self->{AvailableFields}->{ $DynamicField->{Name} } = $DynamicField->{Label};
+        $Self->{DynamicFields}->{ $DynamicField->{Name} } = $DynamicField->{Label};
     }
 
-    $Self->{DynamicFieldScreens} = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens');
-    $Self->{DefaultColumns}      = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DefaultColumns');
+    $Self->{DynamicFieldScreens}   = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens');
+    $Self->{DefaultColumnsScreens} = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreens');
 
     return $Self;
 }
@@ -55,37 +58,51 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-
-    # get objects
+    #     # get objects
+    my $ConfigObject      = $Kernel::OM->Get('Kernel::Config');
+    my $LogObject         = $Kernel::OM->Get('Kernel::System::Log');
+    my $SysConfigObject   = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
     my $LayoutObject      = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $ParamObject       = $Kernel::OM->Get('Kernel::System::Web::Request');
-    my $ConfigObject      = $Kernel::OM->Get('Kernel::Config');
-    my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
-    my $SysConfigObject   = $Kernel::OM->Get('Kernel::System::SysConfig');
 
-    $Self->{Subaction}      = $ParamObject->GetParam( Param => 'Subaction' ) || '';
-    my %DynamicFieldScreens = %{ $Self->{DynamicFieldScreens} };
+    $Self->{Subaction} = $ParamObject->GetParam( Param => 'Subaction' ) || '';
+
+    my %DynamicFields         = %{ $Self->{DynamicFields} };
+    my %DynamicFieldScreens   = %{ $Self->{DynamicFieldScreens} };
+    my %DefaultColumnsScreens = %{ $Self->{DefaultColumnsScreens} };
+
+    # check needed stuff
+    NEEDED:
+    for my $Needed (qw(Element Type)) {
+
+        $Param{$Needed} = $ParamObject->GetParam( Param => $Needed );
+        next NEEDED if $Param{$Needed};
+
+        $Self->{Subaction} = '';
+    }
 
     # ------------------------------------------------------------ #
     # Edit
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'Edit' ) {
 
-        $Param{DynamicFieldScreen} = $ParamObject->GetParam( Param => 'DynamicFieldScreen' );
+        my %Config;
 
-        # check for DynamicFieldScreen
-        if ( !$Param{DynamicFieldScreen} ) {
-            return $LayoutObject->ErrorScreen(
-                Message => "Need parameter 'DynamicFieldScreen'!",
-            );
+        # get config of element
+        if ( $Param{Type} eq 'DynamicField' ) {
+            %Config = $Self->_GetDynamicFieldConfig( DynamicField => $Param{Element} );
+        }
+        elsif ( $Param{Type} eq 'DynamicFieldScreen' ) {
+            %Config = $Self->_GetDynamicFieldScreenConfig( ConfigItem => $Param{Element} );
+        }
+        elsif ( $Param{Type} eq 'DefaultColumnsScreen' ) {
+            %Config = $Self->_GetDefaultColumnsScreenConfig( ConfigItem => $Param{Element} );
         }
 
-        my $ScreenConfigs      = $ConfigObject->Get('Ticket::Frontend::' . $Param{DynamicFieldScreen} );
-        my $DynamicFieldConfig = $ScreenConfigs->{DynamicField};
-
-        return $Self->_ShowEdit(
+        $Self->_ShowEdit(
             %Param,
-            Data   => $DynamicFieldConfig,
+            Data => \%Config,
         );
     }
 
@@ -94,65 +111,81 @@ sub Run {
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'EditAction' ) {
 
-        # # challenge token check for write action
+        # challenge token check for write action
         $LayoutObject->ChallengeTokenCheck();
 
-        my $DynamicFieldScreen = $ParamObject->GetParam( Param => 'DynamicFieldScreen' );
-
-        # check for DynamicFieldScreen
-        if ( !$DynamicFieldScreen ) {
-            return $LayoutObject->ErrorScreen(
-                Message => "Need parameter 'DynamicFieldScreen'!",
-            );
-        }
-
         # check required parameters
-        my @AvailableFields        = $ParamObject->GetArray( Param => 'AvailableFields' );
-        my @AssignedFields         = $ParamObject->GetArray( Param => 'AssignedFields' );
-        my @AssignedRequiredFields = $ParamObject->GetArray( Param => 'AssignedRequiredFields' );
+        my @AvailableElements        = $ParamObject->GetArray( Param => 'AvailableElements' );
+        my @AssignedElements         = $ParamObject->GetArray( Param => 'AssignedElements' );
+        my @AssignedRequiredElements = $ParamObject->GetArray( Param => 'AssignedRequiredElements' );
 
-        # get all fields
-        my %AvailableFields         = map { $_ => '0' } @AvailableFields;
-        my %AssignedFields          = map { $_ => '1' } @AssignedFields;
-        my %AssignedRequiredFields  = map { $_ => '2' } @AssignedRequiredFields;
+        # get all Elements
+        my %AvailableElements        = map { $_ => '0' } @AvailableElements;
+        my %AssignedElements         = map { $_ => '1' } @AssignedElements;
+        my %AssignedRequiredElements = map { $_ => '2' } @AssignedRequiredElements;
 
         # build config hash
-        my %DynamicFieldConfig = (
-            %AvailableFields,
-            %AssignedFields,
-            %AssignedRequiredFields,
+        my %Config = (
+            %AvailableElements,
+            %AssignedElements,
+            %AssignedRequiredElements,
         );
 
-        my %Screens;
-        $Screens{$DynamicFieldScreen} ||= {};
+        my %ScreenConfig;
+        $ScreenConfig{ $Param{Element} } ||= {};
 
-        DYNAMICFIELD:
-        for my $DynamicField (sort keys %DynamicFieldConfig) {
-            $Screens{$DynamicFieldScreen}->{$DynamicField} = $DynamicFieldConfig{$DynamicField};
+        # get config of element
+        if ( $Param{Type} eq 'DynamicField' ) {
+
+            $Self->_SetDynamicFields(
+                DynamicField => $Param{Element},
+                Config       => \%Config,
+            );
+        }
+        elsif ( $Param{Type} eq 'DynamicFieldScreen' ) {
+
+            for my $DynamicField ( sort keys %Config ) {
+                $ScreenConfig{ $Param{Element} }->{$DynamicField} = $Config{$DynamicField};
+            }
+
+            $ZnunyHelperObject->_DynamicFieldsScreenEnable(%ScreenConfig);
+        }
+        elsif ( $Param{Type} eq 'DefaultColumnsScreen' ) {
+
+            for my $DynamicField ( sort keys %Config ) {
+                $ScreenConfig{ $Param{Element} }->{ 'DynamicField_' . $DynamicField } = $Config{$DynamicField};
+            }
+
+            $ZnunyHelperObject->_DefaultColumnsEnable(%ScreenConfig);
         }
 
-        # update all dynamic fields
-        my $Success = $ZnunyHelperObject->_DynamicFieldsScreenEnable(%Screens);
+        $Param{Element} = $LayoutObject->LinkEncode( $Param{Element} );
 
         # redirect to the same view
-        return $LayoutObject->Redirect( OP => "Action=$Self->{Action};Subaction=Edit;DynamicFieldScreen=$DynamicFieldScreen" );
+        return $LayoutObject->Redirect(
+            OP => "Action=$Self->{Action};Subaction=Edit;Type=$Param{Type};Element=$Param{Element};"
+        );
     }
 
     # ------------------------------------------------------------ #
-    # ActvityDialogEditAction
+    # Reset
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Reset' ) {
 
-        my $DynamicFieldScreen = $ParamObject->GetParam( Param => 'DynamicFieldScreen' );
-        my $ResetConfig = "Ticket::Frontend::$DynamicFieldScreen###DynamicField";
+        return $Self->_ShowOverview() if $Param{Type} ne 'DynamicFieldScreen' || $Param{Type} ne 'DefaultColumnsScreen';
 
         $SysConfigObject->ConfigItemReset(
-            Name => $ResetConfig,
+            Name => $Param{Element},
         );
 
+        $Param{Element} = $LayoutObject->LinkEncode( $Param{Element} );
+
         # redirect to the same view
-        return $LayoutObject->Redirect( OP => "Action=$Self->{Action};Subaction=Edit;DynamicFieldScreen=$DynamicFieldScreen" );
+        return $LayoutObject->Redirect(
+            OP => "Action=$Self->{Action};Subaction=Edit;Type=$Param{Type};Element=$Param{Element}"
+        );
     }
+
     # ------------------------------------------------------------ #
     # Error
     # ------------------------------------------------------------ #
@@ -167,32 +200,57 @@ sub _ShowOverview {
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    my %DynamicFieldScreens = %{ $Self->{DynamicFieldScreens} };
+    my %DynamicFields         = %{ $Self->{DynamicFields} };
+    my %DynamicFieldScreens   = %{ $Self->{DynamicFieldScreens} };
+    my %DefaultColumnsScreens = %{ $Self->{DefaultColumnsScreens} };
 
-    # show button
+    # show output
     $LayoutObject->Block( Name => 'ActionList' );
     $LayoutObject->Block( Name => 'ActionOverview' );
+    $LayoutObject->Block( Name => 'Overview' );
 
-    # output overview result
-    $LayoutObject->Block(
-        Name => 'Overview',
-    );
+    for my $DynamicFieldScreen ( sort keys %DynamicFieldScreens ) {
 
-    for my $DynamicFieldScreen (sort keys %DynamicFieldScreens ) {
-
-        # output row
+        # output row for DynamicFieldScreen
         $LayoutObject->Block(
-            Name => 'OverviewRow',
+            Name => 'DynamicFieldScreenOverviewRow',
             Data => {
                 DynamicFieldScreen => $DynamicFieldScreen,
-            }
+                Name               => $DynamicFieldScreens{$DynamicFieldScreen},
+                }
         );
     }
 
-    if ( !IsHashRefWithData(\%DynamicFieldScreens) ) {
+    for my $DefaultColumnsScreen ( sort keys %DefaultColumnsScreens ) {
+
+        # output row for DefaultColumns
+        $LayoutObject->Block(
+            Name => 'DefaultColumnsScreenOverviewRow',
+            Data => {
+                DefaultColumnsScreen => $DefaultColumnsScreen,
+                Name                 => $DefaultColumnsScreens{$DefaultColumnsScreen},
+                }
+        );
+    }
+
+    if ( !IsHashRefWithData( \%DynamicFields ) ) {
         $LayoutObject->Block(
             Name => 'NoDataFoundMsg',
         );
+    }
+    else {
+
+        for my $DynamicField ( sort keys %DynamicFields ) {
+
+            # output row for DynamicField
+            $LayoutObject->Block(
+                Name => 'DynamicFieldOverviewRow',
+                Data => {
+                    DynamicField => $DynamicField,
+                    Name         => $DynamicFields{$DynamicField},
+                    }
+            );
+        }
     }
 
     # output header
@@ -211,29 +269,63 @@ sub _ShowEdit {
     my ( $Self, %Param ) = @_;
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    # localize available fields and dynamic fields screens
-    my %AvailableFields     = %{ $Self->{AvailableFields} };
-    my %DynamicFieldScreens = %{ $Self->{DynamicFieldScreens} };
+    my $NoAssignedRequiredFieldRow;
 
-    # get dynamic field screen information
-    my $Data               = $Param{Data} || {};
-    my $DynamicFieldScreen = $Param{DynamicFieldScreen};
+    my %Data                  = %{ $Param{Data} || {} };
+    my %DynamicFields         = %{ $Self->{DynamicFields} };
+    my %DynamicFieldScreens   = %{ $Self->{DynamicFieldScreens} };
+    my %DefaultColumnsScreens = %{ $Self->{DefaultColumnsScreens} };
+
+    my %Screens = (
+        %{ $Self->{DynamicFieldScreens} },
+        %{ $Self->{DefaultColumnsScreens} },
+    );
+
+    # localize available fields, dynamic fields screens and default column screens
+    my %AvailableElements = %DynamicFields;
+    my %OtherElements     = %DefaultColumnsScreens;
+
+    # set default size for template
+    $Param{Size}   = 'Size1of3';
+    $Param{Header} = 'Dynamic Fields for this Screen';
+
+    if ( $Param{Type} eq 'DynamicField' ) {
+
+        %AvailableElements = %Screens;
+        %OtherElements     = %DynamicFields;
+
+        $Param{Header}      = 'Screens for this Dynamic Field';
+        $Param{HiddenReset} = 'Hidden';
+    }
+    elsif ( $Param{Type} eq 'DynamicFieldScreens' ) {
+
+        # remove AssignedRequiredFieldRow off template if screen is AgentTicketZoom oder CustomTicketZoom
+        if ( $Param{Element} =~ m{Zoom}msxi ) {
+
+            $NoAssignedRequiredFieldRow = 1;
+            $Param{Size}                = 'Size1of2';
+            $Param{HiddenRequired}      = 'Hidden';
+        }
+        %OtherElements = %DynamicFieldScreens;
+    }
 
     # show button
     $LayoutObject->Block( Name => 'ActionList' );
     $LayoutObject->Block( Name => 'ActionOverview' );
     $LayoutObject->Block( Name => 'ActionOverviewList' );
 
-    for my $DynamicFieldScreen (sort keys %DynamicFieldScreens ) {
+    # shows sidebar selection
+    for my $Element ( sort keys %OtherElements ) {
 
         # output row
         $LayoutObject->Block(
             Name => 'ActionOverviewRow',
             Data => {
-                DynamicFieldScreen => $DynamicFieldScreen,
-            }
+                Element    => $OtherElements{$Element},
+                ElementKey => $Element,
+                Type       => $Param{Type},
+                }
         );
     }
 
@@ -241,68 +333,66 @@ sub _ShowEdit {
     $LayoutObject->Block(
         Name => 'Edit',
         Data => {
-            SysConfigSubGroup => $DynamicFieldScreens{$DynamicFieldScreen},
             %Param,
-            %{$Data},
+            %Data,
         },
     );
 
     # get used fields by the dynamic field group
-    if ( IsHashRefWithData( \%{$Data} ) ) {
+    if ( IsHashRefWithData( \%Data ) ) {
 
-        FIELD:
-        for my $Field ( sort keys %{ $Data } ) {
+        ELEMENT:
+        for my $Element ( sort keys %Data ) {
 
-
-            next FIELD if !$AvailableFields{$Field};
-            next FIELD if $Data->{$Field} ne 1;
+            next ELEMENT if !$AvailableElements{$Element};
+            next ELEMENT if $Data{$Element} ne 1;
 
             $LayoutObject->Block(
                 Name => 'AssignedFieldRow',
                 Data => {
-                    Field => $Field,
-                    Label => $AvailableFields{$Field},
+                    Element => $Element,
+                    Label   => $AvailableElements{$Element},
                 },
             );
 
             # remove used fields from available list
-            delete $AvailableFields{$Field};
+            delete $AvailableElements{$Element};
         }
     }
+
     # get used fields by the dynamic field group
-    if ( IsHashRefWithData( \%{$Data} ) ) {
+    if ( IsHashRefWithData( \%Data ) && !$NoAssignedRequiredFieldRow ) {
 
-        FIELD:
-        for my $Field ( sort keys %{ $Data } ) {
+        ELEMENT:
+        for my $Element ( sort keys %Data ) {
 
-            next FIELD if !$AvailableFields{$Field};
-            next FIELD if $Data->{$Field} ne 2;
+            next ELEMENT if !$AvailableElements{$Element};
+            next ELEMENT if $Data{$Element} ne 2;
 
             $LayoutObject->Block(
                 Name => 'AssignedRequiredFieldRow',
                 Data => {
-                    Field => $Field,
-                    Label => $AvailableFields{$Field},
+                    Element => $Element,
+                    Label   => $AvailableElements{$Element},
                 },
             );
 
             # remove used fields from available list
-            delete $AvailableFields{$Field};
+            delete $AvailableElements{$Element};
         }
     }
 
-
     # display available fields
-    for my $Field (
-        sort { $AvailableFields{$a} cmp $AvailableFields{$b} }
-        keys %AvailableFields
+    for my $Element (
+        sort { $AvailableElements{$a} cmp $AvailableElements{$b} }
+        keys %AvailableElements
         )
     {
         $LayoutObject->Block(
             Name => 'AvailableFieldRow',
             Data => {
-                Field => $Field,
-                Label => $AvailableFields{$Field},
+                Element => $Element,
+                Label   => $AvailableElements{$Element},
             },
         );
     }
@@ -319,87 +409,173 @@ sub _ShowEdit {
     return $Output;
 }
 
-sub _GetDynamicFields {
+sub _GetDynamicFieldConfig {
     my ( $Self, %Param ) = @_;
 
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
 
     # check needed stuff
     NEEDED:
-    for my $Needed ( qw(ConfigItem) ) {
+    for my $Needed (qw(DynamicField)) {
 
-        next NEEDED if defined $Param{ $Needed };
+        next NEEDED if defined $Param{$Needed};
 
-        $Self->{LogObject}->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => "Parameter '$Needed' is needed!",
         );
         return;
     }
 
-    my $ConfigItem = $Param{ConfigItem};
-    my $Config;
-    my %DynamicFields;
-    my @ConfigItemElements;
+    # get all possible screens
+    my %DynamicFieldScreens   = %{ $Self->{DynamicFieldScreens} };
+    my %DefaultColumnsScreens = %{ $Self->{DefaultColumnsScreens} };
 
-    if( $Param{ConfigItem} =~ /###/ ){
+    my %Config;
 
-        @ConfigItemElements = split /###/, $Param{ConfigItem};
-        $Config = $ConfigObject->Get($ConfigItemElements[0]);
+    DYNAMICFIELDSCREEN:
+    for my $DynamicFieldScreen ( sort keys %DynamicFieldScreens ) {
 
-        my %DefaultColumns = %{ $Config->{$ConfigItemElements[-1]}->{DefaultColumns} };
+        my %DynamicFieldScreenConfig = $Self->_GetDynamicFieldScreenConfig(
+            ConfigItem => $DynamicFieldScreen,
+        );
 
-        DYNAMICFIELD:
-        for my $DefaultColumn (sort keys %DefaultColumns){
-
-            next DYNAMICFIELD if $DefaultColumn !~ /DynamicField_/;
-
-            my $DynamicFieldName = $DefaultColumn;
-            $DynamicFieldName =~ s/DynamicField_//;
-            $DynamicFields{$DynamicFieldName} = $DefaultColumns{$DefaultColumn};
-        }
-
-        return %DynamicFields;
-    }
-    else{
-
-        $Config = $ConfigObject->Get($Param{ConfigItem});
-
-        if ($Config->{DefaultColumns}){
-            my %DefaultColumns = %{ $Config->{DefaultColumns} };
-
-            DYNAMICFIELD:
-            for my $DefaultColumn (sort keys %DefaultColumns){
-
-                next DYNAMICFIELD if $DefaultColumn !~ /DynamicField_/;
-
-                my $DynamicFieldName = $DefaultColumn;
-                $DynamicFieldName =~ s/DynamicField_//;
-                $DynamicFields{$DynamicFieldName} = $DefaultColumns{$DefaultColumn};
-            }
-        }
-        elsif ($Config->{DynamicField}){
-
-            %DynamicFields = %{ $Config->{DynamicField} };
-
-        }
-
-        return %DynamicFields;
+        next DYNAMICFIELDSCREEN if !IsStringWithData( $DynamicFieldScreenConfig{ $Param{DynamicField} } );
+        $Config{$DynamicFieldScreen} = $DynamicFieldScreenConfig{ $Param{DynamicField} };
     }
 
+    DEFAULTCOLUMNSCREEN:
+    for my $DefaultColumnsScreen ( sort keys %DefaultColumnsScreens ) {
+
+        my %DefaultColumnsScreenConfig = $Self->_GetDefaultColumnsScreenConfig(
+            ConfigItem => $DefaultColumnsScreen,
+        );
+
+        next DEFAULTCOLUMNSCREEN if !IsStringWithData( $DefaultColumnsScreenConfig{ $Param{DynamicField} } );
+        $Config{$DefaultColumnsScreen} = $DefaultColumnsScreenConfig{ $Param{DynamicField} };
+    }
+
+    return %Config;
+}
+
+sub _GetDynamicFieldScreenConfig {
+    my ( $Self, %Param ) = @_;
+
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $LogObject    = $Kernel::OM->Get('Kernel::System::Log');
+
+    # check needed stuff
+    NEEDED:
+    for my $Needed (qw(ConfigItem)) {
+
+        next NEEDED if defined $Param{$Needed};
+
+        $LogObject->Log(
+            Priority => 'error',
+            Message  => "Parameter '$Needed' is needed!",
+        );
+        return;
+    }
+
+    my @Keys = split '###', $Param{ConfigItem};
+
+    my $Config = $ConfigObject->Get( $Keys[0] );
+    INDEX:
+    for my $Index ( 1 ... $#Keys ) {
+        last INDEX if !IsHashRefWithData($Config);
+        $Config = $Config->{ $Keys[$Index] };
+    }
+    next VIEW if ref $Config ne 'HASH';
+
+    return %{$Config};
+}
+
+sub _GetDefaultColumnsScreenConfig {
+    my ( $Self, %Param ) = @_;
+
+    my $ConfigObject      = $Kernel::OM->Get('Kernel::Config');
+    my $LogObject         = $Kernel::OM->Get('Kernel::System::Log');
+    my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
+
+    # check needed stuff
+    NEEDED:
+    for my $Needed (qw(ConfigItem)) {
+
+        next NEEDED if defined $Param{$Needed};
+
+        $LogObject->Log(
+            Priority => 'error',
+            Message  => "Parameter '$Needed' is needed!",
+        );
+        return;
+    }
+
+    my @Configs = $Param{ConfigItem};
+    my %Configs = $ZnunyHelperObject->_DefaultColumnsGet(@Configs);
+    my %Config  = %{ $Configs{ $Param{ConfigItem} } };
+
+    ITEM:
+    for my $Item ( sort keys %Config ) {
+
+        my $Value = delete $Config{$Item};
+        next ITEM if $Item !~ m{DynamicField_}xms;
+        $Item =~ s/DynamicField_//;
+
+        $Config{$Item} = $Value;
+    }
+
+    return %Config;
 }
 
 sub _SetDynamicFields {
     my ( $Self, %Param ) = @_;
 
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-    my $Config = $Param{Config};
+    my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
+    my $LogObject         = $Kernel::OM->Get('Kernel::System::Log');
 
-    my $ScreenConfigs = $ConfigObject->Get($Config);
+    # check needed stuff
+    NEEDED:
+    for my $Needed (qw(DynamicField Config)) {
 
+        next NEEDED if defined $Param{$Needed};
 
+        $LogObject->Log(
+            Priority => 'error',
+            Message  => "Parameter '$Needed' is needed!",
+        );
+        return;
+    }
+
+    my %Config                = %{ $Param{Config} };
+    my %DynamicFieldScreens   = %{ $Self->{DynamicFieldScreens} };
+    my %DefaultColumnsScreens = %{ $Self->{DefaultColumnsScreens} };
+    my $Success;
+
+    my %ScreenConfig;
+    SCREEN:
+    for my $DynamicFieldScreen ( sort keys %DynamicFieldScreens ) {
+
+        next SCREEN if !defined $Config{$DynamicFieldScreen};
+
+        $ScreenConfig{$DynamicFieldScreen} = {
+            $Param{DynamicField} => $Config{$DynamicFieldScreen},
+        };
+    }
+
+    $Success = $ZnunyHelperObject->_DynamicFieldsScreenEnable(%ScreenConfig);
+
+    undef %ScreenConfig;
+
+    for my $DefaultColumnsScreen ( sort keys %DefaultColumnsScreens ) {
+        next SCREEN if !defined $Config{$DefaultColumnsScreen};
+
+        $ScreenConfig{$DefaultColumnsScreen} = {
+            "DynamicField_$Param{DynamicField}" => $Config{$DefaultColumnsScreen},
+        };
+    }
+
+    $Success = $ZnunyHelperObject->_DefaultColumnsEnable(%ScreenConfig);
 
 }
-
 
 1;
