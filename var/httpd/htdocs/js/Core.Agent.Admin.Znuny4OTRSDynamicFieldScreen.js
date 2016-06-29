@@ -22,7 +22,7 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
 
     TargetNS.Init = function () {
 
-        function UpdateFields(UI) {
+        function UpdateFields(Event, UI) {
 
             var Target = $(UI.item).parent().attr('id');
 
