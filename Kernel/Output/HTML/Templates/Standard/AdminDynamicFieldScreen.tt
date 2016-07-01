@@ -86,7 +86,8 @@
                         <li class="Header">[% Translate("DynamicFields") | html %]</li>
                         <li class="FilterMessage Hidden">[% Translate("No matches found.") | html %]</li>
 [% RenderBlockStart("NoDataFoundMsg") %]
-                        <li>[% Translate("No data found.") | html %]</li>
+                        <li>[% Translate("No data found.") | html %] <a href="[% Env("Baselink") %]Action=AdminDynamicField" >[% Translate("Add DynamicField") | html %]</a>
+</li>
 [% RenderBlockEnd("NoDataFoundMsg") %]
 [% RenderBlockStart("DynamicFieldOverviewRow") %]
                         <li>

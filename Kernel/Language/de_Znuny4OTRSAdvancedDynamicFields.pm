@@ -43,6 +43,8 @@ sub Data {
     $Self->{Translation}->{'Filter assigned elements'}          = 'Zugewiesene Elemente filtern';
     $Self->{Translation}->{'Filter assigned required elements'} = 'Zugewiesene Pflichtelemente filtern';
 
+    $Self->{Translation}->{'Add DynamicField'} = 'Dynamiches Feld hinzufügen';
+
     return 1;
 }
 
