@@ -59,7 +59,6 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
 
         $.each( ['SelectAllAvailableElements', 'SelectAllAssignedElements', 'SelectAllAssignedRequiredElements'], function (Index, Elements) {
 
-            console.log(Elements);
             $('input[type="checkbox"][name="'+Elements+'"').bind('click', function () {
                 Core.Form.SelectAllCheckboxes($(this), $('#' + Elements));
             });
@@ -70,15 +69,21 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
 
             var Element;
             $('#AllSeleced'+ ParameterName).bind('click', function () {
+
                 // move all li to another ul list.
                 $("input:checkbox:checked").each(function(){
                     Element = $(this).val();
+
+                    console.log(Element);
+
                     if(Element){
                         $('li#'+Element).appendTo('#'+ ParameterName);
                         $('li#'+Element).find('input[type="hidden"]').attr('name', ParameterName);
                         $('#'+Element).find('input[type="checkbox"]').attr('name', 'SelectAll'+ ParameterName);
                     }
                 });
+
+                // removed all checked
                 $("input:checkbox").prop('checked', $(this).prop("checked")).removeAttr('checked');
             });
         });
