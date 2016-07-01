@@ -119,17 +119,20 @@
                         </div>
                         <div class="[% Data.Size | html %]">
                             <input type="text" id="FilterAvailableElements" class="W90pc" name="FilterAvailableElements" value="" title="[% Translate('Filter available elements') | html %]" placeholder="[% Translate('Filter available elements') | html %]..." />
+
+                            <a id='AllSelecedAvailableElements' class="CallForAction W90pc Center SpacingTop"><span><i class="fa fa-caret-down"></i>[% Translate("seleced to available elements") | html %]</span></a>
+
                             <ul class="Tablelike W90pc SpacingTop">
                                 <li class="Header">
-                        [% Translate("Available Elements") | html %]
+                                    <input type="checkbox" name="SelectAllAvailableElements" id="SelectAllAvailableElements" title="[% Translate('Toggle all available elements') | html %]" value="" />
+                                    [% Translate("Available Elements") | html %]
                                 </li>
                             </ul>
-
-
                             <ul class="AllocationList Tablelike W90pc" style="max-height: inherit;" id="AvailableElements">
 [% RenderBlockStart("AvailableFieldRow") %]
-                                <li title="[% Translate(Data.Label) | html %]" id="[% Data.Label | html %]">
-                        [% Translate(Data.Label) | html %]
+                                <li title="[% Translate(Data.Label) | html %]" id="[% Data.Element | html %]">
+                                    <input type="checkbox" name="SelectAllAvailableElements" value="[% Data.Element | html %]"/>
+                                    [% Translate(Data.Label) | html %]
                                     <input type="hidden" name="AvailableElements"  value="[% Data.Element | html %]">
                                 </li>
 [% RenderBlockEnd("AvailableFieldRow") %]
@@ -137,15 +140,20 @@
                         </div>
                         <div class="[% Data.Size | html %]">
                             <input type="text" id="FilterAssignedElements" class="W90pc" name="FilterAssignedElements" value="" title="[% Translate('Filter assigned elements') | html %]" placeholder="[% Translate('Filter assigned elements') | html %]..." />
+
+                            <a id='AllSelecedAssignedElements' class="CallForAction W90pc Center SpacingTop"><span><i class="fa fa-caret-down"></i>[% Translate("seleced to assigned elements") | html %]</span></a>
+
                             <ul class="Tablelike W90pc SpacingTop">
                                 <li class="Header">
-                        [% Translate("Assigned Elements") | html %]
+                                    <input type="checkbox" name="SelectAllAssignedElements" id="SelectAllAssignedElements" title="[% Translate('Toggle all assigned elements') | html %]" value="" />
+                                    [% Translate("Assigned Elements") | html %]
                                 </li>
                             </ul>
                             <ul class="AllocationList Tablelike W90pc" style="max-height: inherit;" id="AssignedElements">
 [% RenderBlockStart("AssignedFieldRow") %]
-                                <li title="[% Translate(Data.Label) | html %]">
-                        [% Translate(Data.Label) | html %]
+                                <li title="[% Translate(Data.Label) | html %]" id="[% Data.Element | html %]">
+                                    <input type="checkbox" name="SelectAllAssignedElements" value="[% Data.Element | html %]"/>
+                                    [% Translate(Data.Label) | html %]
                                     <input type="hidden" name="AssignedElements" value="[% Data.Element | html %]">
                                 </li>
 [% RenderBlockEnd("AssignedFieldRow") %]
@@ -153,15 +161,20 @@
                         </div>
                         <div class="[% Data.Size | html %] [% Data.HiddenRequired | html %]">
                             <input type="text" id="FilterAssignedRequiredElements" class="W90pc" name="FilterAssignedRequiredElements" value="" title="[% Translate('Filter assigned required elements') | html %]" placeholder="[% Translate('Filter assigned required elements') | html %]..." />
+
+                            <a id='AllSelecedAssignedRequiredElements' class="CallForAction W90pc Center SpacingTop"><span><i class="fa fa-caret-down"></i>[% Translate("seleced to assigned required elements") | html %]</span></a>
+
                             <ul class="Tablelike W90pc SpacingTop">
                                 <li class="Header">
-                        [% Translate("Assigned Required Elements") | html %]
+                                    <input type="checkbox" name="SelectAllAssignedRequiredElements" id="SelectAllAssignedRequiredElements" title="[% Translate('Toggle all assigned required elements') | html %]" value="" />
+                                    [% Translate("Assigned Required Elements") | html %]
                                 </li>
                             </ul>
                              <ul class="AllocationList Tablelike W90pc" style="max-height: inherit;" id="AssignedRequiredElements">
 [% RenderBlockStart("AssignedRequiredFieldRow") %]
-                                <li title="[% Translate(Data.Label) | html %]">
-                        [% Translate(Data.Label) | html %]
+                                <li title="[% Translate(Data.Label) | html %]" id="[% Data.Element | html %]">
+                                    <input type="checkbox" name="SelectAllAssignedRequiredElements" value="[% Data.Element | html %]"/>
+                                    [% Translate(Data.Label) | html %]
                                     <input type="hidden" name="AssignedRequiredElements" value="[% Data.Element | html %]">
                                 </li>
 [% RenderBlockEnd("AssignedRequiredFieldRow") %]
