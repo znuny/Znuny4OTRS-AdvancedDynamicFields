@@ -45,6 +45,11 @@ sub Data {
 
     $Self->{Translation}->{'Add DynamicField'} = 'Dynamiches Feld hinzufügen';
 
+    # SysConfig
+    $Self->{Translation}->{'This configuration defines if only valids or all (invalids) dynamic fields should be shown.'} = 'Diese Konfiguration definiert ob nur gültige oder alle (ungültige) dynamischen Felder angezeigt werden sollen.';
+    $Self->{Translation}->{'This configuration defines all possible Screens to enable or disable default columns'} = 'Diese Konfiguration definiert alle möglichen Oberflächen in denen dynamische Felder als DefaultColumns aktiviert/deaktiviert werden können.';
+    $Self->{Translation}->{'This configuration defines all possible Screens to enable or disable dynamic fields'} = 'Diese Konfiguration definiert alle möglichen Oberflächen in denen dynamische Felder als DynamicFields aktiviert/deaktiviert werden können.';
+
     return 1;
 }
 
