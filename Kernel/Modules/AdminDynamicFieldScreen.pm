@@ -32,9 +32,12 @@ sub new {
     my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
     my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
 
+    my $DynamicFieldValid = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldValid');
+
     my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet(
         ObjectType => 'Ticket',
         ResultType => 'HASH',
+        Valid      => $DynamicFieldValid,
     );
 
     $Self->{DynamicFields} = {};
