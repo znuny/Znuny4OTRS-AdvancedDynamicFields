@@ -43,7 +43,15 @@ sub Data {
     $Self->{Translation}->{'Filter assigned elements'}          = 'Zugewiesene Elemente filtern';
     $Self->{Translation}->{'Filter assigned required elements'} = 'Zugewiesene Pflichtelemente filtern';
 
-    $Self->{Translation}->{'Add DynamicField'} = 'Dynamiches Feld hinzufügen';
+    $Self->{Translation}->{'Add DynamicField'}                      = 'Dynamiches Feld hinzufügen';
+
+    $Self->{Translation}->{'Toggle all available elements'}         = 'Alle verfügbare Elemente umschalten';
+    $Self->{Translation}->{'Toggle all assigned elements'}          = 'Alle zugewiesene Elemente umschalten';
+    $Self->{Translation}->{'Toggle all assigned required elements'} = 'Alle zugewiesene Pflichtelemente umschalten';
+
+    $Self->{Translation}->{'seleced to available elements'}         = 'Selektierte zu verfügbare Elemente';
+    $Self->{Translation}->{'seleced to assigned elements'}          = 'Selektierte zu zugewiesene Elemente';
+    $Self->{Translation}->{'seleced to assigned required elements'} = 'Selektierte zu zugewiesene Pflichtelemente';
 
     # SysConfig
     $Self->{Translation}->{'This configuration defines if only valids or all (invalids) dynamic fields should be shown.'} = 'Diese Konfiguration definiert ob nur gültige oder alle (ungültige) dynamischen Felder angezeigt werden sollen.';
