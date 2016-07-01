@@ -57,7 +57,7 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
         Core.UI.Table.InitTableFilter($('#FilterAssignedElements'), $('#AssignedElements'));
         Core.UI.Table.InitTableFilter($('#FilterAssignedRequiredElements'), $('#AssignedRequiredElements'));
 
-        $.each( ['SelectAllAvailableElements', 'SelectAllAssignedElements', 'SelectAllAssignedRequiredElements'], function (Index, Elements) {
+        $.each(['SelectAllAvailableElements', 'SelectAllAssignedElements', 'SelectAllAssignedRequiredElements'], function (Index, Elements) {
 
             $('input[type="checkbox"][name="'+Elements+'"').bind('click', function () {
                 Core.Form.SelectAllCheckboxes($(this), $('#' + Elements));
@@ -65,7 +65,7 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
         });
 
         // register all bindings
-        $.each( ['AvailableElements', 'AssignedElements', 'AssignedRequiredElements'], function (Index, ParameterName) {
+        $.each(['AvailableElements', 'AssignedElements', 'AssignedRequiredElements'], function (Index, ParameterName) {
 
             var Element;
             $('#AllSeleced'+ ParameterName).bind('click', function () {
@@ -73,8 +73,6 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
                 // move all li to another ul list.
                 $("input:checkbox:checked").each(function(){
                     Element = $(this).val();
-
-                    console.log(Element);
 
                     if(Element){
                         $('li#'+Element).appendTo('#'+ ParameterName);
