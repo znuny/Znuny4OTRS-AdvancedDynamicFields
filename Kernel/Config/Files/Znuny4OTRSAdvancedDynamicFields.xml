@@ -26,6 +26,17 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Znuny4OTRSAdvancedDynamicFields::DynamicFieldValid" Required="1" Valid="1">
+        <Description Translatable="1">This configuration defines if only valids or all (invalids) dynamic fields should be shown.</Description>
+        <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
+        <SubGroup>DynamicFieldScreen</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="1">valid</Item>
+                <Item Key="0">invalid</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens" Required="1" Valid="1">
         <Description Translatable="1">This configuration defines all possible Screens to enable or disable dynamic fields.</Description>
         <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
