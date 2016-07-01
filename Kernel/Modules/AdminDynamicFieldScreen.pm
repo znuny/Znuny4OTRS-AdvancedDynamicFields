@@ -353,7 +353,7 @@ sub _ShowEdit {
             next ELEMENT if $Data{$Element} ne 1;
 
             my $ID = $AvailableElements{$Element};
-            $ID    =~ s/\s//g;
+            $ID =~ s/\s//g;
 
             $LayoutObject->Block(
                 Name => 'AssignedFieldRow',
@@ -379,7 +379,7 @@ sub _ShowEdit {
             next ELEMENT if $Data{$Element} ne 2;
 
             my $ID = $AvailableElements{$Element};
-            $ID    =~ s/\s//g;
+            $ID =~ s/\s//g;
 
             $LayoutObject->Block(
                 Name => 'AssignedRequiredFieldRow',
@@ -399,10 +399,10 @@ sub _ShowEdit {
     for my $Element (
         sort { $AvailableElements{$a} cmp $AvailableElements{$b} }
         keys %AvailableElements
-    )
+        )
     {
         my $ID = $AvailableElements{$Element};
-        $ID    =~ s/\s//g;
+        $ID =~ s/\s//g;
 
         $LayoutObject->Block(
             Name => 'AvailableFieldRow',
