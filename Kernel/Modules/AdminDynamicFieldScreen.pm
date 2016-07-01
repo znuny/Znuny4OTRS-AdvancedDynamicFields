@@ -37,6 +37,8 @@ sub new {
         ResultType => 'HASH',
     );
 
+    $Self->{DynamicFields} = {};
+
     DYNAMICFIELD:
     for my $DynamicField ( @{$DynamicFieldList} ) {
 
