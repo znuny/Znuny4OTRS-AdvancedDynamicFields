@@ -29,8 +29,9 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
     my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
+    my $PackageObject      = $Kernel::OM->Get('Kernel::System::Package');
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
 
     my $DynamicFieldValid = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldValid');
 
@@ -54,8 +55,42 @@ sub new {
         $Self->{DynamicFields}->{ $DynamicField->{Name} } = $DynamicField->{Label};
     }
 
-    $Self->{DynamicFieldScreens}   = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens');
-    $Self->{DefaultColumnsScreens} = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreens');
+    $Self->{DynamicFieldScreens}  =  $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens') ;
+    $Self->{DefaultColumnsScreens}  =  $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreens') ;
+
+    my %DynamicFieldScreensAdditional = %{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreensAdditional') };
+
+    ADDITIONAL:
+    for my $Name (sort keys %DynamicFieldScreensAdditional){
+
+        my $IsInstalled = $PackageObject->PackageIsInstalled(
+            Name => $Name,
+        );
+
+        next ADDITIONAL if !$IsInstalled;
+
+        %{ $Self->{DynamicFieldScreens} } = (
+            %{ $Self->{DynamicFieldScreens} },
+            %{ $DynamicFieldScreensAdditional{$Name} },
+        );
+    }
+
+    my %DefaultColumnsScreensAdditional = %{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreensAdditional') };
+
+    ADDITIONAL:
+    for my $Name (sort keys %DefaultColumnsScreensAdditional){
+
+        my $IsInstalled = $PackageObject->PackageIsInstalled(
+            Name => $Name,
+        );
+
+        #next ADDITIONAL if !$IsInstalled;
+
+        %{ $Self->{DefaultColumnsScreens} } = (
+            %{ $Self->{DefaultColumnsScreens} },
+            %{ $DefaultColumnsScreensAdditional{$Name} },
+        );
+    }
 
     return $Self;
 }
@@ -352,8 +387,12 @@ sub _ShowEdit {
             next ELEMENT if !$AvailableElements{$Element};
             next ELEMENT if $Data{$Element} ne 1;
 
-            my $ID = $AvailableElements{$Element};
+            # remove all spaces # or :
+            my $ID = $Element;
             $ID =~ s/\s//g;
+            $ID =~ s/\#*//g;
+            $ID =~ s/\:\://g;
+
 
             $LayoutObject->Block(
                 Name => 'AssignedFieldRow',
@@ -378,8 +417,12 @@ sub _ShowEdit {
             next ELEMENT if !$AvailableElements{$Element};
             next ELEMENT if $Data{$Element} ne 2;
 
-            my $ID = $AvailableElements{$Element};
+            # remove all spaces # or :
+            my $ID = $Element;
             $ID =~ s/\s//g;
+            $ID =~ s/\#*//g;
+            $ID =~ s/\:*//g;
+
 
             $LayoutObject->Block(
                 Name => 'AssignedRequiredFieldRow',
@@ -401,8 +444,12 @@ sub _ShowEdit {
         keys %AvailableElements
         )
     {
-        my $ID = $AvailableElements{$Element};
+        # remove all spaces # or :
+        my $ID = $Element;
         $ID =~ s/\s//g;
+        $ID =~ s/\#*//g;
+        $ID =~ s/\:\://g;
+
 
         $LayoutObject->Block(
             Name => 'AvailableFieldRow',
@@ -502,7 +549,8 @@ sub _GetDynamicFieldScreenConfig {
         last INDEX if !IsHashRefWithData($Config);
         $Config = $Config->{ $Keys[$Index] };
     }
-    next VIEW if ref $Config ne 'HASH';
+    return {} if !$Config;
+    return {} if ref $Config ne 'HASH';
 
     return %{$Config};
 }

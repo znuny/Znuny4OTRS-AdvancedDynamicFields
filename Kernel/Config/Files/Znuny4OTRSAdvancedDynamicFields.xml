@@ -103,4 +103,39 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreensAdditional###FAQ" Required="1" Valid="1">
+        <Description Translatable="1">This configuration defines all possible Screens to enable or disable dynamic field in all FAQ's.</Description>
+        <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
+        <SubGroup>DynamicFieldScreen</SubGroup>
+        <Setting>
+            <Hash>
+                <!-- DynamicFieldScreensFAQ -->
+                <Item Key="FAQ::Frontend::OverviewSmall###DynamicField">FAQ - OverviewSmall</Item>
+                <Item Key="FAQ::Frontend::AgentFAQAdd###DynamicField">FAQ - AgentFAQAdd</Item>
+                <Item Key="FAQ::Frontend::AgentFAQEdit###DynamicField">FAQ - AgentFAQEdit</Item>
+                <Item Key="FAQ::Frontend::AgentFAQZoom###DynamicField">FAQ - AgentFAQZoom</Item>
+                <Item Key="FAQ::Frontend::CustomerFAQZoom###DynamicField">FAQ - CustomerFAQZoom</Item>
+                <Item Key="FAQ::Frontend::PublicFAQZoom###DynamicField">FAQ - PublicFAQZoom</Item>
+                <Item Key="FAQ::Frontend::AgentFAQPrint###DynamicField">FAQ - AgentFAQPrint</Item>
+                <Item Key="FAQ::Frontend::CustomerFAQPrint###DynamicField">FAQ - CustomerFAQPrint</Item>
+                <Item Key="FAQ::Frontend::PublicFAQPrint###DynamicField">FAQ - PublicFAQPrint</Item>
+                <Item Key="FAQ::Frontend::AgentFAQSearch###DynamicField">FAQ - AgentFAQSearch</Item>
+                <Item Key="FAQ::Frontend::CustomerFAQSearch###DynamicField">FAQ - CustomerFAQSearch</Item>
+                <Item Key="FAQ::Frontend::CustomerFAQOverview###DynamicField">FAQ - CustomerFAQOverview</Item>
+                <Item Key="FAQ::Frontend::PublicFAQSearch###DynamicField">FAQ - PublicFAQSearch</Item>
+                <Item Key="FAQ::Frontend::PublicFAQOverview###DynamicField">FAQ - PublicFAQOverview</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreensAdditional###Znuny4OTRS-TicketWatchlistExtended" Required="1" Valid="1">
+        <Description Translatable="1">This configuration defines all possible Screens to enable or disable default columns.</Description>
+        <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
+        <SubGroup>DynamicFieldScreen</SubGroup>
+        <Setting>
+            <Hash>
+                <!-- Znuny4OTRS-TicketWatchlistExtended -->
+                <Item Key="Ticket::Frontend::AgentTicketWatchlistExtendedOverview###DefaultColumns">AgentTicketWatchlistExtendedOverview</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
 </otrs_config>
