@@ -16,6 +16,7 @@ our @ObjectDependencies = (
     'Kernel::Output::HTML::Layout',
     'Kernel::System::DynamicField',
     'Kernel::System::Log',
+    'Kernel::System::Package',
     'Kernel::System::SysConfig',
     'Kernel::System::Web::Request',
     'Kernel::System::ZnunyHelper',
@@ -55,41 +56,48 @@ sub new {
         $Self->{DynamicFields}->{ $DynamicField->{Name} } = $DynamicField->{Label};
     }
 
-    $Self->{DynamicFieldScreens}  =  $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens') ;
-    $Self->{DefaultColumnsScreens}  =  $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreens') ;
+    $Self->{DynamicFieldScreens}   = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens');
+    $Self->{DefaultColumnsScreens} = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreens');
 
-    my %DynamicFieldScreensAdditional = %{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreensAdditional') };
+    my %DynamicFieldScreensAdditional
+        = %{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreensAdditional') || {} };
 
-    ADDITIONAL:
-    for my $Name (sort keys %DynamicFieldScreensAdditional){
+    if (%DynamicFieldScreensAdditional) {
 
-        my $IsInstalled = $PackageObject->PackageIsInstalled(
-            Name => $Name,
-        );
+        ADDITIONAL:
+        for my $Name ( sort keys %DynamicFieldScreensAdditional ) {
 
-        next ADDITIONAL if !$IsInstalled;
+            my $IsInstalled = $PackageObject->PackageIsInstalled(
+                Name => $Name,
+            );
 
-        %{ $Self->{DynamicFieldScreens} } = (
-            %{ $Self->{DynamicFieldScreens} },
-            %{ $DynamicFieldScreensAdditional{$Name} },
-        );
+            next ADDITIONAL if !$IsInstalled;
+
+            %{ $Self->{DynamicFieldScreens} } = (
+                %{ $Self->{DynamicFieldScreens} },
+                %{ $DynamicFieldScreensAdditional{$Name} },
+            );
+        }
     }
 
-    my %DefaultColumnsScreensAdditional = %{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreensAdditional') };
+    my %DefaultColumnsScreensAdditional
+        = %{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreensAdditional') || {} };
 
-    ADDITIONAL:
-    for my $Name (sort keys %DefaultColumnsScreensAdditional){
+    if (%DynamicFieldScreensAdditional) {
+        ADDITIONAL:
+        for my $Name ( sort keys %DefaultColumnsScreensAdditional ) {
 
-        my $IsInstalled = $PackageObject->PackageIsInstalled(
-            Name => $Name,
-        );
+            my $IsInstalled = $PackageObject->PackageIsInstalled(
+                Name => $Name,
+            );
 
-        #next ADDITIONAL if !$IsInstalled;
+            next ADDITIONAL if !$IsInstalled;
 
-        %{ $Self->{DefaultColumnsScreens} } = (
-            %{ $Self->{DefaultColumnsScreens} },
-            %{ $DefaultColumnsScreensAdditional{$Name} },
-        );
+            %{ $Self->{DefaultColumnsScreens} } = (
+                %{ $Self->{DefaultColumnsScreens} },
+                %{ $DefaultColumnsScreensAdditional{$Name} },
+            );
+        }
     }
 
     return $Self;
@@ -393,7 +401,6 @@ sub _ShowEdit {
             $ID =~ s/\#*//g;
             $ID =~ s/\:\://g;
 
-
             $LayoutObject->Block(
                 Name => 'AssignedFieldRow',
                 Data => {
@@ -423,7 +430,6 @@ sub _ShowEdit {
             $ID =~ s/\#*//g;
             $ID =~ s/\:*//g;
 
-
             $LayoutObject->Block(
                 Name => 'AssignedRequiredFieldRow',
                 Data => {
@@ -449,7 +455,6 @@ sub _ShowEdit {
         $ID =~ s/\s//g;
         $ID =~ s/\#*//g;
         $ID =~ s/\:\://g;
-
 
         $LayoutObject->Block(
             Name => 'AvailableFieldRow',

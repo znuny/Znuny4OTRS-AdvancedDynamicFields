@@ -185,8 +185,10 @@
                         <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
                         [% Translate("or") | html %]
                         <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" >[% Translate("Cancel") | html %]</a>
-                        <b class="[% Data.HiddenReset | html %]">[% Translate("or") | html %]</b>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Reset;Type=[% Data.Type | uri %];Element=[% Data.Element | uri %]" class="[% Data.HiddenReset | html %]" >[% Translate("Reset") | html %]</a>
+                        <i class="[% Data.HiddenReset | html %]">[% Translate("or") | html %]</i>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Reset;Type=[% Data.Type | uri %];Element=[% Data.Element | uri %]" class="CallForAction Center [% Data.HiddenReset | html %]" >
+                            <span><i class="fa fa-trash-o"></i>[% Translate("Reset") | html %]</span>
+                        </a>
                     </div>
                     <div class="Clear"></div>
                 </form>
