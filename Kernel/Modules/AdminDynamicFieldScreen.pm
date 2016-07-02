@@ -346,7 +346,7 @@ sub _ShowEdit {
         $Param{Header}      = 'Screens for this Dynamic Field';
         $Param{HiddenReset} = 'Hidden';
     }
-    elsif ( $Param{Type} eq 'DynamicFieldScreens' ) {
+    elsif ( $Param{Type} eq 'DynamicFieldScreen' ) {
 
         # remove AssignedRequiredFieldRow off template if screen is AgentTicketZoom oder CustomTicketZoom
         if ( $Param{Element} =~ m{Zoom}msxi ) {
