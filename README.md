@@ -1,8 +1,8 @@
 ![Znuny logo](http://znuny.com/assets/images/logo_small.png)
 
-AdvancedDynamicFIelds
+AdvancedDynamicFields
 =================
-This package contains the functionality easy configure the shown dynamic fields. 
+This package contains the functionality easy configure the shown dynamic fields.
 
 
 **Prerequisites**
