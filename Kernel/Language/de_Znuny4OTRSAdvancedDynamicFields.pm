@@ -23,12 +23,12 @@ sub Data {
     # $Self->{Translation}->{'This configuration defines all possible Screens to enable or disable dynamic fields.'} = 'Diese Konfiguration definiert alle möglichen Oberflächen um dynamische Felder zu aktivieren oder zu deaktivieren.';
 
     # Elements
-    $Self->{Translation}->{'Management of DynamicFields <-> Screens'} = 'Verwaltung von Dynamische Feldern <-> Oberflächen';
+    $Self->{Translation}->{'Management of Dynamic Fields <-> Screens'} = 'Verwaltung von Dynamische Feldern <-> Oberflächen';
 
     $Self->{Translation}->{'Dynamic Fields Screens'} = 'Dynamische Felder Oberflächen';
-    $Self->{Translation}->{'DynamicFieldScreens'}    = 'Dynamische Felder Oberflächen';
-    $Self->{Translation}->{'DefaultColumnsScreens'}  = 'DefaultColumns Oberflächen';
-    $Self->{Translation}->{'DynamicFields'}          = 'Dynamische Felder';
+    $Self->{Translation}->{'DynamicField Screens'}    = 'Dynamische Felder Oberflächen';
+    $Self->{Translation}->{'Default Columns Screens'}  = 'DefaultColumns Oberflächen';
+    $Self->{Translation}->{'Dynamic Fields'}          = 'Dynamische Felder';
 
     $Self->{Translation}->{'Available Elements'}         = 'Verfügbare Elemente';
     $Self->{Translation}->{'Assigned Elements'}          = 'Zugewiesene Elemente';
@@ -38,7 +38,7 @@ sub Data {
     $Self->{Translation}->{'Screens for this Dynamic Field'}  = 'Oberflächen für das dynamische Feld';
 
     # Filter
-    $Self->{Translation}->{'Filter DynamicField Screen'}        = 'Oberflächen für Dynamische Felder filtern';
+    $Self->{Translation}->{'Filter Dynamic Fields Screen'}        = 'Oberflächen für Dynamische Felder filtern';
     $Self->{Translation}->{'Filter available elements'}         = 'Verfügbare Elemente filtern';
     $Self->{Translation}->{'Filter assigned elements'}          = 'Zugewiesene Elemente filtern';
     $Self->{Translation}->{'Filter assigned required elements'} = 'Zugewiesene Pflichtelemente filtern';
