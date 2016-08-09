@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 <div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
-    <h1>[% Translate("Management of DynamicFields <-> Screens") | html %]</h1>
+    <h1>[% Translate("Management of Dynamic Fields <-> Screens") | html %]</h1>
 
     <div class="SidebarColumn">
         <div class="WidgetSimple">
@@ -61,7 +61,7 @@
 
                 <div class="Size1of3">
                     <ul class="Tablelike" id="DynamicFieldScreens">
-                        <li class="Header">[% Translate("DynamicFieldScreens") | html %]</li>
+                        <li class="Header">[% Translate("Dynamic Fields Screens") | html %]</li>
                         <li class="FilterMessage Hidden">[% Translate("No matches found.") | html %]</li>
 [% RenderBlockStart("DynamicFieldScreenOverviewRow") %]
                         <li>
@@ -72,7 +72,7 @@
                 </div>
                 <div class="Size1of3">
                     <ul class="Tablelike" id="DefaultColumnsScreens">
-                        <li class="Header">[% Translate("DefaultColumnsScreens") | html %]</li>
+                        <li class="Header">[% Translate("Default Columns Screens") | html %]</li>
                         <li class="FilterMessage Hidden">[% Translate("No matches found.") | html %]</li>
 [% RenderBlockStart("DefaultColumnsScreenOverviewRow") %]
                         <li>
@@ -83,7 +83,7 @@
                 </div>
                 <div class="Size1of3">
                     <ul class="Tablelike" id="DynamicFields">
-                        <li class="Header">[% Translate("DynamicFields") | html %]</li>
+                        <li class="Header">[% Translate("Dynamic Fields") | html %]</li>
                         <li class="FilterMessage Hidden">[% Translate("No matches found.") | html %]</li>
 [% RenderBlockStart("NoDataFoundMsg") %]
                         <li>[% Translate("No data found.") | html %] <a href="[% Env("Baselink") %]Action=AdminDynamicField" >[% Translate("Add DynamicField") | html %]</a>
