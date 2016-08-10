@@ -83,21 +83,21 @@ sub new {
     my %DefaultColumnsScreensAdditional
         = %{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreensAdditional') || {} };
 
-    if (%DynamicFieldScreensAdditional) {
-        ADDITIONAL:
-        for my $Name ( sort keys %DefaultColumnsScreensAdditional ) {
+    return $Self if !%DefaultColumnsScreensAdditional;
 
-            my $IsInstalled = $PackageObject->PackageIsInstalled(
-                Name => $Name,
-            );
+    ADDITIONAL:
+    for my $Name ( sort keys %DefaultColumnsScreensAdditional ) {
 
-            next ADDITIONAL if !$IsInstalled;
+        my $IsInstalled = $PackageObject->PackageIsInstalled(
+            Name => $Name,
+        );
 
-            %{ $Self->{DefaultColumnsScreens} } = (
-                %{ $Self->{DefaultColumnsScreens} },
-                %{ $DefaultColumnsScreensAdditional{$Name} },
-            );
-        }
+        next ADDITIONAL if !$IsInstalled;
+
+        %{ $Self->{DefaultColumnsScreens} } = (
+            %{ $Self->{DefaultColumnsScreens} },
+            %{ $DefaultColumnsScreensAdditional{$Name} },
+        );
     }
 
     return $Self;
@@ -106,7 +106,7 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    #     # get objects
+    # get objects
     my $ConfigObject      = $Kernel::OM->Get('Kernel::Config');
     my $LogObject         = $Kernel::OM->Get('Kernel::System::Log');
     my $SysConfigObject   = $Kernel::OM->Get('Kernel::System::SysConfig');
@@ -281,7 +281,7 @@ sub _ShowOverview {
         );
     }
 
-    if ( !IsHashRefWithData( \%DynamicFields ) ) {
+    if (%DynamicFields) {
         $LayoutObject->Block(
             Name => 'NoDataFoundMsg',
         );
@@ -387,7 +387,7 @@ sub _ShowEdit {
     );
 
     # get used fields by the dynamic field group
-    if ( IsHashRefWithData( \%Data ) ) {
+    if (%Data) {
 
         ELEMENT:
         for my $Element ( sort keys %Data ) {
@@ -416,7 +416,7 @@ sub _ShowEdit {
     }
 
     # get used fields by the dynamic field group
-    if ( IsHashRefWithData( \%Data ) && !$NoAssignedRequiredFieldRow ) {
+    if ( %Data && !$NoAssignedRequiredFieldRow ) {
 
         ELEMENT:
         for my $Element ( sort keys %Data ) {
