@@ -28,24 +28,24 @@ Um im OTRS Standard Ticket-Attribute in allen Dashboard-Konfigurationen hinzuzuf
 
 Die Hilfe kann wie folgt ausgegeben werden:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add
+bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add
 ```
 
 Beispielaufruf:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add DynamicField_Test 2
+bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add DynamicField_Test 2
 ```
 
 Zum Löschen kann das Konsolenkommando "Znuny4OTRS::DashboardColumn::Remove" analog verwendet werden.
 
 Die Hilfe kann wie folgt ausgegeben werden:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove
+bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove
 ```
 
 Beispielaufruf:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove DynamicField_Test
+bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove DynamicField_Test
 ```
 
 ## Verwaltung von DynamicFields im Frontend
@@ -56,20 +56,22 @@ Default werden alle mögliche Oberflächen verwendet.
 
 Die Hilfe kann wie folgt ausgegeben werden:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add
 ```
 
 Die möglichen Screens und dynamischen Felder können wie folgt ausgegeben werden:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add --values
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add --values
 ```
 
 Beispielaufruf:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1
+```
 
 Screen ist optional
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1 --screen=AgentTicketNote --screen=AgentTicketZoom
+```
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1 --screen=AgentTicketNote --screen=AgentTicketZoom
 ```
 
 
@@ -78,19 +80,21 @@ Zum Löschen kann das Konsolenkommando "Znuny4OTRS::DynamicFieldScreen::Remove" 
 
 Die Hilfe kann wie folgt ausgegeben werden:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove
 ```
 
 Die möglichen Screens und dynamischen Felder können wie folgt ausgegeben werden:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --values
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --values
 ```
 
 Beispielaufruf:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2
+```
 
 Screen ist optional
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2 --screen=AgentTicketNote --screen=AgentTicketZoom
+```
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2 --screen=AgentTicketNote --screen=AgentTicketZoom
 
 ```
