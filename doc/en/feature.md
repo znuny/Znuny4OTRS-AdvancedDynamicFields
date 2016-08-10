@@ -28,24 +28,24 @@ The new console command "Znuny4OTRS::DashboardColumn::Add" supports you with thi
 
 With the following command a help screen is shown:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add
+bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add
 ```
 
 Example:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add DynamicField_Test 2
+bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add DynamicField_Test 2
 ```
 
 For deletion the command "Znuny4OTRS::DashboardColumn::Remove" could be used in the same way.
 
 With the following command a help screen is shown:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove
+bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove
 ```
 
 Example:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove DynamicField_Test
+bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove DynamicField_Test
 ```
 
 ## Management of Dynamic Fields in screens
@@ -55,20 +55,22 @@ By using the parameter screen it is possible to configure specific screens. By d
 
 With the following command a help screen is shown:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add
 ```
 
 All available screens and dynamic fields are shown by this command:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add --values
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add --values
 ```
 
 Example:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1
+```
 
 The screen parameter is optional:
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1 --screen=AgentTicketNote --screen=AgentTicketZoom
+```
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1 --screen=AgentTicketNote --screen=AgentTicketZoom
 ```
 
 
@@ -76,19 +78,21 @@ To remove dynamic screen the command "Znuny4OTRS::DynamicFieldScreen::Remove" ca
 
 With the following command a help screen is shown:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove
 ```
 
 All available screens and dynamic fields are shown by this command:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --values
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --values
 ```
 
 Example:
 ```
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2
+```
 
 The screen parameter is optional:
-./bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2 --screen=AgentTicketNote --screen=AgentTicketZoom
+```
+bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2 --screen=AgentTicketNote --screen=AgentTicketZoom
 
 ```
