@@ -103,15 +103,4 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreensAdditional###Znuny4OTRS-TicketWatchlistExtended" Required="1" Valid="1">
-        <Description Translatable="1">This configuration defines all possible Screens to enable or disable default columns.</Description>
-        <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
-        <SubGroup>DynamicFieldScreen</SubGroup>
-        <Setting>
-            <Hash>
-                <!-- Znuny4OTRS-TicketWatchlistExtended -->
-                <Item Key="Ticket::Frontend::AgentTicketWatchlistExtendedOverview###DefaultColumns">AgentTicketWatchlistExtendedOverview</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
 </otrs_config>
