@@ -281,7 +281,7 @@ sub _ShowOverview {
         );
     }
 
-    if (%DynamicFields) {
+    if (!%DynamicFields) {
         $LayoutObject->Block(
             Name => 'NoDataFoundMsg',
         );
