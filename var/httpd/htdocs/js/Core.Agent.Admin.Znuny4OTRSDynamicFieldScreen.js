@@ -22,32 +22,6 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
 
     TargetNS.Init = function () {
 
-        function UpdateFields(Event, UI) {
-
-            var Target = $(UI.item).parent().attr('id');
-
-            // if the element was removed from the AssignedElement list, rename it to DF name
-            if (Target === 'AvailableElements') {
-                $(UI.item).find('input[type="hidden"]').attr('name', 'AvailableElements');
-                $(UI.item).find('input[type="checkbox"]').attr('name', 'SelectAllAvailableElements');
-                $(UI.item).find('input[type="checkbox"]').removeAttr('checked');
-
-            }
-
-            // rename it to AssignedElements
-            else if (Target === 'AssignedElements') {
-                $(UI.item).find('input[type="hidden"]').attr('name', 'AssignedElements');
-                $(UI.item).find('input[type="checkbox"]').attr('name', 'SelectAllAssignedElements');
-                $(UI.item).find('input[type="checkbox"]').removeAttr('checked');
-            }
-
-            // rename it to AssignedRequiredElements
-            else if (Target === 'AssignedRequiredElements') {
-                $(UI.item).find('input[type="hidden"]').attr('name', 'AssignedRequiredElements');
-                $(UI.item).find('input[type="checkbox"]').attr('name', 'SelectAllAssignedRequiredElements');
-                $(UI.item).find('input[type="checkbox"]').removeAttr('checked');
-            }
-        }
         // Initialize Allocation List
         Core.UI.AllocationList.Init("#AvailableElements, #AssignedElements, #AssignedRequiredElements", ".AllocationList", UpdateFields);
 
@@ -91,6 +65,32 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
             return false;
         });
     };
+
+    function UpdateFields(Event, UI) {
+
+        var Target = $(UI.item).parent().attr('id');
+
+        // if the element was removed from the AssignedElement list, rename it to DF name
+        if (Target === 'AvailableElements') {
+            $(UI.item).find('input[type="hidden"]').attr('name', 'AvailableElements');
+            $(UI.item).find('input[type="checkbox"]').attr('name', 'SelectAllAvailableElements');
+            $(UI.item).find('input[type="checkbox"]').removeAttr('checked');
+        }
+
+        // rename it to AssignedElements
+        else if (Target === 'AssignedElements') {
+            $(UI.item).find('input[type="hidden"]').attr('name', 'AssignedElements');
+            $(UI.item).find('input[type="checkbox"]').attr('name', 'SelectAllAssignedElements');
+            $(UI.item).find('input[type="checkbox"]').removeAttr('checked');
+        }
+
+        // rename it to AssignedRequiredElements
+        else if (Target === 'AssignedRequiredElements') {
+            $(UI.item).find('input[type="hidden"]').attr('name', 'AssignedRequiredElements');
+            $(UI.item).find('input[type="checkbox"]').attr('name', 'SelectAllAssignedRequiredElements');
+            $(UI.item).find('input[type="checkbox"]').removeAttr('checked');
+        }
+    }
 
     return TargetNS;
 }(Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen || {}));
