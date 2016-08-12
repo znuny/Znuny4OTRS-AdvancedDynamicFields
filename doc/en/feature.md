@@ -26,6 +26,8 @@ The configuration is easy done by drag and drop.
 To manage the OTRS ticket attributes of a dashboard widget you have to configure the one by one via the SysConfig.
 The new console command "Znuny4OTRS::DashboardColumn::Add" supports you with this by configure the given attribute to all dashboards.
 
+### Add
+
 With the following command a help screen is shown:
 ```
 bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add
@@ -35,6 +37,8 @@ Example:
 ```
 bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add DynamicField_Test 2
 ```
+
+### Delete
 
 For deletion the command "Znuny4OTRS::DashboardColumn::Remove" could be used in the same way.
 
@@ -52,6 +56,8 @@ bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove DynamicField_Test
 
 With a default OTRS you have to configure each screen in single step to manage dynamic fields via the SysConfig. The new console command "Znuny4OTRS::DynamicFieldScreen::Add" supports to do this job. The given dynamic fields are configured to all screens with the given state.
 By using the parameter screen it is possible to configure specific screens. By default all available screens are configured.
+
+### Add
 
 With the following command a help screen is shown:
 ```
@@ -73,6 +79,7 @@ The screen parameter is optional:
 bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1 --screen=AgentTicketNote --screen=AgentTicketZoom
 ```
 
+### Delete
 
 To remove dynamic screen the command "Znuny4OTRS::DynamicFieldScreen::Remove" can be used similar.
 
@@ -94,5 +101,4 @@ bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --dynamicfield=FieldN
 The screen parameter is optional:
 ```
 bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2 --screen=AgentTicketNote --screen=AgentTicketZoom
-
 ```

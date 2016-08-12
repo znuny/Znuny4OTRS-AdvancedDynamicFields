@@ -29,7 +29,7 @@
     <ConfigItem Name="Znuny4OTRSAdvancedDynamicFields::DynamicFieldValid" Required="1" Valid="1">
         <Description Translatable="1">This configuration defines if only valids or all (invalids) dynamic fields should be shown.</Description>
         <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
-        <SubGroup>DynamicFieldScreen</SubGroup>
+        <SubGroup>Core</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="1">valid</Item>
@@ -40,7 +40,7 @@
     <ConfigItem Name="Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens" Required="1" Valid="1">
         <Description Translatable="1">This configuration defines all possible screens to enable or disable dynamic fields.</Description>
         <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
-        <SubGroup>DynamicFieldScreen</SubGroup>
+        <SubGroup>Core</SubGroup>
         <Setting>
             <Hash>
                 <!-- Views -->
@@ -77,7 +77,7 @@
     <ConfigItem Name="Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreens" Required="1" Valid="1">
         <Description Translatable="1">This configuration defines all possible screens to enable or disable default columns.</Description>
         <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
-        <SubGroup>DynamicFieldScreen</SubGroup>
+        <SubGroup>Core</SubGroup>
         <Setting>
             <Hash>
                 <!-- DefaultColumns -->
