@@ -220,7 +220,12 @@ sub Run {
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Reset' ) {
 
-        return $Self->_ShowOverview() if $Param{Type} ne 'DynamicFieldScreen' && $Param{Type} ne 'DefaultColumnsScreen';
+        if (
+            $Param{Type} ne 'DynamicFieldScreen'
+            && $Param{Type} ne 'DefaultColumnsScreen'
+        ) {
+            return $Self->_ShowOverview();
+        }
 
         $SysConfigObject->ConfigItemReset(
             Name => $Param{Element},
@@ -644,8 +649,7 @@ sub _SetDynamicFields {
         };
     }
 
-    $Success = $ZnunyHelperObject->_DefaultColumnsEnable(%ScreenConfig);
-
+    return $ZnunyHelperObject->_DefaultColumnsEnable(%ScreenConfig);
 }
 
 1;
