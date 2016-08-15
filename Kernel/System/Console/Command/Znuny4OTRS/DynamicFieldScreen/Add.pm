@@ -101,10 +101,13 @@ sub Run {
         return $Self->ExitCodeOk();
     }
 
-    if ( !@DynamicFields || $DynamicFieldState ) {
-
-        $Self->Print("\n<red>DynamicField and State are Required!</red>");
-        return $Self->ExitCodeOk();
+    if ( !@DynamicFields ) {
+        $Self->Print("\n<red>DynamicField is Required!</red>");
+        return $Self->ExitCodeError();
+    }
+    if ( !$DynamicFieldState ) {
+        $Self->Print("\n<red>State is Required!</red>");
+        return $Self->ExitCodeError();
     }
 
     $Self->Print("<green>Updating the 'DynamicField' SysConfigs ...</green>");
