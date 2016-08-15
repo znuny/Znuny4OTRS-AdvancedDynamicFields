@@ -74,7 +74,8 @@ sub Run {
     my @DynamicFieldList        = values %DynamicFieldList;
 
     if ( !@DynamicFieldScreens ) {
-        @DynamicFieldScreens = @{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens') };
+        @DynamicFieldScreens
+            = sort keys %{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens') };
     }
 
     if ($Values) {
