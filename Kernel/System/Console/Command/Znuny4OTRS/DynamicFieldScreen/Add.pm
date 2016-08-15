@@ -28,7 +28,7 @@ sub Configure {
 
     $Self->AddOption(
         Name        => 'values',
-        Description => 'Prints all possible dynamicFields and screens.',
+        Description => 'Prints all possible DynamicFields and Screens.',
         Required    => 0,
         HasValue    => 0,
         ValueRegex  => qr/.*/smx,
@@ -36,7 +36,7 @@ sub Configure {
 
     $Self->AddOption(
         Name        => 'dynamicfield',
-        Description => 'Name of the dynamicfield which should get added or updated.',
+        Description => 'Name of the DynamicField which should get added or updated.',
         Required    => 0,
         HasValue    => 1,
         Multiple    => 1,
@@ -45,7 +45,7 @@ sub Configure {
 
     $Self->AddOption(
         Name        => 'state',
-        Description => 'The attribute state Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.',
+        Description => 'The attribute state possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.',
         Required    => 0,
         HasValue    => 1,
         ValueRegex  => qr/.*/smx,
@@ -87,6 +87,7 @@ sub Run {
             = sort keys %{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens') };
     }
 
+    # show all possible values (screens and dynamic fields)
     if ($Values) {
 
         $Self->Print("\n<green>DynamicFields:</green>");
@@ -102,11 +103,13 @@ sub Run {
     }
 
     if ( !@DynamicFields ) {
-        $Self->Print("\n<red>DynamicField is Required!</red>");
+        $Self->Print("\n<red>DynamicField is Required!</red>\n");
+        $Self->Print( $Self->GetUsageHelp() );
         return $Self->ExitCodeError();
     }
     if ( !$DynamicFieldState ) {
-        $Self->Print("\n<red>State is Required!</red>");
+        $Self->Print("\n<red>State is Required!</red>\n");
+        $Self->Print( $Self->GetUsageHelp() );
         return $Self->ExitCodeError();
     }
 
