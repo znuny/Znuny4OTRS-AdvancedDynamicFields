@@ -223,7 +223,8 @@ sub Run {
         if (
             $Param{Type} ne 'DynamicFieldScreen'
             && $Param{Type} ne 'DefaultColumnsScreen'
-        ) {
+            )
+        {
             return $Self->_ShowOverview();
         }
 
@@ -286,7 +287,7 @@ sub _ShowOverview {
         );
     }
 
-    if (!%DynamicFields) {
+    if ( !%DynamicFields ) {
         $LayoutObject->Block(
             Name => 'NoDataFoundMsg',
         );
