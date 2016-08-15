@@ -15,8 +15,8 @@
         <File Permission="644" Location="Kernel/Language/de_Znuny4OTRSAdvancedDynamicFields.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminDynamicFieldScreen.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldScreen.tt"/>
-        <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DashboardColumn/Add.pm"/>
-        <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DashboardColumn/Remove.pm"/>
+        <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DefaultColumnsScreen/Add.pm"/>
+        <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DefaultColumnsScreen/Remove.pm"/>
         <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DynamicFieldScreen/Add.pm"/>
         <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DynamicFieldScreen/Remove.pm"/>
         <File Permission="644" Location="scripts/test/Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDynamicFieldScreen.t"/>
