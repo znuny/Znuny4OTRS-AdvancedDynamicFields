@@ -23,33 +23,44 @@ Die Administration der einzelnen Elemente kann einfach mittels 'Drag and Drop' d
 
 ## Verwaltung von Dashboard DefaultColumns
 
-Um im OTRS Standard Ticket-Attribute in allen Dashboard-Konfigurationen hinzuzufügen, bearbeiten oder zu löschen muss jeder Konfigurationseintrag manuell über die SysConfig Oberfläche angepasst werden. Das neue OTRS Konsolenkommando "Znuny4OTRS::DashboardColumn::Add" erleichtert diese Arbeit, indem das übergebene Ticket-Attribut in allen entsprechenden Dashboard-Konfigurationen mit dem übergebenen Wert gesetzt wird.
+Um im OTRS Standard Ticket-Attribute in allen Dashboard-Konfigurationen hinzuzufügen, bearbeiten oder zu löschen muss jeder Konfigurationseintrag manuell über die SysConfig Oberfläche angepasst werden. Das neue OTRS Konsolenkommando "Znuny4OTRS::DefaultColumnsScreen::Add" erleichtert diese Arbeit, indem das übergebene Ticket-Attribut in allen entsprechenden Dashboard-Konfigurationen mit dem übergebenen Wert gesetzt wird.
 
 ### Hinzufügen
 
 Die Hilfe kann wie folgt ausgegeben werden:
 ```
-bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add
+bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Add
 ```
 
 Beispielaufruf:
 ```
-bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add DynamicField_Test 2
+bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1
+```
+
+Screen ist optional
+```
+bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1 --screen='DashboardBackend###0130-TicketOpen' --screen='Ticket::Frontend::AgentTicketQueue###DefaultColumns'
 ```
 
 ### Löschen
 
-Zum Löschen kann das Konsolenkommando "Znuny4OTRS::DashboardColumn::Remove" analog verwendet werden.
+Zum Löschen kann das Konsolenkommando "Znuny4OTRS::DefaultColumnsScreen::Remove" analog verwendet werden.
 
 Die Hilfe kann wie folgt ausgegeben werden:
 ```
-bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove
+bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Remove
 ```
 
 Beispielaufruf:
 ```
-bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove DynamicField_Test
+bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2
 ```
+
+Screen ist optional
+```
+bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2 --screen='DashboardBackend###0130-TicketOpen' --screen='Ticket::Frontend::AgentTicketQueue###DefaultColumns'
+```
+
 
 ## Verwaltung von DynamicFields im Frontend
 
