@@ -12,9 +12,10 @@ yeah otrs
 Advanced Dynamic Fields
 ```
 
+
 Alternativ können auch folgende Konfigurationen genutzt werden.
 
-#### DefaultColumnsScreensAdditional
+## DefaultColumnsScreensAdditional
 ```
 <!-- Znuny4OTRSAdvancedDynamicFields DefaultColumnsScreens registration -->
 <ConfigItem Name="Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreensAdditional###Znuny4OTRS-PackageName" Required="1" Valid="1">
@@ -29,7 +30,7 @@ Alternativ können auch folgende Konfigurationen genutzt werden.
 </ConfigItem>
 ```
 
-#### DynamicFieldScreensAdditional
+## DynamicFieldScreensAdditional
 ```
 <!-- Znuny4OTRSAdvancedDynamicFields DynamicFieldScreens registration -->
 <ConfigItem Name="Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreensAdditional###Znuny4OTRS-PackageName" Required="1" Valid="1">
@@ -42,5 +43,4 @@ Alternativ können auch folgende Konfigurationen genutzt werden.
         </Hash>
     </Setting>
 </ConfigItem>
-
 ```
