@@ -42,7 +42,7 @@ for my $Count ( 1 .. 3 ) {
     $ZnunyHelperObject->_DynamicFieldsCreateIfNotExists(
         {
             Name       => 'Test' . $Count,
-            Label      => 'Label' . $Count,
+            Label      => 'Test' . $Count,
             FieldType  => 'Text',
             ObjectType => 'Ticket',
             Config     => {
