@@ -41,7 +41,7 @@
                     <tbody>
 [% RenderBlockStart("ActionOverviewRow") %]
                         <tr>
-                            <td title="[% Data.Element | html %]"><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=[% Data.Type | uri %];Element=[% Data.ElementKey | uri %]">[% Data.Element | truncate(80) | html %]</a></td>
+                            <td title="[% Data.Element | html %]"><a class="AsBlock" id="[% Translate(Data.Element) | uri %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=[% Data.Type | uri %];Element=[% Data.ElementKey | uri %]">[% Data.Element | truncate(80) | html %]</a></td>
                         </tr>
 [% RenderBlockEnd("ActionOverviewRow") %]
                     </tbody>
@@ -65,7 +65,7 @@
                         <li class="FilterMessage Hidden">[% Translate("No matches found.") | html %]</li>
 [% RenderBlockStart("DynamicFieldScreenOverviewRow") %]
                         <li>
-                            <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=DynamicFieldScreen;Element=[% Data.DynamicFieldScreen | uri %]">[% Data.Name | truncate(80) | html %]</a>
+                            <a class="AsBlock" id="[% Data.Name | uri %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=DynamicFieldScreen;Element=[% Data.DynamicFieldScreen | uri %]">[% Data.Name | truncate(80) | html %]</a>
                         </li>
 [% RenderBlockEnd("DynamicFieldScreenOverviewRow") %]
                     </ul>
@@ -76,7 +76,7 @@
                         <li class="FilterMessage Hidden">[% Translate("No matches found.") | html %]</li>
 [% RenderBlockStart("DefaultColumnsScreenOverviewRow") %]
                         <li>
-                            <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=DefaultColumnsScreen;Element=[% Data.DefaultColumnsScreen | uri %]">[% Data.Name | truncate(80) | html %]</a>
+                            <a class="AsBlock" id="[% Data.Name | uri %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=DefaultColumnsScreen;Element=[% Data.DefaultColumnsScreen | uri %]">[% Data.Name | truncate(80) | html %]</a>
                         </li>
 [% RenderBlockEnd("DefaultColumnsScreenOverviewRow") %]
                     </ul>
@@ -91,7 +91,7 @@
 [% RenderBlockEnd("NoDataFoundMsg") %]
 [% RenderBlockStart("DynamicFieldOverviewRow") %]
                         <li>
-                            <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=DynamicField;Element=[% Data.DynamicField | uri %]">[% Data.Name | truncate(80) | html %]</a>
+                            <a class="AsBlock" id="[% Data.Name | uri %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=DynamicField;Element=[% Data.DynamicField | uri %]">[% Data.Name | truncate(80) | html %]</a>
                         </li>
 [% RenderBlockEnd("DynamicFieldOverviewRow") %]
                     </ul>
@@ -154,7 +154,7 @@
                                 <li title="[% Translate(Data.Label) | html %]" id="[% Data.ID | html %]">
                                     <input type="checkbox" name="SelectAllAssignedElements" value="[% Data.ID | html %]"/>
                                     [% Translate(Data.Label) | html %]
-                                    <input type="hidden" name="AssignedElements" value="[% Data.Element | html %]">
+                                    <input type="hidden" name="AssignedElements" value="[% Dat.Element | html %]">
                                 </li>
 [% RenderBlockEnd("AssignedFieldRow") %]
                             </ul>
