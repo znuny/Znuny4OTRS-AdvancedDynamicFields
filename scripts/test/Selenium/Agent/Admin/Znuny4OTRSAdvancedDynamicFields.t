@@ -22,7 +22,7 @@ $Kernel::OM->ObjectParamAdd(
 );
 
 # get the Znuny4OTRS Selenium object
-my $SeleniumObject     = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
+my $SeleniumObject = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 # store test function in variable so the Selenium object can handle errors/exceptions/dies etc.
 my $SeleniumTest = sub {
@@ -77,12 +77,12 @@ my $SeleniumTest = sub {
 
     # check elements
     $Self->True(
-        $SeleniumObject->find_element( '#Row2 > div:nth-child(2) > div > div.Content > ul > li:nth-child(16)', 'css' )->is_displayed(),
+        $SeleniumObject->find_element( '#Row2 > div:nth-child(2) > div > div.Content > ul > li:nth-child(13)', 'css' )->is_displayed(),
         "DynamicFieldScreen is visible",
     );
 
     $Self->True(
-        $SeleniumObject->find_element( '#Row2 > div:nth-child(2) > div > div.Content > ul > li:nth-child(16) > h4 > a', 'css' )->is_displayed(),
+        $SeleniumObject->find_element( '#Row2 > div:nth-child(2) > div > div.Content > ul > li:nth-child(13) > h4 > a', 'css' )->is_displayed(),
         "DynamicFieldScreen link is visible",
     );
 
