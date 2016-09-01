@@ -37,8 +37,8 @@ my $SeleniumTest = sub {
 
         $ZnunyHelperObject->_DynamicFieldsCreateIfNotExists(
             {
-                Name          => 'UnitTestText'. $Count,
-                Label         => "UnitTestText". $Count,
+                Name          => 'UnitTestText' . $Count,
+                Label         => "UnitTestText" . $Count,
                 ObjectType    => 'Ticket',
                 FieldType     => 'Text',
                 InternalField => 0,
@@ -59,7 +59,6 @@ my $SeleniumTest = sub {
         );
     }
 
-
     # ---
     # GUI AdminDynamicFieldScreen
     # ---
@@ -77,12 +76,14 @@ my $SeleniumTest = sub {
 
     # check elements
     $Self->True(
-        $SeleniumObject->find_element( '#Row2 > div:nth-child(2) > div > div.Content > ul > li:nth-child(13)', 'css' )->is_displayed(),
+        $SeleniumObject->find_element( '#Row2 > div:nth-child(2) > div > div.Content > ul > li:nth-child(13)', 'css' )
+            ->is_displayed(),
         "DynamicFieldScreen is visible",
     );
 
     $Self->True(
-        $SeleniumObject->find_element( '#Row2 > div:nth-child(2) > div > div.Content > ul > li:nth-child(13) > h4 > a', 'css' )->is_displayed(),
+        $SeleniumObject->find_element( '#Row2 > div:nth-child(2) > div > div.Content > ul > li:nth-child(13) > h4 > a',
+            'css' )->is_displayed(),
         "DynamicFieldScreen link is visible",
     );
 
@@ -126,7 +127,7 @@ my $SeleniumTest = sub {
     );
 
     SCREEN:
-    for my $Screen ( qw(AgentTicketNote AgentTicketQueue) ) {
+    for my $Screen (qw(AgentTicketNote AgentTicketQueue)) {
 
         # navigate to AdminDynamicFieldScreen page
         $SeleniumObject->AgentInterface(
@@ -146,15 +147,15 @@ my $SeleniumTest = sub {
 
         # set UnitTestText0 to ASSIGNED ELEMENTS
         $SeleniumObject->find_element( "#UnitTestText0 > input[type='checkbox']:nth-child(1)", 'css' )->click();
-        $SeleniumObject->find_element( '#AllSelecedAvailableElements', 'css' )->click();
+        $SeleniumObject->find_element( '#AllSelecedAvailableElements',                         'css' )->click();
 
         # set UnitTestText1 to ASSIGNED ELEMENTS
         $SeleniumObject->find_element( "#UnitTestText1 > input[type='checkbox']:nth-child(1)", 'css' )->click();
-        $SeleniumObject->find_element( '#AllSelecedAssignedElements', 'css' )->click();
+        $SeleniumObject->find_element( '#AllSelecedAssignedElements',                          'css' )->click();
 
         # set UnitTestText2 to ASSIGNED REQUIRED ELEMENTS
         $SeleniumObject->find_element( "#UnitTestText2 > input[type='checkbox']:nth-child(1)", 'css' )->click();
-        $SeleniumObject->find_element( '#AllSelecedAssignedRequiredElements', 'css' )->click();
+        $SeleniumObject->find_element( '#AllSelecedAssignedRequiredElements',                  'css' )->click();
 
         # submit form
         $SeleniumObject->find_element( '#Form > div.Field.SpacingTop > button', 'css' )->click();
@@ -168,17 +169,17 @@ my $SeleniumTest = sub {
         );
 
         my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-        my $Config = $ConfigObject->Get("Ticket::Frontend::$Screen");
+        my $Config       = $ConfigObject->Get("Ticket::Frontend::$Screen");
 
         my $Prefix = '';
-        if ($ScreenMapping{$Screen} eq 'DefaultColumns'){
+        if ( $ScreenMapping{$Screen} eq 'DefaultColumns' ) {
             $Prefix = 'DynamicField_';
         }
 
         # check dynFields
         for my $Count ( 0 .. 2 ) {
             $Self->Is(
-                $Config->{$ScreenMapping{$Screen}}->{$Prefix . "UnitTestText" . $Count},
+                $Config->{ $ScreenMapping{$Screen} }->{ $Prefix . "UnitTestText" . $Count },
                 $Count,
                 "Set dynamicField 'UnitTestText$Count' for Screen: '$Screen' correctly.",
             );
@@ -203,7 +204,7 @@ my $SeleniumTest = sub {
         );
 
         # TODO drag'n drop
-        if ($ScreenMapping{$Screen} eq 'DefaultColumns'){
+        if ( $ScreenMapping{$Screen} eq 'DefaultColumns' ) {
             last SCREEN;
         }
 
@@ -221,6 +222,6 @@ my $SeleniumTest = sub {
 };
 
 # finally run the test(s) in the browser
-$SeleniumObject->RunTest( $SeleniumTest );
+$SeleniumObject->RunTest($SeleniumTest);
 
 1;
