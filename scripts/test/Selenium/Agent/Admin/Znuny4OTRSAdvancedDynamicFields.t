@@ -82,8 +82,10 @@ my $SeleniumTest = sub {
     );
 
     $Self->True(
-        $SeleniumObject->find_element( '#Row2 > div:nth-child(2) > div > div.Content > ul > li:nth-child(13) > h4 > a',
-            'css' )->is_displayed(),
+        $SeleniumObject->find_element(
+            '#Row2 > div:nth-child(2) > div > div.Content > ul > li:nth-child(13) > h4 > a',
+            'css'
+            )->is_displayed(),
         "DynamicFieldScreen link is visible",
     );
 
