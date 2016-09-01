@@ -628,10 +628,10 @@ sub _SetDynamicFields {
     my $Success;
 
     my %ScreenConfig;
-    SCREEN:
+    DYNAMICFIELDSCREEN:
     for my $DynamicFieldScreen ( sort keys %DynamicFieldScreens ) {
 
-        next SCREEN if !defined $Config{$DynamicFieldScreen};
+        next DYNAMICFIELDSCREEN if !defined $Config{$DynamicFieldScreen};
 
         $ScreenConfig{$DynamicFieldScreen} = {
             $Param{DynamicField} => $Config{$DynamicFieldScreen},
@@ -642,9 +642,9 @@ sub _SetDynamicFields {
 
     undef %ScreenConfig;
 
-    SCREEN:
+    DEFAULTCOLUMNSCREEN:
     for my $DefaultColumnsScreen ( sort keys %DefaultColumnsScreens ) {
-        next SCREEN if !defined $Config{$DefaultColumnsScreen};
+        next DEFAULTCOLUMNSCREEN if !defined $Config{$DefaultColumnsScreen};
 
         $ScreenConfig{$DefaultColumnsScreen} = {
             "DynamicField_$Param{DynamicField}" => $Config{$DefaultColumnsScreen},
