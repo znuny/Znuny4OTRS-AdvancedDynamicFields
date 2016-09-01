@@ -642,6 +642,7 @@ sub _SetDynamicFields {
 
     undef %ScreenConfig;
 
+    SCREEN:
     for my $DefaultColumnsScreen ( sort keys %DefaultColumnsScreens ) {
         next SCREEN if !defined $Config{$DefaultColumnsScreen};
 
