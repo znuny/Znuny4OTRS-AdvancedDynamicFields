@@ -154,7 +154,7 @@
                                 <li title="[% Translate(Data.Label) | html %]" id="[% Data.ID | html %]">
                                     <input type="checkbox" name="SelectAllAssignedElements" value="[% Data.ID | html %]"/>
                                     [% Translate(Data.Label) | html %]
-                                    <input type="hidden" name="AssignedElements" value="[% Dat.Element | html %]">
+                                    <input type="hidden" name="AssignedElements" value="[% Data.Element | html %]">
                                 </li>
 [% RenderBlockEnd("AssignedFieldRow") %]
                             </ul>
