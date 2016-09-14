@@ -586,17 +586,19 @@ sub _GetDefaultColumnsScreenConfig {
         return;
     }
 
-    my @Configs = $Param{ConfigItem};
-    my %Configs = $ZnunyHelperObject->_DefaultColumnsGet(@Configs);
-    my %Config  = %{ $Configs{ $Param{ConfigItem} } };
+    my @Configs      = ( $Param{ConfigItem} );
+    my %ScreenConfig = $ZnunyHelperObject->_DefaultColumnsGet(@Configs);
+
+    my %Config;
+    my %CurrentScreenConfig = %{ $ScreenConfig{ $Param{ConfigItem} } };
 
     ITEM:
-    for my $Item ( sort keys %Config ) {
+    for my $Item ( sort keys %CurrentScreenConfig ) {
 
-        my $Value = delete $Config{$Item};
         next ITEM if $Item !~ m{DynamicField_}xms;
-        $Item =~ s/DynamicField_//;
 
+        my $Value = $CurrentScreenConfig{$Item};
+        $Item =~ s/DynamicField_//;
         $Config{$Item} = $Value;
     }
 
