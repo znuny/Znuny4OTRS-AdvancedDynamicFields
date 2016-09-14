@@ -15,8 +15,6 @@
         <File Permission="644" Location="Kernel/Modules/AdminDynamicFieldScreen.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminDynamicFieldScreen.tt"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFields.t"/>
-        <File Permission="644" Location="scripts/test/Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDefaultColumnsScreen.t"/>
-        <File Permission="644" Location="scripts/test/Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDynamicFieldScreen.t"/>
         <File Permission="644" Location="var/httpd/htdocs/js/Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen.js"/>
     </Filelist>
 </otrs_package>
