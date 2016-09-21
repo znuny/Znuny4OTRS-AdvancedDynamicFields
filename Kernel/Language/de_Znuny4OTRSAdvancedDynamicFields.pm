@@ -18,7 +18,7 @@ sub Data {
 
     # Frontend
     $Self->{Translation}->{'You can assign elements to this Screen/Field by dragging the elements with the mouse from the left list to the right list.'} = 'Sie können diese Elemente den Oberflächen/Feldern zuweisen, indem Sie sie mit der Maus aus der rechten Liste in die linke Liste verschieben.';
-    $Self->{Translation}->{'Manage dynamic field in screens.'} = 'Verwaltung von dynamischen Feldern in Oberflächen';
+    $Self->{Translation}->{'Manage dynamic field in screens.'} = 'Verwaltung von dynamischen Feldern in Oberflächen.';
 
     # Elements
     $Self->{Translation}->{'Management of Dynamic Fields <-> Screens'} = 'Verwaltung von Dynamische Feldern <-> Oberflächen';
