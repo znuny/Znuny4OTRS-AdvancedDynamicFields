@@ -33,7 +33,7 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
 
         $.each(['SelectAllAvailableElements', 'SelectAllAssignedElements', 'SelectAllAssignedRequiredElements'], function (Index, Elements) {
 
-            $('input[type="checkbox"][name="'+Elements+'"').bind('click', function () {
+            $('input[type="checkbox"][name="'+Elements+'"]').bind('click', function () {
                 Core.Form.SelectAllCheckboxes($(this), $('#' + Elements));
             });
         });
