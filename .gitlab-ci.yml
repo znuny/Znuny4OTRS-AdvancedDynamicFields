@@ -16,3 +16,6 @@ job_unit_otrs_Znuny4OTRSAdvancedDynamicFields:
   script:
     - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --verbose --directory Znuny4OTRSAdvancedDynamicFields" -s /bin/bash otrs
     - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --verbose --test test/Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFields" -s /bin/bash otrs
+
+    - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --test Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDefaultColumnsScreen" -s /bin/bash otrs
+    - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --test Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDynamicFieldScreen" -s /bin/bash otrs
