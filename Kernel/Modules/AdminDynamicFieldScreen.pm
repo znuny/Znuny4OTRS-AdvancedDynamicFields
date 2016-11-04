@@ -163,18 +163,24 @@ sub Run {
         $LayoutObject->ChallengeTokenCheck();
 
         # check required parameters
-        my @AvailableElements        = $ParamObject->GetArray( Param => 'AvailableElements' );
+        my @AvailableElements = $ParamObject->GetArray( Param => 'AvailableElements' );
+
+        #         my @DisabledElements         = $ParamObject->GetArray( Param => 'DisabledElements' );
         my @AssignedElements         = $ParamObject->GetArray( Param => 'AssignedElements' );
         my @AssignedRequiredElements = $ParamObject->GetArray( Param => 'AssignedRequiredElements' );
 
         # get all Elements
-        my %AvailableElements        = map { $_ => '0' } @AvailableElements;
+        my %AvailableElements = map { $_ => undef } @AvailableElements;
+
+        #         my %DisabledElements        = map { $_ => '0' } @DisabledElements;
         my %AssignedElements         = map { $_ => '1' } @AssignedElements;
         my %AssignedRequiredElements = map { $_ => '2' } @AssignedRequiredElements;
 
         # build config hash
         my %Config = (
             %AvailableElements,
+
+            #             %DisabledElements,
             %AssignedElements,
             %AssignedRequiredElements,
         );
@@ -627,27 +633,22 @@ sub _SetDynamicFields {
     my %Config                = %{ $Param{Config} };
     my %DynamicFieldScreens   = %{ $Self->{DynamicFieldScreens} };
     my %DefaultColumnsScreens = %{ $Self->{DefaultColumnsScreens} };
-    my $Success;
 
     my %ScreenConfig;
+
     DYNAMICFIELDSCREEN:
     for my $DynamicFieldScreen ( sort keys %DynamicFieldScreens ) {
-
-        next DYNAMICFIELDSCREEN if !defined $Config{$DynamicFieldScreen};
-
         $ScreenConfig{$DynamicFieldScreen} = {
             $Param{DynamicField} => $Config{$DynamicFieldScreen},
         };
     }
 
-    $Success = $ZnunyHelperObject->_DynamicFieldsScreenEnable(%ScreenConfig);
+    my $Success = $ZnunyHelperObject->_DynamicFieldsScreenEnable(%ScreenConfig);
 
     undef %ScreenConfig;
 
     DEFAULTCOLUMNSCREEN:
     for my $DefaultColumnsScreen ( sort keys %DefaultColumnsScreens ) {
-        next DEFAULTCOLUMNSCREEN if !defined $Config{$DefaultColumnsScreen};
-
         $ScreenConfig{$DefaultColumnsScreen} = {
             "DynamicField_$Param{DynamicField}" => $Config{$DefaultColumnsScreen},
         };
