@@ -29,6 +29,7 @@ sub Data {
     $Self->{Translation}->{'Dynamic Fields'}          = 'Dynamische Felder';
 
     $Self->{Translation}->{'Available Elements'}         = 'Verfügbare Elemente';
+    $Self->{Translation}->{'Disabled Elements'}          = 'Deaktivierte Elemente';
     $Self->{Translation}->{'Assigned Elements'}          = 'Zugewiesene Elemente';
     $Self->{Translation}->{'Assigned Required Elements'} = 'Zugewiesene Pflichtelemente';
 
@@ -38,6 +39,7 @@ sub Data {
     # Filter
     $Self->{Translation}->{'Filter Dynamic Fields Screen'}      = 'Oberflächen für Dynamische Felder filtern';
     $Self->{Translation}->{'Filter available elements'}         = 'Verfügbare Elemente filtern';
+    $Self->{Translation}->{'Filter disabled elements'}          = 'Deaktivierte Elemente filtern';
     $Self->{Translation}->{'Filter assigned elements'}          = 'Zugewiesene Elemente filtern';
     $Self->{Translation}->{'Filter assigned required elements'} = 'Zugewiesene Pflichtelemente filtern';
 
@@ -45,9 +47,11 @@ sub Data {
 
     $Self->{Translation}->{'Toggle all available elements'}         = 'Alle verfügbare Elemente umschalten';
     $Self->{Translation}->{'Toggle all assigned elements'}          = 'Alle zugewiesene Elemente umschalten';
+    $Self->{Translation}->{'Toggle all disabled elements'}          = 'Alle deaktivierte Elemente umschalten';
     $Self->{Translation}->{'Toggle all assigned required elements'} = 'Alle zugewiesene Pflichtelemente umschalten';
 
     $Self->{Translation}->{'seleced to available elements'}         = 'Selektierte zu verfügbare Elemente';
+    $Self->{Translation}->{'seleced to disabled elements'}          = 'Selektierte zu deaktivierte Elemente';
     $Self->{Translation}->{'seleced to assigned elements'}          = 'Selektierte zu zugewiesene Elemente';
     $Self->{Translation}->{'seleced to assigned required elements'} = 'Selektierte zu zugewiesene Pflichtelemente';
 
