@@ -193,7 +193,7 @@ my $SeleniumTest = sub {
 
             $Self->Is(
                 $Config->{ $ScreenMapping{$Screen} }->{ $Prefix . "UnitTestText" . $Count },
-                $Count,
+                $ExpectedValue,
                 "Set dynamicField 'UnitTestText$Count' for Screen: '$Screen' correctly.",
             );
         }
