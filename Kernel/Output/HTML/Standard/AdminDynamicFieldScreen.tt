@@ -138,6 +138,27 @@
 [% RenderBlockEnd("AvailableFieldRow") %]
                             </ul>
                         </div>
+                         <div class="[% Data.Size | html %]">
+                            <input type="text" id="FilterDisabledElements" class="W90pc" name="FilterDisabledElements" value="" title="[% Translate('Filter disabled elements') | html %]" placeholder="[% Translate('Filter disabled elements') | html %]..." />
+
+                            <a id='AllSelecedDisabledElements' class="CallForAction W90pc Center SpacingTop"><span><i class="fa fa-caret-down"></i>[% Translate("seleced to disabled elements") | html %]</span></a>
+
+                            <ul class="Tablelike W90pc SpacingTop">
+                                <li class="Header">
+                                    <input type="checkbox" name="SelectAllDisabledElements" id="SelectAllDisabledElements" title="[% Translate('Toggle all disabled elements') | html %]" value="" />
+                                    [% Translate("Disabled Elements") | html %]
+                                </li>
+                            </ul>
+                            <ul class="AllocationList Tablelike W90pc" style="max-height: inherit;" id="DisabledElements">
+[% RenderBlockStart("DisabledFieldRow") %]
+                                <li title="[% Translate(Data.Label) | html %]" id="[% Data.ID | html %]">
+                                    <input type="checkbox" name="SelectAllDisabledElements" value="[% Data.ID | html %]"/>
+                                    [% Translate(Data.Label) | html %]
+                                    <input type="hidden" name="DisabledElements" value="[% Data.Element | html %]">
+                                </li>
+[% RenderBlockEnd("DisabledFieldRow") %]
+                            </ul>
+                        </div>
                         <div class="[% Data.Size | html %]">
                             <input type="text" id="FilterAssignedElements" class="W90pc" name="FilterAssignedElements" value="" title="[% Translate('Filter assigned elements') | html %]" placeholder="[% Translate('Filter assigned elements') | html %]..." />
 

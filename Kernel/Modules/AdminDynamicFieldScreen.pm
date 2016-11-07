@@ -165,22 +165,20 @@ sub Run {
         # check required parameters
         my @AvailableElements = $ParamObject->GetArray( Param => 'AvailableElements' );
 
-        #         my @DisabledElements         = $ParamObject->GetArray( Param => 'DisabledElements' );
+        my @DisabledElements         = $ParamObject->GetArray( Param => 'DisabledElements' );
         my @AssignedElements         = $ParamObject->GetArray( Param => 'AssignedElements' );
         my @AssignedRequiredElements = $ParamObject->GetArray( Param => 'AssignedRequiredElements' );
 
         # get all Elements
-        my %AvailableElements = map { $_ => undef } @AvailableElements;
-
-        #         my %DisabledElements        = map { $_ => '0' } @DisabledElements;
+        my %AvailableElements        = map { $_ => undef } @AvailableElements;
+        my %DisabledElements         = map { $_ => '0' } @DisabledElements;
         my %AssignedElements         = map { $_ => '1' } @AssignedElements;
         my %AssignedRequiredElements = map { $_ => '2' } @AssignedRequiredElements;
 
         # build config hash
         my %Config = (
             %AvailableElements,
-
-            #             %DisabledElements,
+            %DisabledElements,
             %AssignedElements,
             %AssignedRequiredElements,
         );
@@ -347,7 +345,7 @@ sub _ShowEdit {
     my %OtherElements     = %DefaultColumnsScreens;
 
     # set default size for template
-    $Param{Size}   = 'Size1of3';
+    $Param{Size}   = 'Size1of4';
     $Param{Header} = 'Dynamic Fields for this Screen';
 
     if ( $Param{Type} eq 'DynamicField' ) {
@@ -363,6 +361,7 @@ sub _ShowEdit {
         # remove AssignedRequiredFieldRow off template if screen is AgentTicketZoom oder CustomTicketZoom
         if ( $Param{Element} =~ m{Zoom}msxi ) {
 
+            # AssignedRequired is not needed for Zoom-Views
             $NoAssignedRequiredFieldRow = 1;
             $Param{Size}                = 'Size1of2';
             $Param{HiddenRequired}      = 'Hidden';
@@ -405,7 +404,6 @@ sub _ShowEdit {
         for my $Element ( sort keys %Data ) {
 
             next ELEMENT if !$AvailableElements{$Element};
-            next ELEMENT if $Data{$Element} ne 1;
 
             # remove all spaces # or :
             my $ID = $Element;
@@ -413,37 +411,22 @@ sub _ShowEdit {
             $ID =~ s/\#*//g;
             $ID =~ s/\:\://g;
 
-            $LayoutObject->Block(
-                Name => 'AssignedFieldRow',
-                Data => {
-                    Element => $Element,
-                    Label   => $AvailableElements{$Element},
-                    ID      => $ID,
-                },
-            );
+            my $BlockName = undef;
 
-            # remove used fields from available list
-            delete $AvailableElements{$Element};
-        }
-    }
+            if ($Data{$Element} eq 0){
+                $BlockName = 'DisabledFieldRow';
+            }
+            elsif ($Data{$Element} eq 1){
+                $BlockName = 'AssignedFieldRow';
+            }
+            elsif ($Data{$Element} eq 2 && !$NoAssignedRequiredFieldRow){
+                $BlockName = 'AssignedRequiredFieldRow';
+            }
 
-    # get used fields by the dynamic field group
-    if ( %Data && !$NoAssignedRequiredFieldRow ) {
-
-        ELEMENT:
-        for my $Element ( sort keys %Data ) {
-
-            next ELEMENT if !$AvailableElements{$Element};
-            next ELEMENT if $Data{$Element} ne 2;
-
-            # remove all spaces # or :
-            my $ID = $Element;
-            $ID =~ s/\s//g;
-            $ID =~ s/\#*//g;
-            $ID =~ s/\:*//g;
+            next ELEMENT if !$BlockName;
 
             $LayoutObject->Block(
-                Name => 'AssignedRequiredFieldRow',
+                Name => $BlockName,
                 Data => {
                     Element => $Element,
                     Label   => $AvailableElements{$Element},
