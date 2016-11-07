@@ -23,15 +23,16 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
     TargetNS.Init = function () {
 
         // Initialize Allocation List
-        Core.UI.AllocationList.Init("#AvailableElements, #AssignedElements, #AssignedRequiredElements", ".AllocationList", UpdateFields);
+        Core.UI.AllocationList.Init("#AvailableElements, #DisabledElements, #AssignedElements, #AssignedRequiredElements", ".AllocationList", UpdateFields);
 
         // Initialize list filter
         Core.UI.Table.InitTableFilter($('#FilterElements'), $('#Elements'));
         Core.UI.Table.InitTableFilter($('#FilterAvailableElements'), $('#AvailableElements'));
+        Core.UI.Table.InitTableFilter($('#FilterDisabledElements'), $('#DisabledElements'));
         Core.UI.Table.InitTableFilter($('#FilterAssignedElements'), $('#AssignedElements'));
         Core.UI.Table.InitTableFilter($('#FilterAssignedRequiredElements'), $('#AssignedRequiredElements'));
 
-        $.each(['SelectAllAvailableElements', 'SelectAllAssignedElements', 'SelectAllAssignedRequiredElements'], function (Index, Elements) {
+        $.each(['SelectAllAvailableElements', 'SelectAllDisabledElements',  'SelectAllAssignedElements', 'SelectAllAssignedRequiredElements'], function (Index, Elements) {
 
             $('input[type="checkbox"][name="'+Elements+'"]').bind('click', function () {
                 Core.Form.SelectAllCheckboxes($(this), $('#' + Elements));
@@ -39,7 +40,7 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
         });
 
         // register all bindings
-        $.each(['AvailableElements', 'AssignedElements', 'AssignedRequiredElements'], function (Index, ParameterName) {
+        $.each(['AvailableElements', 'DisabledElements', 'AssignedElements', 'AssignedRequiredElements'], function (Index, ParameterName) {
 
             var Element;
             $('#AllSeleced'+ ParameterName).bind('click', function () {
@@ -74,6 +75,13 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
         if (Target === 'AvailableElements') {
             $(UI.item).find('input[type="hidden"]').attr('name', 'AvailableElements');
             $(UI.item).find('input[type="checkbox"]').attr('name', 'SelectAllAvailableElements');
+            $(UI.item).find('input[type="checkbox"]').removeAttr('checked');
+        }
+
+        // rename it to DisabledElements
+        else if (Target === 'DisabledElements') {
+            $(UI.item).find('input[type="hidden"]').attr('name', 'DisabledElements');
+            $(UI.item).find('input[type="checkbox"]').attr('name', 'SelectAllDisabledElements');
             $(UI.item).find('input[type="checkbox"]').removeAttr('checked');
         }
 
