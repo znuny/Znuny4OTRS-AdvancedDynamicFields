@@ -33,7 +33,7 @@ my $SeleniumTest = sub {
     my $HelperObject       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
     # Add Dynamic Field
-    for my $Count ( 0 .. 2 ) {
+    for my $Count ( 0 .. 3 ) {
 
         $ZnunyHelperObject->_DynamicFieldsCreateIfNotExists(
             {
@@ -106,7 +106,7 @@ my $SeleniumTest = sub {
     );
 
     # check dynFields
-    for my $Count ( 0 .. 2 ) {
+    for my $Count ( 0 .. 3 ) {
 
         $Self->True(
             $SeleniumObject->find_element( "#UnitTestText$Count", 'css' )->is_displayed(),
@@ -140,16 +140,16 @@ my $SeleniumTest = sub {
         $SeleniumObject->find_element( "#$Screen", 'css' )->click();
 
         # check dynFields
-        for my $Count ( 0 .. 2 ) {
+        for my $Count ( 0 .. 3 ) {
             $Self->True(
                 $SeleniumObject->find_element( "#UnitTestText$Count", 'css' )->is_displayed(),
                 "DefaultColumnsScreen 'Test$Count' is visible",
             );
         }
 
-        # set UnitTestText0 to ASSIGNED ELEMENTS
+        # set UnitTestText0 to DISABLED ELEMENTS
         $SeleniumObject->find_element( "#UnitTestText0 > input[type='checkbox']:nth-child(1)", 'css' )->click();
-        $SeleniumObject->find_element( '#AllSelectedAvailableElements',                        'css' )->click();
+        $SeleniumObject->find_element( '#AllSelectedDisabledElements',                         'css' )->click();
 
         # set UnitTestText1 to ASSIGNED ELEMENTS
         $SeleniumObject->find_element( "#UnitTestText1 > input[type='checkbox']:nth-child(1)", 'css' )->click();
@@ -161,6 +161,9 @@ my $SeleniumTest = sub {
 
         # submit form
         $SeleniumObject->find_element( '#Form > div.Field.SpacingTop > button', 'css' )->click();
+
+        # wait for submit to reload page
+        sleep(5);
 
         # use PackageSetupInit to rebuild Config
         $ZnunyHelperObject->_PackageSetupInit();
@@ -179,10 +182,18 @@ my $SeleniumTest = sub {
         }
 
         # check dynFields
-        for my $Count ( 0 .. 2 ) {
+        for my $Count ( 0 .. 3 ) {
+
+            # UnitTestText3 is a completely unassigned dynamic field whose status
+            # must be handled as undefined
+            my $ExpectedValue = $Count;
+            if ( $Count == 3 ) {
+                $ExpectedValue = undef;
+            }
+
             $Self->Is(
                 $Config->{ $ScreenMapping{$Screen} }->{ $Prefix . "UnitTestText" . $Count },
-                $Count,
+                $ExpectedValue,
                 "Set dynamicField 'UnitTestText$Count' for Screen: '$Screen' correctly.",
             );
         }
