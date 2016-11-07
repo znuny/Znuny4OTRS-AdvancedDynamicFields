@@ -43,7 +43,7 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
         $.each(['AvailableElements', 'DisabledElements', 'AssignedElements', 'AssignedRequiredElements'], function (Index, ParameterName) {
 
             var Element;
-            $('#AllSeleced'+ ParameterName).bind('click', function () {
+            $('#AllSelected'+ ParameterName).bind('click', function () {
 
                 // move all li to another ul list.
                 $("input:checkbox:checked").each(function(){

@@ -403,6 +403,7 @@ sub _ShowEdit {
         ELEMENT:
         for my $Element ( sort keys %Data ) {
 
+            next ELEMENT if !defined $Data{$Element};
             next ELEMENT if !$AvailableElements{$Element};
 
             # remove all spaces # or :

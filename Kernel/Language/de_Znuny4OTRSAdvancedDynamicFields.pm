@@ -50,10 +50,10 @@ sub Data {
     $Self->{Translation}->{'Toggle all disabled elements'}          = 'Alle deaktivierte Elemente umschalten';
     $Self->{Translation}->{'Toggle all assigned required elements'} = 'Alle zugewiesene Pflichtelemente umschalten';
 
-    $Self->{Translation}->{'seleced to available elements'}         = 'Selektierte zu verfügbare Elemente';
-    $Self->{Translation}->{'seleced to disabled elements'}          = 'Selektierte zu deaktivierte Elemente';
-    $Self->{Translation}->{'seleced to assigned elements'}          = 'Selektierte zu zugewiesene Elemente';
-    $Self->{Translation}->{'seleced to assigned required elements'} = 'Selektierte zu zugewiesene Pflichtelemente';
+    $Self->{Translation}->{'selected to available elements'}         = 'Selektierte zu verfügbare Elemente';
+    $Self->{Translation}->{'selected to disabled elements'}          = 'Selektierte zu deaktivierte Elemente';
+    $Self->{Translation}->{'selected to assigned elements'}          = 'Selektierte zu zugewiesene Elemente';
+    $Self->{Translation}->{'selected to assigned required elements'} = 'Selektierte zu zugewiesene Pflichtelemente';
 
     # SysConfig
     $Self->{Translation}->{'This configuration defines if only valids or all (invalids) dynamic fields should be shown.'} = 'Diese Konfiguration definiert ob nur gültige oder alle (ungültige) dynamischen Felder angezeigt werden sollen.';
