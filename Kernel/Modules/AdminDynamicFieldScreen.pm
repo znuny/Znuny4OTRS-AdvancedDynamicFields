@@ -413,13 +413,13 @@ sub _ShowEdit {
 
             my $BlockName = undef;
 
-            if ($Data{$Element} eq 0){
+            if ( $Data{$Element} eq 0 ) {
                 $BlockName = 'DisabledFieldRow';
             }
-            elsif ($Data{$Element} eq 1){
+            elsif ( $Data{$Element} eq 1 ) {
                 $BlockName = 'AssignedFieldRow';
             }
-            elsif ($Data{$Element} eq 2 && !$NoAssignedRequiredFieldRow){
+            elsif ( $Data{$Element} eq 2 && !$NoAssignedRequiredFieldRow ) {
                 $BlockName = 'AssignedRequiredFieldRow';
             }
 
