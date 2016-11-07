@@ -117,6 +117,8 @@
                     [% Translate("Ordering the elements within the list is also possible by drag 'n' drop.") | html %]
                             </p>
                         </div>
+                    </div>
+                    <div class="LayoutGrid">
                         <div class="[% Data.Size | html %]">
                             <input type="text" id="FilterAvailableElements" class="W90pc" name="FilterAvailableElements" value="" title="[% Translate('Filter available elements') | html %]" placeholder="[% Translate('Filter available elements') | html %]..." />
 
