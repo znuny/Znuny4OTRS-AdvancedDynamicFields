@@ -149,15 +149,15 @@ my $SeleniumTest = sub {
 
         # set UnitTestText0 to ASSIGNED ELEMENTS
         $SeleniumObject->find_element( "#UnitTestText0 > input[type='checkbox']:nth-child(1)", 'css' )->click();
-        $SeleniumObject->find_element( '#AllSelecedAvailableElements',                         'css' )->click();
+        $SeleniumObject->find_element( '#AllSelectedAvailableElements',                        'css' )->click();
 
         # set UnitTestText1 to ASSIGNED ELEMENTS
         $SeleniumObject->find_element( "#UnitTestText1 > input[type='checkbox']:nth-child(1)", 'css' )->click();
-        $SeleniumObject->find_element( '#AllSelecedAssignedElements',                          'css' )->click();
+        $SeleniumObject->find_element( '#AllSelectedAssignedElements',                         'css' )->click();
 
         # set UnitTestText2 to ASSIGNED REQUIRED ELEMENTS
         $SeleniumObject->find_element( "#UnitTestText2 > input[type='checkbox']:nth-child(1)", 'css' )->click();
-        $SeleniumObject->find_element( '#AllSelecedAssignedRequiredElements',                  'css' )->click();
+        $SeleniumObject->find_element( '#AllSelectedAssignedRequiredElements',                 'css' )->click();
 
         # submit form
         $SeleniumObject->find_element( '#Form > div.Field.SpacingTop > button', 'css' )->click();

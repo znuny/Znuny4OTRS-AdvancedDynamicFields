@@ -122,7 +122,7 @@
                         <div class="[% Data.Size | html %]">
                             <input type="text" id="FilterAvailableElements" class="W90pc" name="FilterAvailableElements" value="" title="[% Translate('Filter available elements') | html %]" placeholder="[% Translate('Filter available elements') | html %]..." />
 
-                            <a id='AllSelecedAvailableElements' class="CallForAction W90pc Center SpacingTop"><span><i class="fa fa-caret-down"></i>[% Translate("seleced to available elements") | html %]</span></a>
+                            <a id='AllSelectedAvailableElements' class="CallForAction W90pc Center SpacingTop"><span><i class="fa fa-caret-down"></i>[% Translate("selected to available elements") | html %]</span></a>
 
                             <ul class="Tablelike W90pc SpacingTop">
                                 <li class="Header">
@@ -143,7 +143,7 @@
                          <div class="[% Data.Size | html %]">
                             <input type="text" id="FilterDisabledElements" class="W90pc" name="FilterDisabledElements" value="" title="[% Translate('Filter disabled elements') | html %]" placeholder="[% Translate('Filter disabled elements') | html %]..." />
 
-                            <a id='AllSelecedDisabledElements' class="CallForAction W90pc Center SpacingTop"><span><i class="fa fa-caret-down"></i>[% Translate("seleced to disabled elements") | html %]</span></a>
+                            <a id='AllSelectedDisabledElements' class="CallForAction W90pc Center SpacingTop"><span><i class="fa fa-caret-down"></i>[% Translate("selected to disabled elements") | html %]</span></a>
 
                             <ul class="Tablelike W90pc SpacingTop">
                                 <li class="Header">
@@ -164,7 +164,7 @@
                         <div class="[% Data.Size | html %]">
                             <input type="text" id="FilterAssignedElements" class="W90pc" name="FilterAssignedElements" value="" title="[% Translate('Filter assigned elements') | html %]" placeholder="[% Translate('Filter assigned elements') | html %]..." />
 
-                            <a id='AllSelecedAssignedElements' class="CallForAction W90pc Center SpacingTop"><span><i class="fa fa-caret-down"></i>[% Translate("seleced to assigned elements") | html %]</span></a>
+                            <a id='AllSelectedAssignedElements' class="CallForAction W90pc Center SpacingTop"><span><i class="fa fa-caret-down"></i>[% Translate("selected to assigned elements") | html %]</span></a>
 
                             <ul class="Tablelike W90pc SpacingTop">
                                 <li class="Header">
@@ -185,7 +185,7 @@
                         <div class="[% Data.Size | html %] [% Data.HiddenRequired | html %]">
                             <input type="text" id="FilterAssignedRequiredElements" class="W90pc" name="FilterAssignedRequiredElements" value="" title="[% Translate('Filter assigned required elements') | html %]" placeholder="[% Translate('Filter assigned required elements') | html %]..." />
 
-                            <a id='AllSelecedAssignedRequiredElements' class="CallForAction W90pc Center SpacingTop"><span><i class="fa fa-caret-down"></i>[% Translate("seleced to assigned required elements") | html %]</span></a>
+                            <a id='AllSelectedAssignedRequiredElements' class="CallForAction W90pc Center SpacingTop"><span><i class="fa fa-caret-down"></i>[% Translate("selected to assigned required elements") | html %]</span></a>
 
                             <ul class="Tablelike W90pc SpacingTop">
                                 <li class="Header">
