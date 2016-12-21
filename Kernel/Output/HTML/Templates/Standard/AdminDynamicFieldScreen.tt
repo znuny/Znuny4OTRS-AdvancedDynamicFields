@@ -20,6 +20,9 @@
                     <li>
                         <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Overview") | html %]</span></a>
                     </li>
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=AdminDynamicField" class="CallForAction Fullsize Center"><span><i class="fa fa-plus-square"></i>[% Translate("Dynamic Fields") | html %]</span></a>
+                    </li>
 [% RenderBlockEnd("ActionOverview") %]
                 </ul>
             </div>
