@@ -24,6 +24,7 @@ Alternativ können auch folgende Konfigurationen genutzt werden.
     <SubGroup>DynamicFieldScreen</SubGroup>
     <Setting>
         <Hash>
+            <Item Key="PathToDefaultColoumnInSysConfig###DefaultColumns">VisibleName</Item>
             <Item Key="Ticket::Frontend::AgentTicketPackageName###DefaultColumns">AgentTicketWatchlistExtendedOverview</Item>
         </Hash>
     </Setting>
@@ -39,6 +40,7 @@ Alternativ können auch folgende Konfigurationen genutzt werden.
     <SubGroup>Core</SubGroup>
     <Setting>
         <Hash>
+            <Item Key="PathToDefaultColoumnInSysConfig###DynamicField">VisibleName</Item>
             <Item Key="Ticket::Frontend::AgentTicketPackageName###DynamicField">ModuleName</Item>
         </Hash>
     </Setting>
