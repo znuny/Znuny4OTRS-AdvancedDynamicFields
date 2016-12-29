@@ -4,13 +4,15 @@ OTRS hat im standard Framework nur eine bestimmte Anzahl an Oberflächen in dene
 
 Einige Erweiterungen enthalten jedoch zusätzliche Oberflächen in denen ebenfalls dynamische Felder aktiviert werden können. Um diese Oberflächen auch via Znuny4OTRS-AdvancedDynamicFields konfigurieren zu können, wird für jede Oberfläche eine zusätzliche Konfiguration benötigt.
 
-Znuny4OTRS-AdvancedDynamicFields prüft dann, ob dieses Packet z.B. 'Znuny4OTRS-PackageName' installiert ist und fügt dann die möglichen Oberflächen hinzu.
+Znuny4OTRS-AdvancedDynamicFields prüft dann, ob dieses Packet z.B. 'Znuny4OTRS-PackageName' __installiert__ ist und fügt dann die möglichen Oberflächen hinzu.
 
 Diese Konfiguration kann mit dem yeahman hinzugefügt werden:
 ```
 yeah otrs
 Advanced Dynamic Fields
 ```
+
+![AdditionalScreens](doc/images/AdditionalScreens.png)
 
 
 Alternativ können auch folgende Konfigurationen genutzt werden.
