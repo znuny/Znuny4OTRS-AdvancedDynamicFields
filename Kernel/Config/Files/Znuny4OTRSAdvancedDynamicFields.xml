@@ -71,6 +71,8 @@
                 <Item Key="Ticket::Frontend::OverviewPreview###DynamicField">OverviewPreview</Item>
                 <Item Key="Ticket::Frontend::OverviewSmall###DynamicField">OverviewSmall</Item>
                 <Item Key="Ticket::Frontend::CustomerTicketOverview###DynamicField">CustomerTicketOverview</Item>
+                <!-- Process -->
+                <Item Key="Ticket::Frontend::AgentTicketZoom###ProcessWidgetDynamicField">ProcessWidgetDynamicField</Item>
             </Hash>
         </Setting>
     </ConfigItem>
