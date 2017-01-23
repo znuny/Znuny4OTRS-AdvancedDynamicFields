@@ -363,7 +363,7 @@ sub _ShowEdit {
 
             # AssignedRequired is not needed for Zoom-Views
             $NoAssignedRequiredFieldRow = 1;
-            $Param{Size}                = 'Size1of2';
+            $Param{Size}                = 'Size1of3';
             $Param{HiddenRequired}      = 'Hidden';
         }
         %OtherElements = %DynamicFieldScreens;
