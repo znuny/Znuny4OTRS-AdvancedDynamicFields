@@ -562,6 +562,7 @@ sub _GetDefaultColumnsScreenConfig {
     my $ConfigObject      = $Kernel::OM->Get('Kernel::Config');
     my $LogObject         = $Kernel::OM->Get('Kernel::System::Log');
     my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
+    my $LayoutObject      = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check needed stuff
     NEEDED:
@@ -578,6 +579,19 @@ sub _GetDefaultColumnsScreenConfig {
 
     my @Configs      = ( $Param{ConfigItem} );
     my %ScreenConfig = $ZnunyHelperObject->_DefaultColumnsGet(@Configs);
+
+    if (!%ScreenConfig){
+
+        $LogObject->Log(
+            Priority => 'error',
+            Message  => "Can't get Data (DefaultColumns) of SysConfig '$Param{ConfigItem}' !",
+        );
+
+        $LayoutObject->FatalError(
+            Message => "Can't get Data (DefaultColumns) of SysConfig '$Param{ConfigItem}' !",
+        );
+        return;
+    }
 
     my %Config;
     my %CurrentScreenConfig = %{ $ScreenConfig{ $Param{ConfigItem} } };
