@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_package version="1.0">
     <Name>Znuny4OTRS-AdvancedDynamicFields</Name>
-    <Version>4.0.2</Version>
+    <Version>4.0.3</Version>
+    <ChangeLog Version="4.0.3" Date="2017-02-20 16:37:19 +0100">Improved AdminDynamicFieldScreen - get only valid SysConfigs.</ChangeLog>
     <ChangeLog Version="4.0.2" Date="2016-11-08 13:35:23 +0100">Added new column for 0 setting.</ChangeLog>
     <ChangeLog Version="4.0.1" Date="2016-10-05 11:46:25 +0200">Fixed Safari bug - added missing square bracket.</ChangeLog>
     <ChangeLog Version="4.0.0" Date="2016-09-14 21:07:31 +0200">First Release 4</ChangeLog>
