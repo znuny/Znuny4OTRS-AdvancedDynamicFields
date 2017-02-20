@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_package version="1.0">
     <Name>Znuny4OTRS-AdvancedDynamicFields</Name>
-    <Version>5.0.3</Version>
+    <Version>5.0.4</Version>
+    <ChangeLog Version="5.0.4" Date="2017-02-20 11:17:35 +0100">Added additional log for _GetDefaultColumnsScreenConfig.</ChangeLog>
     <ChangeLog Version="5.0.3" Date="2016-11-08 13:35:32 +0100">Added new column for 0 setting.</ChangeLog>
     <ChangeLog Version="5.0.2" Date="2016-10-05 11:46:17 +0200">Fixed Safari bug - added missing square bracket.</ChangeLog>
     <ChangeLog Version="5.0.1" Date="2016-09-14 20:04:16 +0200">Rebuild _GetDefaultColumnsScreenConfig and fixed typo.</ChangeLog>
