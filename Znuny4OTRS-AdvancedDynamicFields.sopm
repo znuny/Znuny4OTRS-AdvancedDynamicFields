@@ -17,7 +17,9 @@
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/Znuny4OTRSAdvancedDynamicFields.xml"/>
         <File Permission="644" Location="Kernel/Language/de_Znuny4OTRSAdvancedDynamicFields.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AdminDynamicFieldImportExport.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminDynamicFieldScreen.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/Znuny4OTRSAdvancedDynamicFields.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminDynamicFieldScreen.tt"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFields.t"/>
         <File Permission="644" Location="var/httpd/htdocs/js/Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen.js"/>

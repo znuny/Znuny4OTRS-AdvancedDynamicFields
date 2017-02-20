@@ -16,6 +16,16 @@ use utf8;
 sub Data {
     my $Self = shift;
 
+    # Import / Export
+    # Frontend
+    $Self->{Translation}->{'Here you can upload a configuration file to import dynamic fields to your system. The file needs to be in .yml format as exported by dynamic field management module.'} = 'Hier können Sie eine Konfigurationsdatei hochladen, um dynamische Felder auf Ihr System zu importieren. Die Datei muss im .yml-Format vorliegen, wie es von dem dynamischen Feld Verwaltungsmodul exportiert wird.';
+
+    $Self->{Translation}->{'Here you can manage the dynamic fields in the respective screens.'} = 'Hier können Sie die dynamischen Felder in den jeweiligen Oberflächen verwalten.';
+
+    $Self->{Translation}->{'DynamicFields Import'} = 'Dynamische Felder importieren';
+    $Self->{Translation}->{'DynamicFields Export'} = 'Dynamische Felder exportieren';
+
+    # Screens
     # Frontend
     $Self->{Translation}->{'You can assign elements to this Screen/Field by dragging the elements with the mouse from the left list to the right list.'} = 'Sie können diese Elemente den Oberflächen/Feldern zuweisen, indem Sie sie mit der Maus aus der rechten Liste in die linke Liste verschieben.';
     $Self->{Translation}->{'Manage dynamic field in screens.'} = 'Verwaltung von dynamischen Feldern in Oberflächen.';
