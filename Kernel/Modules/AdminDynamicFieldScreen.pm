@@ -16,7 +16,6 @@ our @ObjectDependencies = (
     'Kernel::Output::HTML::Layout',
     'Kernel::System::DynamicField',
     'Kernel::System::Log',
-    'Kernel::System::Package',
     'Kernel::System::SysConfig',
     'Kernel::System::Web::Request',
     'Kernel::System::ZnunyHelper',
@@ -30,75 +29,9 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
-    my $PackageObject      = $Kernel::OM->Get('Kernel::System::Package');
-    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
-
-    my $DynamicFieldValid = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldValid');
-
-    my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet(
-        ObjectType => 'Ticket',
-        ResultType => 'HASH',
-        Valid      => $DynamicFieldValid,
-    );
-
-    $Self->{DynamicFields} = {};
-
-    DYNAMICFIELD:
-    for my $DynamicField ( @{$DynamicFieldList} ) {
-
-        next DYNAMICFIELD if !IsHashRefWithData($DynamicField);
-
-        # do not show internal fields for process management
-        next DYNAMICFIELD if $DynamicField->{Name} eq 'ProcessManagementProcessID';
-        next DYNAMICFIELD if $DynamicField->{Name} eq 'ProcessManagementActivityID';
-
-        $Self->{DynamicFields}->{ $DynamicField->{Name} } = $DynamicField->{Label};
-    }
-
-    $Self->{DynamicFieldScreens}   = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens');
-    $Self->{DefaultColumnsScreens} = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreens');
-
-    my %DynamicFieldScreensAdditional
-        = %{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreensAdditional') || {} };
-
-    if (%DynamicFieldScreensAdditional) {
-
-        ADDITIONAL:
-        for my $Name ( sort keys %DynamicFieldScreensAdditional ) {
-
-            my $IsInstalled = $PackageObject->PackageIsInstalled(
-                Name => $Name,
-            );
-
-            next ADDITIONAL if !$IsInstalled;
-
-            %{ $Self->{DynamicFieldScreens} } = (
-                %{ $Self->{DynamicFieldScreens} },
-                %{ $DynamicFieldScreensAdditional{$Name} },
-            );
-        }
-    }
-
-    my %DefaultColumnsScreensAdditional
-        = %{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreensAdditional') || {} };
-
-    return $Self if !%DefaultColumnsScreensAdditional;
-
-    ADDITIONAL:
-    for my $Name ( sort keys %DefaultColumnsScreensAdditional ) {
-
-        my $IsInstalled = $PackageObject->PackageIsInstalled(
-            Name => $Name,
-        );
-
-        next ADDITIONAL if !$IsInstalled;
-
-        %{ $Self->{DefaultColumnsScreens} } = (
-            %{ $Self->{DefaultColumnsScreens} },
-            %{ $DefaultColumnsScreensAdditional{$Name} },
-        );
-    }
+    $Self->_GetValidDynamicFields();
+    $Self->_GetValidConfigs();
+    $Self->_GetValidAdditionalScreens();
 
     return $Self;
 }
@@ -580,7 +513,7 @@ sub _GetDefaultColumnsScreenConfig {
     my @Configs      = ( $Param{ConfigItem} );
     my %ScreenConfig = $ZnunyHelperObject->_DefaultColumnsGet(@Configs);
 
-    if (!%ScreenConfig){
+    if ( !%ScreenConfig ) {
 
         $LogObject->Log(
             Priority => 'error',
@@ -653,6 +586,92 @@ sub _SetDynamicFields {
     }
 
     return $ZnunyHelperObject->_DefaultColumnsEnable(%ScreenConfig);
+}
+
+sub _GetValidConfigs {
+    my ( $Self, %Param ) = @_;
+
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    for my $Screen (qw( DynamicFieldScreens DefaultColumnsScreens )) {
+
+        $Self->{$Screen} = $ConfigObject->Get("Znuny4OTRSAdvancedDynamicFields::$Screen");
+
+        for my $CurrentConfig ( sort keys %{ $Self->{$Screen} } ) {
+
+            my ( $ConfigPath, $Key ) = split '###', $CurrentConfig;
+
+            my $ConfigData = $ConfigObject->Get($ConfigPath);
+
+            delete $Self->{$Screen}->{$CurrentConfig} if !IsHashRefWithData( $ConfigData->{$Key} );
+
+        }
+    }
+}
+
+sub _GetValidDynamicFields {
+    my ( $Self, %Param ) = @_;
+
+    my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+
+    my $DynamicFieldValid = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldValid');
+
+    my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet(
+        ObjectType => 'Ticket',
+        ResultType => 'HASH',
+        Valid      => $DynamicFieldValid,
+    );
+
+    $Self->{DynamicFields} = {};
+
+    DYNAMICFIELD:
+    for my $DynamicField ( @{$DynamicFieldList} ) {
+
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicField);
+
+        # do not show internal fields for process management
+        next DYNAMICFIELD if $DynamicField->{Name} eq 'ProcessManagementProcessID';
+        next DYNAMICFIELD if $DynamicField->{Name} eq 'ProcessManagementActivityID';
+
+        $Self->{DynamicFields}->{ $DynamicField->{Name} } = $DynamicField->{Label};
+    }
+}
+
+=item _GetValidAdditionalScreens()
+
+get all additional screens for Znuny4OTRSAdvancedDynamicFields
+
+    Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreensAdditional
+    Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreensAdditional
+
+=cut
+
+sub _GetValidAdditionalScreens {
+    my ( $Self, %Param ) = @_;
+
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    SCREEN:
+    for my $Screen (qw( DynamicFieldScreens DefaultColumnsScreens )) {
+
+        my %Data = %{ $ConfigObject->Get( "Znuny4OTRSAdvancedDynamicFields::" . $Screen . "Additional" ) || {} };
+        next SCREEN if !%Data;
+
+        ADDITIONAL:
+        for my $CurrentConfig ( sort keys %Data ) {
+
+            my ( $ConfigPath, $Key ) = split '###', $CurrentConfig;
+            my $ConfigData = $ConfigObject->Get($ConfigPath);
+
+            next ADDITIONAL if !IsHashRefWithData( $ConfigData->{$Key} );
+
+            %{ $Self->{$Screen} } = (
+                %{ $Self->{$Screen} },
+                $CurrentConfig => $Data{$CurrentConfig},
+            );
+        }
+    }
 }
 
 1;
