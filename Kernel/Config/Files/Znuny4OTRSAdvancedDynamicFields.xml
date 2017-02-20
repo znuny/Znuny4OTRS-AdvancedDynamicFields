@@ -15,7 +15,7 @@
                     <Name Translatable="1">Dynamic Fields Screens</Name>
                     <Description Translatable="1">Manage dynamic field in screens.</Description>
                     <Block>Ticket</Block>
-                    <Prio>1005</Prio>
+                    <Prio>1001</Prio>
                 </NavBarModule>
                 <Loader>
                     <CSS>Core.AllocationList.css</CSS>
