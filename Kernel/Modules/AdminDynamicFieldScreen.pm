@@ -603,7 +603,7 @@ sub _GetValidScreens {
 
             my $ConfigData = $ConfigObject->Get($ConfigPath);
 
-            delete $Self->{$Screen}->{$CurrentConfig} if !IsHashRefWithData( $ConfigData->{$Key} );
+            delete $Self->{$Screen}->{$CurrentConfig} if !defined $ConfigData->{$Key};
 
         }
     }
@@ -664,7 +664,7 @@ sub _GetValidAdditionalScreens {
             my ( $ConfigPath, $Key ) = split '###', $CurrentConfig;
             my $ConfigData = $ConfigObject->Get($ConfigPath);
 
-            next ADDITIONAL if !IsHashRefWithData( $ConfigData->{$Key} );
+            next ADDITIONAL if !defined $ConfigData->{$Key};
 
             %{ $Self->{$Screen} } = (
                 %{ $Self->{$Screen} },
