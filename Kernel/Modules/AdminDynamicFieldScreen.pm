@@ -30,7 +30,7 @@ sub new {
     bless( $Self, $Type );
 
     $Self->_GetValidDynamicFields();
-    $Self->_GetValidConfigs();
+    $Self->_GetValidScreens();
     $Self->_GetValidAdditionalScreens();
 
     return $Self;
@@ -588,7 +588,7 @@ sub _SetDynamicFields {
     return $ZnunyHelperObject->_DefaultColumnsEnable(%ScreenConfig);
 }
 
-sub _GetValidConfigs {
+sub _GetValidScreens {
     my ( $Self, %Param ) = @_;
 
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
