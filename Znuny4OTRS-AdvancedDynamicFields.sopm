@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_package version="1.0">
     <Name>Znuny4OTRS-AdvancedDynamicFields</Name>
-    <Version>5.0.5</Version>
+    <Version>5.0.6</Version>
+    <ChangeLog Version="5.0.6" Date="2017-02-21 11:40:05 +0100">Fixed bug - show config if valid also without values.</ChangeLog>
     <ChangeLog Version="5.0.5" Date="2017-02-20 16:37:11 +0100">Improved AdminDynamicFieldScreen - get only valid SysConfigs.</ChangeLog>
     <ChangeLog Version="5.0.4" Date="2017-02-20 11:17:35 +0100">Added additional log for _GetDefaultColumnsScreenConfig.</ChangeLog>
     <ChangeLog Version="5.0.3" Date="2016-11-08 13:35:32 +0100">Added new column for 0 setting.</ChangeLog>
