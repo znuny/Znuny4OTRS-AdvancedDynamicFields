@@ -4,7 +4,7 @@
     <ConfigItem Name="Frontend::Module###AdminDynamicFieldImportExport" Required="0" Valid="0">
         <Description Translatable="1">Frontend module registration for the admin interface.</Description>
         <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
-        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
                 <Group>admin</Group>
