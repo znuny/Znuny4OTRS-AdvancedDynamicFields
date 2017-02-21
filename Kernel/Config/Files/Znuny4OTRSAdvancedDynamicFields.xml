@@ -17,7 +17,7 @@
     <ConfigItem Name="Frontend::Output::FilterElementPost###Znuny4OTRSAdvancedDynamicFields" Required="0" Valid="0">
         <Description Translatable="1">Defines the filter that processes the HTML templates.</Description>
         <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewZoom</SubGroup>
+        <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FilterElementPost::Znuny4OTRSAdvancedDynamicFields</Item>
