@@ -1,15 +1,19 @@
 image: otrs4ci
 
-before_script:
-  - env
-  - pwd
-  - /run.sh
-  - su -c "perl /opt/otrs/bin/znuny.AdvancedPackageManagerInstallDependencies.pl /opt/otrs/Znuny4OTRS-AdvancedDynamicFields.sopm" -s /bin/bash otrs
-
 stages:
   - test
+  - deploy
 
 job_unit_otrs_Znuny4OTRSAdvancedDynamicFields:
   stage: test
   script:
+    - env
+    - pwd
+    - /run.sh
+    - su -c "perl /opt/otrs/bin/znuny.AdvancedPackageManagerInstallSOPM.pl /opt/otrs/Znuny4OTRS-AdvancedDynamicFields.sopm" -s /bin/bash otrs
     - su -c "perl /opt/otrs/bin/otrs.UnitTest.pl -n Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFields" -s /bin/bash otrs
+
+job_deploy_otrs_Znuny4OTRSAdvancedDynamicFields:
+  stage: deploy
+  script:
+    - sh /sync_repo.sh git@github.com:znuny/Znuny4OTRS-AdvancedDynamicFields.git
