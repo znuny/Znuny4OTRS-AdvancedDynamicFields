@@ -104,10 +104,12 @@ sub Run {
             </div>
         </div>";
 
+
+    my $Label     = $LanguageObject->Translate('Hint');
+    my $RegExHTML = '(\<div class\=\"WidgetSimple\"\>\s+\<div class\=\"Header\"\>\s+\<h2\>' . $Label . '\<\/h2\>)';
+
     # manipulate HTML content
-    ${ $Param{Data} } =~ s{
-        (\s*<div [^>]+ WidgetSimple [^>]+ >)$
-    }{$ImportExportHTML$ScreensHTML$1}msix;
+    ${ $Param{Data} } =~ s{$RegExHTML}{$ImportExportHTML$ScreensHTML$1}ms;
 
     return 1;
 }
