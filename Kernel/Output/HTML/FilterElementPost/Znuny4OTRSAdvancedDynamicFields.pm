@@ -104,7 +104,6 @@ sub Run {
             </div>
         </div>";
 
-
     my $Label     = $LanguageObject->Translate('Hint');
     my $RegExHTML = '(\<div class\=\"WidgetSimple\"\>\s+\<div class\=\"Header\"\>\s+\<h2\>' . $Label . '\<\/h2\>)';
 
