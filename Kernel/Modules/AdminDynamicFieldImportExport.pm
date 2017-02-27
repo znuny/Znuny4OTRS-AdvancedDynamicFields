@@ -12,8 +12,10 @@ use strict;
 use warnings;
 
 our @ObjectDependencies = (
+    'Kernel::Config',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::DynamicField',
+    'Kernel::System::Log',
     'Kernel::System::Time',
     'Kernel::System::Web::Request',
     'Kernel::System::YAML',
@@ -35,11 +37,13 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get objects
-    my $YAMLObject         = $Kernel::OM->Get('Kernel::System::YAML');
+    my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
     my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
-    my $ParamObject        = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LogObject          = $Kernel::OM->Get('Kernel::System::Log');
     my $LayoutObject       = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $ParamObject        = $Kernel::OM->Get('Kernel::System::Web::Request');
     my $TimeObject         = $Kernel::OM->Get('Kernel::System::Time');
+    my $YAMLObject         = $Kernel::OM->Get('Kernel::System::YAML');
     my $ZnunyHelperObject  = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
 
     $Self->{Subaction} = $ParamObject->GetParam( Param => 'Subaction' ) || '';
@@ -66,12 +70,26 @@ sub Run {
             Data => $YAMLString,
         );
 
+        my $FieldTypeConfig = $ConfigObject->Get('DynamicFields::Driver');
         if ( IsHashRefWithData( $PerlStructure->{DynamicFields} ) ) {
 
             my @DynamicFields;
             DYNAMICFIELD:
             for my $DynamicField ( %{ $PerlStructure->{DynamicFields} } ) {
                 next DYNAMICFIELD if !IsHashRefWithData( $PerlStructure->{DynamicFields}->{$DynamicField} );
+
+                my $FieldType = $PerlStructure->{DynamicFields}->{$DynamicField}->{FieldType};
+
+                if ( !IsHashRefWithData( $FieldTypeConfig->{$FieldType} ) ) {
+
+                    $LogObject->Log(
+                        'Priority' => 'error',
+                        'Message' =>
+                            "Could not import dynamic field '$PerlStructure->{DynamicFields}->{$DynamicField}->{Name}' - Dynamic field backend for FieldType '$PerlStructure->{DynamicFields}->{$DynamicField}->{FieldType}' does not exists!",
+                    );
+                    next DYNAMICFIELD;
+                }
+
                 push @DynamicFields, $PerlStructure->{DynamicFields}->{$DynamicField};
             }
 
@@ -82,7 +100,6 @@ sub Run {
 
                 $Success = $ZnunyHelperObject->_DynamicFieldsCreateIfNotExists(@DynamicFields);
             }
-
         }
 
         # redirect to ActivityDialog
