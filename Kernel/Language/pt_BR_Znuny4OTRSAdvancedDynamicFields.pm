@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Language::pt_BR_AdvancedDynamicFields;
+package Kernel::Language::pt_BR_Znuny4OTRSAdvancedDynamicFields;
 
 use strict;
 use warnings;
