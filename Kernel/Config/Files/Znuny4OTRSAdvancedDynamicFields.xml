@@ -11,6 +11,9 @@
                 <Description>DynamicField Import Export</Description>
                 <Title>DynamicFieldImportExport</Title>
                 <NavBarName></NavBarName>
+                <Loader>
+                    <JavaScript>Core.Agent.Admin.Znuny4OTRSDynamicFieldImportExport.js</JavaScript>
+                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
