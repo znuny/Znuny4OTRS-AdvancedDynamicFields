@@ -1,0 +1,155 @@
+# --
+# Copyright (C) 2012-2017 Znuny GmbH, http://znuny.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1>[% Translate("Dynamic Fields") | html %] - [% Translate(Data.Type) | html %]</h1>
+
+    <div class="Clear"></div>
+
+    <div class="SidebarColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Actions") | html %]</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+[% RenderBlockStart("ActionOverview") %]
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=AdminDynamicField" class="CallForAction Fullsize Center">
+                        <span><i class="fa fa-plus-square"></i>[% Translate("Dynamic Fields") | html %]</span></a>
+                    </li>
+                    <li>
+                        <a href='$LayoutObject->{Baselink}Action=AdminDynamicFieldScreen' class='CallForAction Fullsize Center'>
+                        <span><i class='fa fa-plus-square'></i>[% Translate("Dynamic Fields Screens") | html %]</span></a>
+                    </li>
+[% RenderBlockEnd("ActionOverview") %]
+                </ul>
+            </div>
+        </div>
+
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2></h2>
+            </div>
+            <div class="Content">
+                <div class="FieldExplanation">
+                    <p>
+[% RenderBlockStart("ImportHint") %]
+                        [% Translate("ImportHint") | html %]
+[% RenderBlockEnd("ImportHint") %]
+[% RenderBlockStart("ExportHint") %]
+                        [% Translate("ExportHint") | html %]
+[% RenderBlockEnd("ExportHint") %]
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="ContentColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Dynamic Fields List") | html %]</h2>
+            </div>
+            <div class="Clear"></div>
+
+            <div class="Content LayoutGrid ColumnsWithSpacing">
+                <form id='Form' action="[% Env("CGIHandle") %]" method="post" class="Validate PreventMultipleSubmits">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                    <input type="hidden" name="Subaction" value="[% Env("Subaction") %]Action"/>
+                    <input type="hidden" name="Type" value="[% Data.Type | html %]"/>
+                    <input type="hidden" name="OverwriteExistingEntities"  value="[% Data.OverwriteExistingEntities | html %]">
+                    <table class="DataTable" id="DynamicFieldsTable" summary="List of all registered Dynamic Fields">
+                        <thead>
+                            <tr>
+                                <th class='Center'>
+                                    <input type="checkbox" name="SelectAllDynamicFields" title="[% Translate('Toggle all available elements') | html %]" checked value="" />
+                                    [% Translate("Fields") | html %]
+                                </th>
+                                <th class='Center'>
+                                    <input type="checkbox" name="SelectAllDynamicFieldScreens" title="[% Translate('Toggle all available elements') | html %]" checked value="" />
+                                    [% Translate("Screens") | html %]
+                                </th>
+                                <th>[% Translate("Name") | html %]</th>
+                                <th>[% Translate("Label") | html %]</th>
+                                <th>[% Translate("Order") | html %]</th>
+                                <th>[% Translate("Type") | html %]</th>
+                                <th>[% Translate("Object") | html %]</th>
+                                <th>[% Translate("Validity") | html %]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+[% RenderBlockStart("DynamicFieldsRow") %]
+                            <tr id="DynamicFieldID_[% Data.ID | html %]">
+                                <td class='Center'>
+[% RenderBlockStart("DynamicFieldCheckbox") %]
+                                    <input type="checkbox" id="DynamicFields" name="DynamicFields" value="[% Data.Name | html %]" checked />
+[% RenderBlockEnd("DynamicFieldCheckbox") %]
+                                </td>
+                                <td class='Center'>
+[% RenderBlockStart("DynamicFieldScreensCheckbox") %]
+                                    <input type="checkbox" id="DynamicFieldScreens" name="DynamicFieldScreens" value="[% Data.Name | html %]" checked />
+                                    <a href="#" id="ShowConfig" value="[% Data.Name | html %]">
+[% RenderBlockEnd("DynamicFieldScreensCheckbox") %]
+                                </td>
+                                <td>
+[% RenderBlockStart("Import") %]
+                                    [% Data.Name %]
+[% RenderBlockEnd("Import") %]
+[% RenderBlockStart("Export") %]
+                                    <a href="[% Env("Baselink") %]Action=[% Data.ConfigDialog | uri %];Subaction=Change;ObjectType=[% Data.ObjectType | uri %];FieldType=[% Data.FieldType | uri %];ID=[% Data.ID | uri %]" title="[% Data.Name | html %]" class="MasterActionLink">[% Data.Name %]</a>
+[% RenderBlockEnd("Export") %]
+                                </td>
+                                <td>
+                                    <div>[% Translate(Data.Label) | html %]</div>
+                                </td>
+                                <td>
+                                    <div>[% Data.FieldOrder %]</div>
+                                </td>
+                                <td>
+                                    <div>[% Translate(Data.FieldTypeName) | html %]</div>
+                                </td>
+                                <td>
+                                    <div>[% Translate(Data.ObjectTypeName) | html %]</div>
+                                </td>
+                                <td>
+                                    <div>[% Translate(Data.Valid) | html %]</div>
+                                </td>
+                            </tr>
+[% RenderBlockStart("DynamicFieldScreens") %]
+                            <tr class="Hidden" id="[% Data.Name | html %]">
+                                <td colspan="5">
+                                    [% Translate("No data found.") | html %]
+                                </td>
+                                <td colspan="3">
+                                    [% Translate("No data found.") | html %]
+                                </td>
+                            </tr>
+[% RenderBlockEnd("DynamicFieldScreens") %]
+[% RenderBlockEnd("DynamicFieldsRow") %]
+                        </tbody>
+                    </table>
+                    <div class="Field SpacingTop" style="text-align: center;">
+                        <button class="Primary CallForAction" type="submit" value="[% Translate(Data.Type) | html %]">
+                            <span>[% Translate(Data.Type) | html %]</span>
+                        </button>
+                        [% Translate("or") | html %]
+                        <a href="[% Env("Baselink") %]Action=AdminDynamicField" >[% Translate("Cancel") | html %]</a>
+                    </div>
+                    <div class="Clear"></div>
+                </form>
+            </div>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    Core.Agent.Admin.Znuny4OTRSDynamicFieldImportExport.Init();
+//]]></script>
+[% END %]
+        </div>
+        <div class="Clear"></div>
+    </div>
+</div>
