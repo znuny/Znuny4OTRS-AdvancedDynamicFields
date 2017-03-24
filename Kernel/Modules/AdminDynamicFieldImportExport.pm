@@ -14,9 +14,12 @@ use warnings;
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::Output::HTML::Layout',
+    'Kernel::System::AdvancedDynamicFields',
+    'Kernel::System::AuthSession',
     'Kernel::System::DynamicField',
     'Kernel::System::Log',
     'Kernel::System::Time',
+    'Kernel::System::Valid',
     'Kernel::System::Web::Request',
     'Kernel::System::YAML',
     'Kernel::System::ZnunyHelper',
@@ -37,19 +40,40 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get objects
-    my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
-    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
-    my $LogObject          = $Kernel::OM->Get('Kernel::System::Log');
-    my $LayoutObject       = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $ParamObject        = $Kernel::OM->Get('Kernel::System::Web::Request');
-    my $TimeObject         = $Kernel::OM->Get('Kernel::System::Time');
-    my $YAMLObject         = $Kernel::OM->Get('Kernel::System::YAML');
-    my $ZnunyHelperObject  = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
+    my $ConfigObject                = $Kernel::OM->Get('Kernel::Config');
+    my $DynamicFieldObject          = $Kernel::OM->Get('Kernel::System::DynamicField');
+    my $LogObject                   = $Kernel::OM->Get('Kernel::System::Log');
+    my $LayoutObject                = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $ParamObject                 = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $TimeObject                  = $Kernel::OM->Get('Kernel::System::Time');
+    my $YAMLObject                  = $Kernel::OM->Get('Kernel::System::YAML');
+    my $ZnunyHelperObject           = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
+    my $AdvancedDynamicFieldsObject = $Kernel::OM->Get('Kernel::System::AdvancedDynamicFields');
+    my $SessionObject               = $Kernel::OM->Get('Kernel::System::AuthSession');
+
+    my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields();
+    $Self->{DynamicFields} = $DynamicFields;
+
+    my $ValidScreens = $AdvancedDynamicFieldsObject->GetValidScreens();
+
+    $Self->{DynamicFieldScreens}   = $ValidScreens->{DynamicFieldScreens};
+    $Self->{DefaultColumnsScreens} = $ValidScreens->{DefaultColumnsScreens};
+
+    my $ValidAdditionalScreens = $AdvancedDynamicFieldsObject->GetValidAdditionalScreens();
+
+    SCREEN:
+    for my $Screen (qw( DynamicFieldScreens DefaultColumnsScreens )) {
+        next SCREEN if !$ValidAdditionalScreens->{$Screen};
+        %{ $Self->{$Screen} } = (
+            %{ $Self->{$Screen} },
+            %{ $ValidAdditionalScreens->{$Screen} },
+        );
+    }
 
     $Self->{Subaction} = $ParamObject->GetParam( Param => 'Subaction' ) || '';
 
     # ------------------------------------------------------------ #
-    # ProcessImport
+    # Import
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'Import' ) {
 
@@ -62,76 +86,169 @@ sub Run {
             Param => 'FileUpload',
         );
 
-        my $YAMLString = $UploadStuff{Content};
-
         my $OverwriteExistingEntities = $ParamObject->GetParam( Param => 'OverwriteExistingEntities' );
 
         my $PerlStructure = $YAMLObject->Load(
-            Data => $YAMLString,
+            Data => $UploadStuff{Content},
         );
 
+        my $SessionUpdate = $SessionObject->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => 'AdminDynamicFieldImportExport',
+            Value     => $PerlStructure,
+        );
+
+        $Self->_Mask(
+            Data                      => $PerlStructure,
+            Type                      => $Self->{Subaction},
+            OverwriteExistingEntities => $OverwriteExistingEntities || 0,
+        );
+    }
+
+    # ------------------------------------------------------------ #
+    # ImportAction
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'ImportAction' ) {
+
+        my %Data = $SessionObject->GetSessionIDData(
+            SessionID => $Self->{SessionID},
+        );
+
+        if ( !IsHashRefWithData( $Data{AdminDynamicFieldImportExport} ) ) {
+
+            # redirect to AdminDynamicField
+            my $HTML = $LayoutObject->Redirect(
+                OP => "Action=AdminDynamicField"
+            );
+
+            return $HTML;
+        }
+
+        # check required parameters
+        my @DynamicFieldsSelected          = $ParamObject->GetArray( Param => 'DynamicFields' );
+        my @DynamicFieldForScreensSelected = $ParamObject->GetArray( Param => 'DynamicFieldScreens' );
+        my $OverwriteExistingEntities = $ParamObject->GetParam( Param => 'OverwriteExistingEntities' ) || 0;
+        my $ImportData = $Data{AdminDynamicFieldImportExport};
+
+        my $SessionUpdate = $SessionObject->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => 'AdminDynamicFieldImportExport',
+            Value     => undef,
+        );
+
+        # ------------------------------------------------------------ #
+        # Import DynamicFields
+        # ------------------------------------------------------------ #
         my $FieldTypeConfig = $ConfigObject->Get('DynamicFields::Driver');
-        if ( IsHashRefWithData( $PerlStructure->{DynamicFields} ) ) {
+        if ( IsHashRefWithData( $ImportData->{DynamicFields} ) ) {
 
-            my @DynamicFields;
+            my @DynamicFieldsImport;
             DYNAMICFIELD:
-            for my $DynamicField ( %{ $PerlStructure->{DynamicFields} } ) {
-                next DYNAMICFIELD if !IsHashRefWithData( $PerlStructure->{DynamicFields}->{$DynamicField} );
+            for my $DynamicField ( %{ $ImportData->{DynamicFields} } ) {
 
-                my $FieldType = $PerlStructure->{DynamicFields}->{$DynamicField}->{FieldType};
+                my $Selected
+                    = grep { $ImportData->{DynamicFields}->{$DynamicField}->{Name} eq $_ } @DynamicFieldsSelected;
+                next DYNAMICFIELD if !$Selected;
+
+                next DYNAMICFIELD if !IsHashRefWithData( $ImportData->{DynamicFields}->{$DynamicField} );
+
+                my $FieldType = $ImportData->{DynamicFields}->{$DynamicField}->{FieldType};
 
                 if ( !IsHashRefWithData( $FieldTypeConfig->{$FieldType} ) ) {
 
                     $LogObject->Log(
                         'Priority' => 'error',
                         'Message' =>
-                            "Could not import dynamic field '$PerlStructure->{DynamicFields}->{$DynamicField}->{Name}' - Dynamic field backend for FieldType '$PerlStructure->{DynamicFields}->{$DynamicField}->{FieldType}' does not exists!",
+                            "Could not import dynamic field '$ImportData->{DynamicFields}->{$DynamicField}->{Name}' - Dynamic field backend for FieldType '$ImportData->{DynamicFields}->{$DynamicField}->{FieldType}' does not exists!",
                     );
                     next DYNAMICFIELD;
                 }
 
-                push @DynamicFields, $PerlStructure->{DynamicFields}->{$DynamicField};
+                push @DynamicFieldsImport, $ImportData->{DynamicFields}->{$DynamicField};
             }
 
             if ($OverwriteExistingEntities) {
-                $Success = $ZnunyHelperObject->_DynamicFieldsCreate(@DynamicFields);
+                $ZnunyHelperObject->_DynamicFieldsCreate(@DynamicFieldsImport);
             }
             else {
-
-                $Success = $ZnunyHelperObject->_DynamicFieldsCreateIfNotExists(@DynamicFields);
+                $ZnunyHelperObject->_DynamicFieldsCreateIfNotExists(@DynamicFieldsImport);
             }
         }
 
-        # redirect to ActivityDialog
+        # ------------------------------------------------------------ #
+        # Import DynamicFieldsScreens
+        # ------------------------------------------------------------ #
+
+        if ( IsHashRefWithData( $ImportData->{DynamicFieldsScreens} ) ) {
+
+            my %DynamicFieldsScreensImport;
+            DYNAMICFIELDSCREEN:
+            for my $DynamicField ( sort keys %{ $ImportData->{DynamicFieldsScreens} } ) {
+
+                # check if dynamic field screen was selected
+                my $Selected = grep { $DynamicField eq $_ } @DynamicFieldForScreensSelected;
+                next DYNAMICFIELD if !$Selected;
+
+          #                 # check if dynamic field exists
+          #                 my $DynamicFieldExists = grep { $DynamicField eq $_ } sort keys %{ $Self->{DynamicFields} };
+          #                 next DYNAMICFIELDSCREEN if !$DynamicFieldExists;
+
+                $DynamicFieldsScreensImport{$DynamicField} = $ImportData->{DynamicFieldsScreens}->{$DynamicField};
+            }
+
+            if (%DynamicFieldsScreensImport) {
+                $ZnunyHelperObject->_DynamicFieldsScreenConfigImport(
+                    Config                => \%DynamicFieldsScreensImport,
+                    DynamicFieldScreens   => $Self->{DynamicFieldScreens},
+                    DefaultColumnsScreens => $Self->{DefaultColumnsScreens},
+                );
+            }
+        }
+
+        # redirect to AdminDynamicField
         my $HTML = $LayoutObject->Redirect(
             OP => "Action=AdminDynamicField"
         );
 
         return $HTML;
+
     }
 
     # ------------------------------------------------------------ #
-    # ProcessExport
+    # Export
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Export' ) {
 
-        #         # check for DynamicFieldID
-        #         my $DynamicFieldID = $ParamObject->GetParam( Param => 'ID' ) || '';
+        $Self->_Mask(
+            %Param,
+            Type => $Self->{Subaction},
+        );
 
-        my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet();
+    }
+
+    # ------------------------------------------------------------ #
+    # ExportAction
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'ExportAction' ) {
+
+        # check required parameters
+        my @DynamicFields          = $ParamObject->GetArray( Param => 'DynamicFields' );
+        my @DynamicFieldForScreens = $ParamObject->GetArray( Param => 'DynamicFieldScreens' );
 
         my %Data;
-        my %DynamicFieldData;
+        $Data{DynamicFields} = $ZnunyHelperObject->_DynamicFieldsConfigExport(
+            Format                => 'var',
+            IncludeInternalFields => 1,
+            IncludeAllConfigKeys  => 1,
+            DynamicFields         => \@DynamicFields,
+            Result                => 'HASH',
+        );
 
-        for my $DynamicField ( @{$DynamicFieldList} ) {
-
-            for my $Attribute (qw(ID CreateTime ChangeTime FieldOrder)) {
-                delete $DynamicField->{$Attribute};
-            }
-            $DynamicFieldData{ $DynamicField->{Name} } = $DynamicField;
-        }
-
-        $Data{DynamicFields} = \%DynamicFieldData;
+        %{ $Data{DynamicFieldsScreens} } = $ZnunyHelperObject->_DynamicFieldsScreenConfigExport(
+            DynamicFields         => \@DynamicFieldForScreens,
+            DynamicFieldScreens   => $Self->{DynamicFieldScreens},
+            DefaultColumnsScreens => $Self->{DefaultColumnsScreens},
+        );
 
         # convert the dynamicfielddata hash to string
         my $DynamicFieldDataYAML = $YAMLObject->Dump( Data => \%Data );
@@ -139,27 +256,231 @@ sub Run {
         my $TimeStamp = $TimeObject->CurrentTimestamp();
 
         # send the result to the browser
-        return $LayoutObject->Attachment(
+        my $HTML = $LayoutObject->Attachment(
             ContentType => 'text/html; charset=' . $LayoutObject->{Charset},
             Content     => $DynamicFieldDataYAML,
             Type        => 'attachment',
             Filename    => "Export_DynamicFields_$TimeStamp.yml",
             NoCache     => 1,
         );
+
+        # redirect to AdminDynamicField
+        $HTML .= $LayoutObject->Redirect(
+            OP => "Action=AdminDynamicField",
+        );
+        return $HTML;
+
     }
 
     # ------------------------------------------------------------ #
-    # Error / no Subaction
     # ------------------------------------------------------------ #
     else {
 
-        # redirect to ActivityDialog
+        # redirect to AdminDynamicField
         my $HTML = $LayoutObject->Redirect(
             OP => "Action=AdminDynamicField"
         );
 
         return $HTML;
     }
+}
+
+sub _Mask {
+    my ( $Self, %Param ) = @_;
+
+    my $LayoutObject       = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+    my $LogObject          = $Kernel::OM->Get('Kernel::System::Log');
+
+    $LayoutObject->Block( Name => 'ActionOverview' );
+
+    # call hint block
+    $LayoutObject->Block(
+        Name => $Param{Type} . 'Hint',
+        Data => {
+            %Param,
+        },
+    );
+
+    if ( !$Param{Data} ) {
+
+        # export
+        my $DynamicFieldsList = $DynamicFieldObject->DynamicFieldList(
+            Valid      => 0,
+            ResultType => 'HASH',
+        );
+
+        %{ $Param{Data}->{DynamicFields} } = reverse %{$DynamicFieldsList};
+    }
+
+    # print the list of dynamic fields
+    $Self->_DynamicFieldShow(
+        %Param,
+    );
+
+    # output header
+    my $Output = $LayoutObject->Header();
+    $Output .= $LayoutObject->NavigationBar();
+    $Output .= $LayoutObject->Output(
+        TemplateFile => 'AdminDynamicFieldImportExport',
+        Data         => {
+            %Param,
+        },
+    );
+
+    $Output .= $LayoutObject->Footer();
+    return $Output;
+}
+
+sub _DynamicFieldShow {
+    my ( $Self, %Param ) = @_;
+
+    my $LayoutObject       = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $FieldTypeConfig    = $Kernel::OM->Get('Kernel::Config')->Get('DynamicFields::Driver');
+    my $ValidObject        = $Kernel::OM->Get('Kernel::System::Valid');
+    my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+
+    # check if at least 1 dynamic field is registered in the system
+    if (
+        IsHashRefWithData( $Param{Data}->{DynamicFields} )
+        || IsHashRefWithData( $Param{Data}->{DynamicFieldsScreens} )
+        )
+    {
+
+        my @DynamicFieldsAlreadyUsed;
+
+        DYNAMICFIELD:
+        for my $DynamicField ( sort keys %{ $Param{Data}->{DynamicFields} } ) {
+
+            push @DynamicFieldsAlreadyUsed, $DynamicField;
+
+            my $DynamicFieldData;
+            if ( IsHashRefWithData( $Param{Data}->{DynamicFields}->{$DynamicField} ) ) {
+                $DynamicFieldData = $Param{Data}->{DynamicFields}->{$DynamicField};
+
+            }
+            else {
+                $DynamicFieldData = $DynamicFieldObject->DynamicFieldGet(
+                    ID => $Param{Data}->{DynamicFields}->{$DynamicField},
+                );
+            }
+
+            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldData);
+
+            # convert ValidID to Validity string
+            my $Valid = $ValidObject->ValidLookup(
+                ValidID => $DynamicFieldData->{ValidID},
+            );
+
+            # get the object type display name
+            my $ObjectTypeName = $ConfigObject->Get('DynamicFields::ObjectType')
+                ->{ $DynamicFieldData->{ObjectType} }->{DisplayName}
+                || $DynamicFieldData->{ObjectType};
+
+            # get the field type display name
+            my $FieldTypeName = $FieldTypeConfig->{ $DynamicFieldData->{FieldType} }->{DisplayName}
+                || $DynamicFieldData->{FieldType};
+
+            # get the field backend dialog
+            my $ConfigDialog = $FieldTypeConfig->{ $DynamicFieldData->{FieldType} }->{ConfigDialog}
+                || '';
+
+            my %DynamicFieldData = (
+                %{$DynamicFieldData},
+                Valid          => $Valid,
+                ConfigDialog   => $ConfigDialog,
+                FieldTypeName  => $FieldTypeName,
+                ObjectTypeName => $ObjectTypeName,
+            );
+
+            for my $Blocks ( 'DynamicFieldsRow', 'DynamicFieldCheckbox', $Param{Type} ) {
+
+                # print each dynamic field row
+                $LayoutObject->Block(
+                    Name => $Blocks,
+                    Data => {
+                        %DynamicFieldData
+                    },
+                );
+            }
+
+            if (
+                IsHashRefWithData( $Param{Data}->{DynamicFieldsScreens}->{$DynamicField} )
+                || $Param{Type} ne 'Import'
+                )
+            {
+                $LayoutObject->Block(
+                    Name => 'DynamicFieldScreensCheckbox',
+                    Data => {
+                        %DynamicFieldData
+                    },
+                );
+
+                # TODO next project
+                #                 my $DynamicFieldsScreensData = $Param{Data}->{DynamicFieldsScreens}->{$DynamicField};
+                #                 for my $DynamicFieldsScreens ( sort keys %{ $DynamicFieldsScreensData } ) {
+                #                     $LayoutObject->Block(
+                #                         Name => 'DynamicFieldScreens',
+                #                         Data => {
+                #                             SysConfig => $DynamicFieldsScreens,
+                #                             Screen    => $DynamicFieldsScreensData->{$DynamicFieldsScreens},
+                #                             %DynamicFieldData,
+                #                         },
+                #                     );
+                #                 }
+            }
+
+        }
+
+        DYNAMICFIELDSCREEN:
+        for my $DynamicField ( sort keys %{ $Param{Data}->{DynamicFieldsScreens} } ) {
+
+            next DYNAMICFIELDSCREEN if grep { $DynamicField eq $_ } @DynamicFieldsAlreadyUsed;
+            next DYNAMICFIELDSCREEN if !IsHashRefWithData( $Param{Data}->{DynamicFieldsScreens}->{$DynamicField} );
+
+            my $DynamicFieldsScreensData = $Param{Data}->{DynamicFieldsScreens}->{$DynamicField};
+
+            my %DynamicFieldData = (
+                Name  => $DynamicField,
+                Label => 'DynamicField Screens',
+            );
+
+            for my $Blocks ( 'DynamicFieldsRow', 'DynamicFieldScreensCheckbox', $Param{Type} ) {
+
+                # print each dynamic field row
+                $LayoutObject->Block(
+                    Name => $Blocks,
+                    Data => {
+                        %DynamicFieldData
+                    },
+                );
+            }
+
+            # TODO next project
+            #             for my $DynamicFieldsScreens ( sort keys %{ $DynamicFieldsScreensData } ) {
+            #                 $LayoutObject->Block(
+            #                     Name => 'DynamicFieldScreens',
+            #                     Data => {
+            #                         SysConfig => $DynamicFieldsScreens,
+            #                         Screen    => $DynamicFieldsScreensData->{$DynamicFieldsScreens},
+            #                         %DynamicFieldData,
+            #                     },
+            #                 );
+            #             }
+        }
+    }
+
+    # otherwise show a no data found message
+    else {
+        $LayoutObject->Block(
+            Name => 'NoDataFound',
+            Data => \%Param,
+        );
+    }
+
+    return;
 }
 
 1;
