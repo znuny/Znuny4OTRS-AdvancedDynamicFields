@@ -74,7 +74,6 @@ sub Run {
         . "</span>
                             </button>
                         </form>
-
                     </li>
                     <li>
                         <a href='$LayoutObject->{Baselink}Action=AdminDynamicFieldImportExport;Subaction=Export' class='CallForAction Fullsize Center'><span><i class='fa fa-download'></i>"

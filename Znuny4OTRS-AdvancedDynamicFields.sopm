@@ -24,7 +24,9 @@
         <File Permission="644" Location="Kernel/Modules/AdminDynamicFieldImportExport.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminDynamicFieldScreen.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/Znuny4OTRSAdvancedDynamicFields.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldImportExport.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldScreen.tt"/>
+        <File Permission="644" Location="Kernel/System/AdvancedDynamicFields.pm"/>
         <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DefaultColumnsScreen/Add.pm"/>
         <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DefaultColumnsScreen/Remove.pm"/>
         <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DynamicFieldScreen/Add.pm"/>
@@ -32,6 +34,7 @@
         <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFields.t"/>
         <File Permission="644" Location="scripts/test/Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDefaultColumnsScreen.t"/>
         <File Permission="644" Location="scripts/test/Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDynamicFieldScreen.t"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/Core.Agent.Admin.Znuny4OTRSDynamicFieldImportExport.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen.js"/>
     </Filelist>
 </otrs_package>

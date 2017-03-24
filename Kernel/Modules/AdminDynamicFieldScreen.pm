@@ -14,7 +14,7 @@ use warnings;
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::Output::HTML::Layout',
-    'Kernel::System::DynamicField',
+    'Kernel::System::AdvancedDynamicFields',
     'Kernel::System::Log',
     'Kernel::System::SysConfig',
     'Kernel::System::Web::Request',
@@ -29,9 +29,26 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    $Self->_GetValidDynamicFields();
-    $Self->_GetValidScreens();
-    $Self->_GetValidAdditionalScreens();
+    my $AdvancedDynamicFieldsObject = $Kernel::OM->Get('Kernel::System::AdvancedDynamicFields');
+
+    my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields();
+    $Self->{DynamicFields} = $DynamicFields;
+
+    my $ValidScreens = $AdvancedDynamicFieldsObject->GetValidScreens();
+
+    $Self->{DynamicFieldScreens}   = $ValidScreens->{DynamicFieldScreens};
+    $Self->{DefaultColumnsScreens} = $ValidScreens->{DefaultColumnsScreens};
+
+    my $ValidAdditionalScreens = $AdvancedDynamicFieldsObject->GetValidAdditionalScreens();
+
+    SCREEN:
+    for my $Screen (qw( DynamicFieldScreens DefaultColumnsScreens )) {
+        next SCREEN if !$ValidAdditionalScreens->{$Screen};
+        %{ $Self->{$Screen} } = (
+            %{ $Self->{$Screen} },
+            %{ $ValidAdditionalScreens->{$Screen} },
+        );
+    }
 
     return $Self;
 }
@@ -40,12 +57,13 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get objects
-    my $ConfigObject      = $Kernel::OM->Get('Kernel::Config');
-    my $LogObject         = $Kernel::OM->Get('Kernel::System::Log');
-    my $SysConfigObject   = $Kernel::OM->Get('Kernel::System::SysConfig');
-    my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
-    my $LayoutObject      = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $ParamObject       = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $ConfigObject                = $Kernel::OM->Get('Kernel::Config');
+    my $LogObject                   = $Kernel::OM->Get('Kernel::System::Log');
+    my $SysConfigObject             = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $ZnunyHelperObject           = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
+    my $LayoutObject                = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $ParamObject                 = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $AdvancedDynamicFieldsObject = $Kernel::OM->Get('Kernel::System::AdvancedDynamicFields');
 
     $Self->{Subaction} = $ParamObject->GetParam( Param => 'Subaction' ) || '';
 
@@ -72,13 +90,29 @@ sub Run {
 
         # get config of element
         if ( $Param{Type} eq 'DynamicField' ) {
-            %Config = $Self->_GetDynamicFieldConfig( DynamicField => $Param{Element} );
+            my %ConfigItemConfig = $ZnunyHelperObject->_DynamicFieldsScreenConfigExport(
+                DynamicFields         => [ $Param{Element} ],
+                DynamicFieldScreens   => $Self->{DynamicFieldScreens},
+                DefaultColumnsScreens => $Self->{DefaultColumnsScreens},
+            );
+
+            %Config = %{ $ConfigItemConfig{ $Param{Element} } || {} };
         }
         elsif ( $Param{Type} eq 'DynamicFieldScreen' ) {
-            %Config = $Self->_GetDynamicFieldScreenConfig( ConfigItem => $Param{Element} );
+
+            my %ConfigItemConfig = $ZnunyHelperObject->_DynamicFieldsScreenGet(
+                ConfigItems => [ $Param{Element} ],
+            );
+
+            %Config = %{ $ConfigItemConfig{ $Param{Element} } || {} };
         }
         elsif ( $Param{Type} eq 'DefaultColumnsScreen' ) {
-            %Config = $Self->_GetDefaultColumnsScreenConfig( ConfigItem => $Param{Element} );
+
+            my %ConfigItemConfig = $ZnunyHelperObject->_DynamicFieldsDefaultColumnsGet(
+                ConfigItems => [ $Param{Element} ],
+            );
+
+            %Config = %{ $ConfigItemConfig{ $Param{Element} } || {} };
         }
 
         $Self->_ShowEdit(
@@ -122,9 +156,12 @@ sub Run {
         # get config of element
         if ( $Param{Type} eq 'DynamicField' ) {
 
-            $Self->_SetDynamicFields(
-                DynamicField => $Param{Element},
-                Config       => \%Config,
+            $ScreenConfig{ $Param{Element} } = \%Config;
+
+            $ZnunyHelperObject->_DynamicFieldsScreenConfigImport(
+                Config                => \%ScreenConfig,
+                DynamicFieldScreens   => $Self->{DynamicFieldScreens},
+                DefaultColumnsScreens => $Self->{DefaultColumnsScreens},
             );
         }
         elsif ( $Param{Type} eq 'DynamicFieldScreen' ) {
@@ -405,273 +442,6 @@ sub _ShowEdit {
     $Output .= $LayoutObject->Footer();
 
     return $Output;
-}
-
-sub _GetDynamicFieldConfig {
-    my ( $Self, %Param ) = @_;
-
-    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
-
-    # check needed stuff
-    NEEDED:
-    for my $Needed (qw(DynamicField)) {
-
-        next NEEDED if defined $Param{$Needed};
-
-        $LogObject->Log(
-            Priority => 'error',
-            Message  => "Parameter '$Needed' is needed!",
-        );
-        return;
-    }
-
-    # get all possible screens
-    my %DynamicFieldScreens   = %{ $Self->{DynamicFieldScreens} };
-    my %DefaultColumnsScreens = %{ $Self->{DefaultColumnsScreens} };
-
-    my %Config;
-
-    DYNAMICFIELDSCREEN:
-    for my $DynamicFieldScreen ( sort keys %DynamicFieldScreens ) {
-
-        my %DynamicFieldScreenConfig = $Self->_GetDynamicFieldScreenConfig(
-            ConfigItem => $DynamicFieldScreen,
-        );
-
-        next DYNAMICFIELDSCREEN if !IsStringWithData( $DynamicFieldScreenConfig{ $Param{DynamicField} } );
-        $Config{$DynamicFieldScreen} = $DynamicFieldScreenConfig{ $Param{DynamicField} };
-    }
-
-    DEFAULTCOLUMNSCREEN:
-    for my $DefaultColumnsScreen ( sort keys %DefaultColumnsScreens ) {
-
-        my %DefaultColumnsScreenConfig = $Self->_GetDefaultColumnsScreenConfig(
-            ConfigItem => $DefaultColumnsScreen,
-        );
-
-        next DEFAULTCOLUMNSCREEN if !IsStringWithData( $DefaultColumnsScreenConfig{ $Param{DynamicField} } );
-        $Config{$DefaultColumnsScreen} = $DefaultColumnsScreenConfig{ $Param{DynamicField} };
-    }
-
-    return %Config;
-}
-
-sub _GetDynamicFieldScreenConfig {
-    my ( $Self, %Param ) = @_;
-
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-    my $LogObject    = $Kernel::OM->Get('Kernel::System::Log');
-
-    # check needed stuff
-    NEEDED:
-    for my $Needed (qw(ConfigItem)) {
-
-        next NEEDED if defined $Param{$Needed};
-
-        $LogObject->Log(
-            Priority => 'error',
-            Message  => "Parameter '$Needed' is needed!",
-        );
-        return;
-    }
-
-    my @Keys = split '###', $Param{ConfigItem};
-
-    my $Config = $ConfigObject->Get( $Keys[0] );
-    INDEX:
-    for my $Index ( 1 ... $#Keys ) {
-        last INDEX if !IsHashRefWithData($Config);
-        $Config = $Config->{ $Keys[$Index] };
-    }
-    return {} if !$Config;
-    return {} if ref $Config ne 'HASH';
-
-    return %{$Config};
-}
-
-sub _GetDefaultColumnsScreenConfig {
-    my ( $Self, %Param ) = @_;
-
-    my $ConfigObject      = $Kernel::OM->Get('Kernel::Config');
-    my $LogObject         = $Kernel::OM->Get('Kernel::System::Log');
-    my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
-    my $LayoutObject      = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-
-    # check needed stuff
-    NEEDED:
-    for my $Needed (qw(ConfigItem)) {
-
-        next NEEDED if defined $Param{$Needed};
-
-        $LogObject->Log(
-            Priority => 'error',
-            Message  => "Parameter '$Needed' is needed!",
-        );
-        return;
-    }
-
-    my @Configs      = ( $Param{ConfigItem} );
-    my %ScreenConfig = $ZnunyHelperObject->_DefaultColumnsGet(@Configs);
-
-    if ( !%ScreenConfig ) {
-
-        $LogObject->Log(
-            Priority => 'error',
-            Message  => "Can't get Data (DefaultColumns) of SysConfig '$Param{ConfigItem}' !",
-        );
-
-        $LayoutObject->FatalError(
-            Message => "Can't get Data (DefaultColumns) of SysConfig '$Param{ConfigItem}' !",
-        );
-        return;
-    }
-
-    my %Config;
-    my %CurrentScreenConfig = %{ $ScreenConfig{ $Param{ConfigItem} } };
-
-    ITEM:
-    for my $Item ( sort keys %CurrentScreenConfig ) {
-
-        next ITEM if $Item !~ m{DynamicField_}xms;
-
-        my $Value = $CurrentScreenConfig{$Item};
-        $Item =~ s/DynamicField_//;
-        $Config{$Item} = $Value;
-    }
-
-    return %Config;
-}
-
-sub _SetDynamicFields {
-    my ( $Self, %Param ) = @_;
-
-    my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
-    my $LogObject         = $Kernel::OM->Get('Kernel::System::Log');
-
-    # check needed stuff
-    NEEDED:
-    for my $Needed (qw(DynamicField Config)) {
-
-        next NEEDED if defined $Param{$Needed};
-
-        $LogObject->Log(
-            Priority => 'error',
-            Message  => "Parameter '$Needed' is needed!",
-        );
-        return;
-    }
-
-    my %Config                = %{ $Param{Config} };
-    my %DynamicFieldScreens   = %{ $Self->{DynamicFieldScreens} };
-    my %DefaultColumnsScreens = %{ $Self->{DefaultColumnsScreens} };
-
-    my %ScreenConfig;
-
-    DYNAMICFIELDSCREEN:
-    for my $DynamicFieldScreen ( sort keys %DynamicFieldScreens ) {
-        $ScreenConfig{$DynamicFieldScreen} = {
-            $Param{DynamicField} => $Config{$DynamicFieldScreen},
-        };
-    }
-
-    my $Success = $ZnunyHelperObject->_DynamicFieldsScreenEnable(%ScreenConfig);
-
-    undef %ScreenConfig;
-
-    DEFAULTCOLUMNSCREEN:
-    for my $DefaultColumnsScreen ( sort keys %DefaultColumnsScreens ) {
-        $ScreenConfig{$DefaultColumnsScreen} = {
-            "DynamicField_$Param{DynamicField}" => $Config{$DefaultColumnsScreen},
-        };
-    }
-
-    return $ZnunyHelperObject->_DefaultColumnsEnable(%ScreenConfig);
-}
-
-sub _GetValidScreens {
-    my ( $Self, %Param ) = @_;
-
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-
-    for my $Screen (qw( DynamicFieldScreens DefaultColumnsScreens )) {
-
-        $Self->{$Screen} = $ConfigObject->Get("Znuny4OTRSAdvancedDynamicFields::$Screen");
-
-        for my $CurrentConfig ( sort keys %{ $Self->{$Screen} } ) {
-
-            my ( $ConfigPath, $Key ) = split '###', $CurrentConfig;
-
-            my $ConfigData = $ConfigObject->Get($ConfigPath);
-
-            delete $Self->{$Screen}->{$CurrentConfig} if !defined $ConfigData->{$Key};
-
-        }
-    }
-}
-
-sub _GetValidDynamicFields {
-    my ( $Self, %Param ) = @_;
-
-    my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
-    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
-
-    my $DynamicFieldValid = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldValid');
-
-    my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet(
-        ObjectType => 'Ticket',
-        ResultType => 'HASH',
-        Valid      => $DynamicFieldValid,
-    );
-
-    $Self->{DynamicFields} = {};
-
-    DYNAMICFIELD:
-    for my $DynamicField ( @{$DynamicFieldList} ) {
-
-        next DYNAMICFIELD if !IsHashRefWithData($DynamicField);
-
-        # do not show internal fields for process management
-        next DYNAMICFIELD if $DynamicField->{Name} eq 'ProcessManagementProcessID';
-        next DYNAMICFIELD if $DynamicField->{Name} eq 'ProcessManagementActivityID';
-
-        $Self->{DynamicFields}->{ $DynamicField->{Name} } = $DynamicField->{Label};
-    }
-}
-
-=item _GetValidAdditionalScreens()
-
-get all additional screens for Znuny4OTRSAdvancedDynamicFields
-
-    Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreensAdditional
-    Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreensAdditional
-
-=cut
-
-sub _GetValidAdditionalScreens {
-    my ( $Self, %Param ) = @_;
-
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-
-    SCREEN:
-    for my $Screen (qw( DynamicFieldScreens DefaultColumnsScreens )) {
-
-        my %Data = %{ $ConfigObject->Get( "Znuny4OTRSAdvancedDynamicFields::" . $Screen . "Additional" ) || {} };
-        next SCREEN if !%Data;
-
-        ADDITIONAL:
-        for my $CurrentConfig ( sort keys %Data ) {
-
-            my ( $ConfigPath, $Key ) = split '###', $CurrentConfig;
-            my $ConfigData = $ConfigObject->Get($ConfigPath);
-
-            next ADDITIONAL if !defined $ConfigData->{$Key};
-
-            %{ $Self->{$Screen} } = (
-                %{ $Self->{$Screen} },
-                $CurrentConfig => $Data{$CurrentConfig},
-            );
-        }
-    }
 }
 
 1;

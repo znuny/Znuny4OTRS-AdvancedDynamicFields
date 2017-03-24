@@ -25,6 +25,9 @@ sub Data {
     $Self->{Translation}->{'DynamicFields Import'} = 'Dynamische Felder importieren';
     $Self->{Translation}->{'DynamicFields Export'} = 'Dynamische Felder exportieren';
 
+    $Self->{Translation}->{'Screens'} = 'Oberflächen';
+    $Self->{Translation}->{'Fields'}  = 'Felder';
+
     # Screens
     # Frontend
     $Self->{Translation}->{'You can assign elements to this Screen/Field by dragging the elements with the mouse from the left list to the right list.'} = 'Sie können diese Elemente den Oberflächen/Feldern zuweisen, indem Sie sie mit der Maus aus der rechten Liste in die linke Liste verschieben.';
