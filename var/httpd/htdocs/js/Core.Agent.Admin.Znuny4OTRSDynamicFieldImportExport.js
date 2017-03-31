@@ -30,6 +30,7 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldImportExport = (function (TargetNS) {
 
             });
         });
+
     };
 
     return TargetNS;
