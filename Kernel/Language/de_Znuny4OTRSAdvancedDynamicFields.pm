@@ -20,6 +20,10 @@ sub Data {
     # Frontend
     $Self->{Translation}->{'Here you can upload a configuration file to import dynamic fields to your system. The file needs to be in .yml format as exported by dynamic field management module.'} = 'Hier können Sie eine Konfigurationsdatei hochladen, um dynamische Felder auf Ihr System zu importieren. Die Datei muss im .yml-Format vorliegen, wie es von dem dynamischen Feld Verwaltungsmodul exportiert wird.';
 
+    $Self->{Translation}->{'Here you can export a configuration file of dynamic fields and dynamic field screens to import these on another system. The configuration file is exported in yml format.'} = 'Hier können Sie eine Konfigurationsdatei von dynamischen Feldern und dynamischen Felder Oberflächen exportieren, um diese auf einem anderen System zu importieren. Die Konfigurationsdatei wird im yml Format exportiert.';
+
+    $Self->{Translation}->{'Select the items you want to '} = 'Wählen Sie die Elemente aus, um sie zu ';
+
     $Self->{Translation}->{'Here you can manage the dynamic fields in the respective screens.'} = 'Hier können Sie die dynamischen Felder in den jeweiligen Oberflächen verwalten.';
 
     $Self->{Translation}->{'DynamicFields Import'} = 'Dynamische Felder importieren';
@@ -27,6 +31,9 @@ sub Data {
 
     $Self->{Translation}->{'Screens'} = 'Oberflächen';
     $Self->{Translation}->{'Fields'}  = 'Felder';
+
+    $Self->{Translation}->{'Export'}  = 'Exportieren';
+    $Self->{Translation}->{'Import'}  = 'Importieren';
 
     # Screens
     # Frontend
