@@ -101,7 +101,10 @@
                                 <td class='Center'>
 [% RenderBlockStart("DynamicFieldScreensCheckbox") %]
                                     <input type="checkbox" id="DynamicFieldScreens" name="DynamicFieldScreens" value="[% Data.Name | html %]" checked />
-                                    <a href="#" id="ShowConfig" value="[% Data.Name | html %]">
+                                    <!--
+                                        TODO
+                                        <a id="ShowConfig" value="[% Data.Name | html %]">[% Translate("ShowConfig") | html %]</a>
+                                    -->
 [% RenderBlockEnd("DynamicFieldScreensCheckbox") %]
                                 </td>
                                 <td>
@@ -128,16 +131,25 @@
                                     <div>[% Translate(Data.Valid) | html %]</div>
                                 </td>
                             </tr>
+<!-- TODO
 [% RenderBlockStart("DynamicFieldScreens") %]
                             <tr class="Hidden" id="[% Data.Name | html %]">
+                            <p>
+                                <td colspan="1"></td>
+                                <td class='Center' colspan="1">
+                                    <input type="checkbox" id="DynamicFieldScreens" name="DynamicFieldScreens" value="[% Data.Name | html %]" checked />
+
+                                </td>
                                 <td colspan="5">
                                     [% Translate("No data found.") | html %]
                                 </td>
                                 <td colspan="3">
                                     [% Translate("No data found.") | html %]
                                 </td>
+                            </p>
                             </tr>
 [% RenderBlockEnd("DynamicFieldScreens") %]
+-->
 [% RenderBlockEnd("DynamicFieldsRow") %]
                         </tbody>
                     </table>
