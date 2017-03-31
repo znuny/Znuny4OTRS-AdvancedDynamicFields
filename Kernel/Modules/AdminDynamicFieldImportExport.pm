@@ -189,10 +189,6 @@ sub Run {
                 my $Selected = grep { $DynamicField eq $_ } @DynamicFieldForScreensSelected;
                 next DYNAMICFIELD if !$Selected;
 
-          #                 # check if dynamic field exists
-          #                 my $DynamicFieldExists = grep { $DynamicField eq $_ } sort keys %{ $Self->{DynamicFields} };
-          #                 next DYNAMICFIELDSCREEN if !$DynamicFieldExists;
-
                 $DynamicFieldsScreensImport{$DynamicField} = $ImportData->{DynamicFieldsScreens}->{$DynamicField};
             }
 
