@@ -38,7 +38,7 @@ sub Data {
     $Self->{Translation}->{'Dynamic Fields'}          = 'Campos Dinâmicos';
 
     $Self->{Translation}->{'Available Elements'}         = 'Disponíveis';
-    $Self->{Translation}->{'Disabled Elements'}          = 'Desabiltados';
+    $Self->{Translation}->{'Disabled Elements'}          = 'desabilitados';
     $Self->{Translation}->{'Assigned Elements'}          = 'Atribuídos';
     $Self->{Translation}->{'Assigned Required Elements'} = 'Atribuídos e Obrigatórios';
 
@@ -48,19 +48,19 @@ sub Data {
     # Filtros
     $Self->{Translation}->{'Filter Dynamic Fields Screen'}      = 'Filtrar Tela Campos Dinâmicos';
     $Self->{Translation}->{'Filter available elements'}         = 'Filtrar elementos disponíveis';
-    $Self->{Translation}->{'Filter disabled elements'}          = 'Filtrar elementos desabiltados';
+    $Self->{Translation}->{'Filter disabled elements'}          = 'Filtrar elementos desabilitados';
     $Self->{Translation}->{'Filter assigned elements'}          = 'Filtrar elementos atribuídos';
     $Self->{Translation}->{'Filter assigned required elements'} = 'Filtrar elementos atribuídos e obrigatórios';
 
     $Self->{Translation}->{'Add DynamicField'}  = 'Adicionar Campo Dinâmico';
 
     $Self->{Translation}->{'Toggle all available elements'}         = 'Selecionar todos os elementos disponíveis';
-    $Self->{Translation}->{'Toggle all disabled elements'}          = 'Selecionar todos os elementos desabiltados';
+    $Self->{Translation}->{'Toggle all disabled elements'}          = 'Selecionar todos os elementos desabilitados';
     $Self->{Translation}->{'Toggle all assigned elements'}          = 'Selecionar todos os elementos atribuídos';
     $Self->{Translation}->{'Toggle all assigned required elements'} = 'Selecionar todos os elementos atribuídos e obrigatórios';
 
     $Self->{Translation}->{'selected to available elements'}         = 'selecionados para os elementos disponíveis';
-    $Self->{Translation}->{'selected to disabled elements'}          = 'selecionados para elementos desabiltados';
+    $Self->{Translation}->{'selected to disabled elements'}          = 'selecionados para elementos desabilitados';
     $Self->{Translation}->{'selected to assigned elements'}          = 'selecionados para os elementos atribuídos';
     $Self->{Translation}->{'selected to assigned required elements'} = 'selecionados para os elementos atribuídos e obrigatórios';
 
