@@ -24,7 +24,7 @@
                         <span><i class="fa fa-plus-square"></i>[% Translate("Dynamic Fields") | html %]</span></a>
                     </li>
                     <li>
-                        <a href='$LayoutObject->{Baselink}Action=AdminDynamicFieldScreen' class='CallForAction Fullsize Center'>
+                        <a href='[% Env("Baselink") %]Action=AdminDynamicFieldScreen' class='CallForAction Fullsize Center'>
                         <span><i class='fa fa-plus-square'></i>[% Translate("Dynamic Fields Screens") | html %]</span></a>
                     </li>
 [% RenderBlockEnd("ActionOverview") %]
@@ -34,17 +34,24 @@
 
         <div class="WidgetSimple">
             <div class="Header">
-                <h2></h2>
+                <h2>[% Translate("Hint") | html %] - [% Translate(Data.Type) | html %]</h2>
             </div>
             <div class="Content">
                 <div class="FieldExplanation">
                     <p>
+                        <b>
+                            [% Translate("Select the items you want to ") | html %] [% Translate(Data.Type) | html %].
+                        </b>
+
+                        <p>
+                            </br>
 [% RenderBlockStart("ImportHint") %]
-                        [% Translate("ImportHint") | html %]
+                        [% Translate("Here you can export a configuration file of dynamic fields and dynamic field screens to import these on another system. The configuration file is exported in yml format.") | html %]
 [% RenderBlockEnd("ImportHint") %]
 [% RenderBlockStart("ExportHint") %]
-                        [% Translate("ExportHint") | html %]
+                        [% Translate("Here you can export a configuration file of dynamic fields and dynamic field screens to import these on another system. The configuration file is exported in yml format.") | html %]
 [% RenderBlockEnd("ExportHint") %]
+                         </p>
                     </p>
                 </div>
             </div>
