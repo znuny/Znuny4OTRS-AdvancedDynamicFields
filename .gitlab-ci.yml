@@ -11,11 +11,10 @@ job_unit_otrs_Znuny4OTRSAdvancedDynamicFields:
     - pwd
     - /run.sh
     - su -c "perl /opt/otrs/bin/otrs.Console.pl Znuny4OTRS::AdvancedPackageManager::InstallSOPM /opt/otrs/Znuny4OTRS-AdvancedDynamicFields.sopm" -s /bin/bash otrs
-    - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --verbose --directory Znuny4OTRSAdvancedDynamicFields" -s /bin/bash otrs
-    - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --verbose --test test/Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFields" -s /bin/bash otrs
-
-    - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --test Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDefaultColumnsScreen" -s /bin/bash otrs
-    - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --test Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDynamicFieldScreen" -s /bin/bash otrs
+    - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --verbose --test Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFieldImportExport" -s /bin/bash otrs
+    - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --verbose --test Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFields" -s /bin/bash otrs
+    - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --verbose --test Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDefaultColumnsScreen" -s /bin/bash otrs
+    - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --verbose --test Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDynamicFieldScreen" -s /bin/bash otrs
 
 job_deploy_otrs_Znuny4OTRSAdvancedDynamicFields:
   stage: deploy
