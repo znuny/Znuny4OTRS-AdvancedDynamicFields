@@ -31,6 +31,7 @@
         <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DefaultColumnsScreen/Remove.pm"/>
         <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DynamicFieldScreen/Add.pm"/>
         <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DynamicFieldScreen/Remove.pm"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFieldImportExport.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFields.t"/>
         <File Permission="644" Location="scripts/test/Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDefaultColumnsScreen.t"/>
         <File Permission="644" Location="scripts/test/Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDynamicFieldScreen.t"/>
