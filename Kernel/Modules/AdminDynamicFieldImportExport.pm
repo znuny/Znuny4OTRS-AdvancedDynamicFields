@@ -54,21 +54,12 @@ sub Run {
     my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields();
     $Self->{DynamicFields} = $DynamicFields;
 
-    my $ValidScreens = $AdvancedDynamicFieldsObject->GetValidScreens();
+    my $ValidDynamicFieldScreenList = $ZnunyHelperObject->_ValidDynamicFieldScreenListGet(
+        Result => 'HASH',
+    );
 
-    $Self->{DynamicFieldScreens}   = $ValidScreens->{DynamicFieldScreens};
-    $Self->{DefaultColumnsScreens} = $ValidScreens->{DefaultColumnsScreens};
-
-    my $ValidAdditionalScreens = $AdvancedDynamicFieldsObject->GetValidAdditionalScreens();
-
-    SCREEN:
-    for my $Screen (qw( DynamicFieldScreens DefaultColumnsScreens )) {
-        next SCREEN if !$ValidAdditionalScreens->{$Screen};
-        %{ $Self->{$Screen} } = (
-            %{ $Self->{$Screen} },
-            %{ $ValidAdditionalScreens->{$Screen} },
-        );
-    }
+    $Self->{DynamicFieldScreens}   = $ValidDynamicFieldScreenList->{DynamicFieldScreens};
+    $Self->{DefaultColumnsScreens} = $ValidDynamicFieldScreenList->{DefaultColumnsScreens};
 
     $Self->{Subaction} = $ParamObject->GetParam( Param => 'Subaction' ) || '';
 
@@ -128,6 +119,7 @@ sub Run {
         my @DynamicFieldsSelected          = $ParamObject->GetArray( Param => 'DynamicFields' );
         my @DynamicFieldForScreensSelected = $ParamObject->GetArray( Param => 'DynamicFieldScreens' );
         my $OverwriteExistingEntities = $ParamObject->GetParam( Param => 'OverwriteExistingEntities' ) || 0;
+
         my $ImportData = $Data{AdminDynamicFieldImportExport};
 
         my $SessionUpdate = $SessionObject->UpdateSessionID(
@@ -144,7 +136,7 @@ sub Run {
 
             my @DynamicFieldsImport;
             DYNAMICFIELD:
-            for my $DynamicField ( %{ $ImportData->{DynamicFields} } ) {
+            for my $DynamicField ( sort keys %{ $ImportData->{DynamicFields} } ) {
 
                 my $Selected
                     = grep { $ImportData->{DynamicFields}->{$DynamicField}->{Name} eq $_ } @DynamicFieldsSelected;
@@ -194,9 +186,7 @@ sub Run {
 
             if (%DynamicFieldsScreensImport) {
                 $ZnunyHelperObject->_DynamicFieldsScreenConfigImport(
-                    Config                => \%DynamicFieldsScreensImport,
-                    DynamicFieldScreens   => $Self->{DynamicFieldScreens},
-                    DefaultColumnsScreens => $Self->{DefaultColumnsScreens},
+                    Config => \%DynamicFieldsScreensImport,
                 );
             }
         }
@@ -241,9 +231,7 @@ sub Run {
         );
 
         %{ $Data{DynamicFieldsScreens} } = $ZnunyHelperObject->_DynamicFieldsScreenConfigExport(
-            DynamicFields         => \@DynamicFieldForScreens,
-            DynamicFieldScreens   => $Self->{DynamicFieldScreens},
-            DefaultColumnsScreens => $Self->{DefaultColumnsScreens},
+            DynamicFields => \@DynamicFieldForScreens,
         );
 
         # convert the dynamicfielddata hash to string

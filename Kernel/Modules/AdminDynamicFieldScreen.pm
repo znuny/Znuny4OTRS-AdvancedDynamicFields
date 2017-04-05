@@ -30,25 +30,17 @@ sub new {
     bless( $Self, $Type );
 
     my $AdvancedDynamicFieldsObject = $Kernel::OM->Get('Kernel::System::AdvancedDynamicFields');
+    my $ZnunyHelperObject           = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
 
     my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields();
     $Self->{DynamicFields} = $DynamicFields;
 
-    my $ValidScreens = $AdvancedDynamicFieldsObject->GetValidScreens();
+    my $ValidDynamicFieldScreenList = $ZnunyHelperObject->_ValidDynamicFieldScreenListGet(
+        Result => 'HASH',
+    );
 
-    $Self->{DynamicFieldScreens}   = $ValidScreens->{DynamicFieldScreens};
-    $Self->{DefaultColumnsScreens} = $ValidScreens->{DefaultColumnsScreens};
-
-    my $ValidAdditionalScreens = $AdvancedDynamicFieldsObject->GetValidAdditionalScreens();
-
-    SCREEN:
-    for my $Screen (qw( DynamicFieldScreens DefaultColumnsScreens )) {
-        next SCREEN if !$ValidAdditionalScreens->{$Screen};
-        %{ $Self->{$Screen} } = (
-            %{ $Self->{$Screen} },
-            %{ $ValidAdditionalScreens->{$Screen} },
-        );
-    }
+    $Self->{DynamicFieldScreens}   = $ValidDynamicFieldScreenList->{DynamicFieldScreens};
+    $Self->{DefaultColumnsScreens} = $ValidDynamicFieldScreenList->{DefaultColumnsScreens};
 
     return $Self;
 }
@@ -91,9 +83,7 @@ sub Run {
         # get config of element
         if ( $Param{Type} eq 'DynamicField' ) {
             my %ConfigItemConfig = $ZnunyHelperObject->_DynamicFieldsScreenConfigExport(
-                DynamicFields         => [ $Param{Element} ],
-                DynamicFieldScreens   => $Self->{DynamicFieldScreens},
-                DefaultColumnsScreens => $Self->{DefaultColumnsScreens},
+                DynamicFields => [ $Param{Element} ],
             );
 
             %Config = %{ $ConfigItemConfig{ $Param{Element} } || {} };
@@ -159,9 +149,7 @@ sub Run {
             $ScreenConfig{ $Param{Element} } = \%Config;
 
             $ZnunyHelperObject->_DynamicFieldsScreenConfigImport(
-                Config                => \%ScreenConfig,
-                DynamicFieldScreens   => $Self->{DynamicFieldScreens},
-                DefaultColumnsScreens => $Self->{DefaultColumnsScreens},
+                Config => \%ScreenConfig,
             );
         }
         elsif ( $Param{Type} eq 'DynamicFieldScreen' ) {
