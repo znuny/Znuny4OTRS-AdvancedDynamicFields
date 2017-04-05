@@ -154,7 +154,7 @@
                         </tbody>
                     </table>
                     <div class="Field SpacingTop" style="text-align: center;">
-                        <button class="Primary CallForAction" type="submit" value="[% Translate(Data.Type) | html %]">
+                        <button class="Primary CallForAction" type="submit" id="Export" value="[% Translate(Data.Type) | html %]">
                             <span>[% Translate(Data.Type) | html %]</span>
                         </button>
                         [% Translate("or") | html %]
