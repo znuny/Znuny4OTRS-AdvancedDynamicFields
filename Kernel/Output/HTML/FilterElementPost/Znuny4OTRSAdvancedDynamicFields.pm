@@ -37,7 +37,7 @@ sub Run {
     my $LanguageObject = $Kernel::OM->Get('Kernel::Language');
     my $LayoutObject   = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    my $ImportExportHTML = "<div class='WidgetSimple'>
+    my $ImportExportHTML = "<div class='WidgetSimple' id='DynamicFieldImportExportWidget'>
             <div class='Header'>
                 <h2>" . $LanguageObject->Translate('Import / Export') . "</h2>
             </div>
@@ -68,7 +68,7 @@ sub Run {
         . $LanguageObject->Translate('Overwrite existing entities')
         . "</label>
                             </fieldset>
-                            <button class='CallForAction Fullsize Center SpacingTop' type='submit'>
+                            <button class='CallForAction Fullsize Center SpacingTop' id='DynamicFieldImport' type='submit'>
                                 <span><i class='fa fa-upload'></i>"
         . $LanguageObject->Translate('DynamicFields Import')
         . "</span>
@@ -76,7 +76,7 @@ sub Run {
                         </form>
                     </li>
                     <li>
-                        <a href='$LayoutObject->{Baselink}Action=AdminDynamicFieldImportExport;Subaction=Export' class='CallForAction Fullsize Center'><span><i class='fa fa-download'></i>"
+                        <a href='$LayoutObject->{Baselink}Action=AdminDynamicFieldImportExport;Subaction=Export' id='DynamicFieldExport' class='CallForAction Fullsize Center'><span><i class='fa fa-download'></i>"
         . $LanguageObject->Translate('DynamicFields Export')
         . "</span></a>
                     </li>
