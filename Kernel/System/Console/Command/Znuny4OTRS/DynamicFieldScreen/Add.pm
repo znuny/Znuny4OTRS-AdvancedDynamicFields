@@ -82,9 +82,12 @@ sub Run {
     my %DynamicFieldListReverse = reverse %DynamicFieldList;
     my @DynamicFieldList        = values %DynamicFieldList;
 
+    my $ValidDynamicFieldScreenList = $ZnunyHelperObject->_ValidDynamicFieldScreenListGet();
+
+    my @DynamicFieldScreensConfig = @{ $ValidDynamicFieldScreenList->{DynamicFieldScreens} };
+
     if ( !@DynamicFieldScreens ) {
-        @DynamicFieldScreens
-            = sort keys %{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens') };
+        @DynamicFieldScreens = @DynamicFieldScreensConfig;
     }
 
     # show all possible values (screens and dynamic fields)
@@ -99,6 +102,7 @@ sub Run {
         for my $Screen (@DynamicFieldScreens) {
             $Self->Print("\n$Screen");
         }
+        $Self->Print("\n");
         return $Self->ExitCodeOk();
     }
 

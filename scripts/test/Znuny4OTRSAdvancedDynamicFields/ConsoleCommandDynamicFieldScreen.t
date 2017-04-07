@@ -28,9 +28,11 @@ my $HelperObject        = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 my $AddCommandObject    = $Kernel::OM->Get('Kernel::System::Console::Command::Znuny4OTRS::DynamicFieldScreen::Add');
 my $RemoveCommandObject = $Kernel::OM->Get('Kernel::System::Console::Command::Znuny4OTRS::DynamicFieldScreen::Remove');
 
-# get all possible screens
-my %DynamicFieldScreens       = %{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreens') };
-my %DynamicFieldScreenReverse = reverse %DynamicFieldScreens;
+my $ValidDynamicFieldScreenList = $ZnunyHelperObject->_ValidDynamicFieldScreenListGet(
+    Result => 'HASH',
+);
+
+my %DynamicFieldScreenReverse = reverse %{ $ValidDynamicFieldScreenList->{DynamicFieldScreens} };
 
 my @DynamicFields;
 
@@ -232,9 +234,6 @@ for my $Test (@Tests) {
         my %Config = $GetDynamicFieldScreenConfig->(
             ConfigItem => $DynamicFieldScreenReverse{$DynamicFieldScreen},
         );
-
-        use Data::Dumper;
-        print STDERR 'Debug Dump - %Config = ' . Dumper( \%Config ) . "\n";
 
         # check for config in screen for all used dynamicfiels
         for my $DynamicField ( @{ $Test->{Data}->{DynamicFields} } ) {
