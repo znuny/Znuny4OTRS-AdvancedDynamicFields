@@ -29,10 +29,6 @@ my $AddCommandObject   = $Kernel::OM->Get('Kernel::System::Console::Command::Znu
 my $RemoveCommandObject
     = $Kernel::OM->Get('Kernel::System::Console::Command::Znuny4OTRS::DefaultColumnsScreen::Remove');
 
-# get all possible screens
-my %DefaultColumnsScreens        = %{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreens') };
-my %DefaultColumnsScreensReverse = reverse %DefaultColumnsScreens;
-
 my @DynamicFields;
 
 # Add Dynamic Field

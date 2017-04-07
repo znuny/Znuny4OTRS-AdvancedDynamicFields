@@ -78,11 +78,12 @@ sub Run {
     my @DefaultColumnsScreens = @{ $Self->GetOption('screen') // [] };
 
     # get all dynamicFields
-    my %DynamicFieldList        = %{ $DynamicFieldObject->DynamicFieldList( ResultType => 'HASH' ) };
-    my %DynamicFieldListReverse = reverse %DynamicFieldList;
-    my @DynamicFieldList        = values %DynamicFieldList;
-    my @DefaultColumnsScreensConfig
-        = sort keys %{ $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreens') };
+    my %DynamicFieldList            = %{ $DynamicFieldObject->DynamicFieldList( ResultType => 'HASH' ) };
+    my %DynamicFieldListReverse     = reverse %DynamicFieldList;
+    my @DynamicFieldList            = values %DynamicFieldList;
+    my $ValidDynamicFieldScreenList = $ZnunyHelperObject->_ValidDynamicFieldScreenListGet();
+
+    my @DefaultColumnsScreensConfig = @{ $ValidDynamicFieldScreenList->{DefaultColumnsScreens} };
 
     if ( !@DefaultColumnsScreens ) {
         @DefaultColumnsScreens = @DefaultColumnsScreensConfig;
@@ -100,6 +101,7 @@ sub Run {
         for my $Screen (@DefaultColumnsScreens) {
             $Self->Print("\n$Screen");
         }
+        $Self->Print("\n");
         return $Self->ExitCodeOk();
     }
 
