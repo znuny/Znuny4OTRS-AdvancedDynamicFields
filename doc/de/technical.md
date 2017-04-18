@@ -12,9 +12,6 @@ yeah otrs
 Advanced Dynamic Fields
 ```
 
-![AdditionalScreens](doc/images/AdditionalScreens.gif)
-
-
 Alternativ können auch folgende Konfigurationen genutzt werden.
 
 ## DynamicFieldScreensAdditional
