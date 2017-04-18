@@ -17,34 +17,38 @@ Advanced Dynamic Fields
 
 Alternativ können auch folgende Konfigurationen genutzt werden.
 
-## DefaultColumnsScreensAdditional
-```
-<!-- Znuny4OTRSAdvancedDynamicFields DefaultColumnsScreens registration -->
-<ConfigItem Name="Znuny4OTRSAdvancedDynamicFields::DefaultColumnsScreensAdditional###Znuny4OTRS-PackageName" Required="1" Valid="1">
-    <Description Translatable="1">This configuration defines all possible screens to enable or disable default columns.</Description>
-    <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
-    <SubGroup>DynamicFieldScreen</SubGroup>
-    <Setting>
-        <Hash>
-            <Item Key="PathToDefaultColoumnInSysConfig###DefaultColumns">VisibleName</Item>
-            <Item Key="Ticket::Frontend::AgentTicketPackageName###DefaultColumns">AgentTicketWatchlistExtendedOverview</Item>
-        </Hash>
-    </Setting>
-</ConfigItem>
-```
-
 ## DynamicFieldScreensAdditional
 ```
-<!-- Znuny4OTRSAdvancedDynamicFields DynamicFieldScreens registration -->
-<ConfigItem Name="Znuny4OTRSAdvancedDynamicFields::DynamicFieldScreensAdditional###Znuny4OTRS-PackageName" Required="1" Valid="1">
-    <Description Translatable="1">This configuration defines all possible screens to enable or disable dynamic fields.</Description>
-    <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
-    <SubGroup>Core</SubGroup>
-    <Setting>
-        <Hash>
-            <Item Key="PathToDefaultColoumnInSysConfig###DynamicField">VisibleName</Item>
-            <Item Key="Ticket::Frontend::AgentTicketPackageName###DynamicField">ModuleName</Item>
-        </Hash>
-    </Setting>
-</ConfigItem>
+    <!-- Znuny4OTRSAdvancedDynamicFields DynamicFieldScreens registration -->
+    <ConfigItem Name="DynamicFieldScreens###Znuny4OTRS-PackageName" Required="1" Valid="1">
+        <Description Translatable="1">This configuration defines all possible screens to enable or disable dynamic fields.</Description>
+        <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Ticket::Frontend::AgentTicketNewFunction###DynamicField">AgentTicketNewFunction</Item>
+                <Item Key="Ticket::Frontend::AgentTicketNewFunction2###DynamicField">AgentTicketNewFunction2</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+```
+
+## DefaultColumnsScreensAdditional
+```
+    <!-- Znuny4OTRSAdvancedDynamicFields DefaultColumnsScreens registration -->
+    <ConfigItem Name="DefaultColumnsScreens###Znuny4OTRS-PackageName" Required="1" Valid="1">
+        <Description Translatable="1">This configuration defines all possible screens to enable or disable default columns.</Description>
+        <Group>Znuny4OTRS-AdvancedDynamicFields</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Hash>
+                <!-- DefaultColumns -->
+                <Item Key="Ticket::Frontend::AgentTicketNewFunction###DefaultColumns">AgentTicketNewFunction</Item>
+                <Item Key="Ticket::Frontend::AgentTicketServiceNewFunction###DefaultColumns">AgentTicketServiceNewFunction</Item>
+                <!-- DefaultColumns and Dashboard Widgets -->
+                <Item Key="DashboardBackend###0100-TicketPendingReminderNewFunction">DashboardWidget TicketPendingReminderNewFunction</Item>
+                <Item Key="AgentCustomerInformationCenter::Backend###0130-CIC-TicketOpenNewFunction">DashboardWidget CIC-TicketOpenNewFunction</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
 ```

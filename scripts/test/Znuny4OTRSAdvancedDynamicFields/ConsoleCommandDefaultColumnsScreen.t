@@ -205,9 +205,6 @@ for my $Test (@Tests) {
 
         my %Config = $ZnunyHelperObject->_DefaultColumnsGet($DefaultColumnsScreens);
 
-        use Data::Dumper;
-        print STDERR 'Debug Dump - %Config = ' . Dumper( \%Config ) . "\n";
-
         # check for config in screen for all used dynamicfiels
         for my $DynamicField ( @{ $Test->{Data}->{DynamicFields} } ) {
 
