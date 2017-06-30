@@ -23,7 +23,7 @@
         <File Permission="644" Location="Kernel/Modules/AdminDynamicFieldScreen.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/Znuny4OTRSAdvancedDynamicFields.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminDynamicFieldScreen.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldImportExport.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminDynamicFieldImportExport.tt"/>
         <File Permission="644" Location="Kernel/System/AdvancedDynamicFields.pm"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFieldImportExport.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFields.t"/>
