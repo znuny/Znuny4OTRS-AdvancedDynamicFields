@@ -53,6 +53,14 @@ sub Run {
                     <li>
                         <form action='$LayoutObject->{CGIHandle}' method='post' enctype='multipart/form-data' class='Validate PreventMultipleSubmits'>
                             <input type='hidden' name='ChallengeToken' value='$LayoutObject->{UserChallengeToken}'>
+                            "
+        . (
+        $LayoutObject->{SessionID}
+            && !$LayoutObject->{SessionIDCookie}
+        ? "<input type='hidden' name='$LayoutObject->{SessionName}' value='$LayoutObject->{SessionID}'>"
+        : ''
+        )
+        . "
                             <input type='hidden' name='Action' value='AdminDynamicFieldImportExport'/>
                             <input type='hidden' name='Subaction' value='Import'/>
                             <input name='FileUpload' id='FileUpload' type='file' size='18' class='Fixed W100pc Validate_Required [% Data.FileUploadInvalid | html %]'/>
@@ -76,7 +84,12 @@ sub Run {
                         </form>
                     </li>
                     <li>
-                        <a href='$LayoutObject->{Baselink}Action=AdminDynamicFieldImportExport;Subaction=Export' id='DynamicFieldExport' class='CallForAction Fullsize Center'><span><i class='fa fa-download'></i>"
+                        <a href='$LayoutObject->{Baselink}Action=AdminDynamicFieldImportExport;Subaction=Export"
+        . (
+        $LayoutObject->{SessionID}
+            && !$LayoutObject->{SessionIDCookie} ? ";$LayoutObject->{SessionName}=$LayoutObject->{SessionID}" : ''
+        )
+        . "' id='DynamicFieldExport' class='CallForAction Fullsize Center'><span><i class='fa fa-download'></i>"
         . $LanguageObject->Translate('DynamicFields Export')
         . "</span></a>
                     </li>
@@ -95,7 +108,12 @@ sub Run {
                 </p>
                 <ul class='ActionList SpacingTop'>
                     <li>
-                        <a href='$LayoutObject->{Baselink}Action=AdminDynamicFieldScreen' class='CallForAction Fullsize Center'><span><i class='fa fa-plus-square'></i>"
+                        <a href='$LayoutObject->{Baselink}Action=AdminDynamicFieldScreen"
+        . (
+        $LayoutObject->{SessionID}
+            && !$LayoutObject->{SessionIDCookie} ? ";$LayoutObject->{SessionName}=$LayoutObject->{SessionID}" : ''
+        )
+        . "' class='CallForAction Fullsize Center'><span><i class='fa fa-plus-square'></i>"
         . $LanguageObject->Translate('Dynamic Fields Screens')
         . "</span></a>
                     </li>
