@@ -22,6 +22,8 @@ sub Data {
 
     $Self->{Translation}->{'Here you can export a configuration file of dynamic fields and dynamic field screens to import these on another system. The configuration file is exported in yml format.'} = 'Hier können Sie eine Konfigurationsdatei von dynamischen Feldern und dynamischen Felder Oberflächen exportieren, um diese auf einem anderen System zu importieren. Die Konfigurationsdatei wird im yml Format exportiert.';
 
+    $Self->{Translation}->{"Select the desired elements and confirm the import with 'import'."} = "Selektieren Sie die gewünschten Elemente und bestätigen Sie den Import mit 'importieren'.";
+
     $Self->{Translation}->{'Select the items you want to '} = 'Wählen Sie die Elemente aus, um sie zu ';
 
     $Self->{Translation}->{'Here you can manage the dynamic fields in the respective screens.'} = 'Hier können Sie die dynamischen Felder in den jeweiligen Oberflächen verwalten.';
@@ -38,6 +40,7 @@ sub Data {
     # Screens
     # Frontend
     $Self->{Translation}->{'You can assign elements to this Screen/Field by dragging the elements with the mouse from the left list to the right list.'} = 'Sie können diese Elemente den Oberflächen/Feldern zuweisen, indem Sie sie mit der Maus aus der rechten Liste in die linke Liste verschieben.';
+
     $Self->{Translation}->{'Manage dynamic field in screens.'} = 'Verwaltung von dynamischen Feldern in Oberflächen.';
 
     # Elements
@@ -77,7 +80,9 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'This configuration defines if only valids or all (invalids) dynamic fields should be shown.'} = 'Diese Konfiguration definiert ob nur gültige oder alle (ungültige) dynamischen Felder angezeigt werden sollen.';
+
     $Self->{Translation}->{'This configuration defines all possible screens to enable or disable default columns.'} = 'Diese Konfiguration definiert alle möglichen Oberflächen in denen dynamische Felder als DefaultColumns aktiviert/deaktiviert werden können.';
+
     $Self->{Translation}->{'This configuration defines all possible screens to enable or disable dynamic fields.'} = 'Diese Konfiguration definiert alle möglichen Oberflächen in denen dynamische Felder als DynamicFields aktiviert/deaktiviert werden können.';
 
     return 1;
