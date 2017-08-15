@@ -265,10 +265,6 @@ sub Run {
             NoCache     => 1,
         );
 
-        # redirect to AdminDynamicField
-        $HTML .= $LayoutObject->Redirect(
-            OP => "Action=AdminDynamicField",
-        );
         return $HTML;
 
     }
