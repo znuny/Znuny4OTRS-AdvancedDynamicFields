@@ -222,17 +222,34 @@ sub Run {
         my @DynamicFieldForScreens = $ParamObject->GetArray( Param => 'DynamicFieldScreens' );
 
         my %Data;
-        $Data{DynamicFields} = $ZnunyHelperObject->_DynamicFieldsConfigExport(
-            Format                => 'var',
-            IncludeInternalFields => 1,
-            IncludeAllConfigKeys  => 1,
-            DynamicFields         => \@DynamicFields,
-            Result                => 'HASH',
-        );
+        my $HTML;
 
-        %{ $Data{DynamicFieldsScreens} } = $ZnunyHelperObject->_DynamicFieldsScreenConfigExport(
-            DynamicFields => \@DynamicFieldForScreens,
-        );
+        if (@DynamicFields) {
+
+            $Data{DynamicFields} = $ZnunyHelperObject->_DynamicFieldsConfigExport(
+                Format                => 'var',
+                IncludeInternalFields => 1,
+                IncludeAllConfigKeys  => 1,
+                DynamicFields         => \@DynamicFields,
+                Result                => 'HASH',
+            );
+        }
+
+        if (@DynamicFieldForScreens) {
+
+            %{ $Data{DynamicFieldsScreens} } = $ZnunyHelperObject->_DynamicFieldsScreenConfigExport(
+                DynamicFields => \@DynamicFieldForScreens,
+            );
+        }
+
+        if ( !%Data ) {
+
+            # redirect to AdminDynamicFieldImportExport
+            $HTML .= $LayoutObject->Redirect(
+                OP => "Action=AdminDynamicFieldImportExport;Subaction=Export",
+            );
+            return $HTML;
+        }
 
         # convert the dynamicfielddata hash to string
         my $DynamicFieldDataYAML = $YAMLObject->Dump( Data => \%Data );
@@ -240,7 +257,7 @@ sub Run {
         my $TimeStamp = $TimeObject->CurrentTimestamp();
 
         # send the result to the browser
-        my $HTML = $LayoutObject->Attachment(
+        $HTML = $LayoutObject->Attachment(
             ContentType => 'text/html; charset=' . $LayoutObject->{Charset},
             Content     => $DynamicFieldDataYAML,
             Type        => 'attachment',
