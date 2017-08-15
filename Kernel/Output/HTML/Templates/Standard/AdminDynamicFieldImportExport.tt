@@ -46,7 +46,7 @@
                         <p>
                             </br>
 [% RenderBlockStart("ImportHint") %]
-                        [% Translate("Here you can export a configuration file of dynamic fields and dynamic field screens to import these on another system. The configuration file is exported in yml format.") | html %]
+                        [% Translate("Select the desired elements and confirm the import with 'import'.") | html %]
 [% RenderBlockEnd("ImportHint") %]
 [% RenderBlockStart("ExportHint") %]
                         [% Translate("Here you can export a configuration file of dynamic fields and dynamic field screens to import these on another system. The configuration file is exported in yml format.") | html %]
