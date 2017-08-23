@@ -21,8 +21,7 @@ Die Oberfläche ist kategorisiert in **DYNAMISCHE FELDER OBERFLÄCHEN**, **DEFAU
  beinhaltet alle Oberflächen / Tabellen (Overviews) in denen ein dynamisches Feld als Spalte hinzugefügt werden kann.
 
  * **DYNAMISCHE FELDER**
- beinhaltet alle dynamischen Felder die zu **DYNAMISCHE FELDER OBERFLÄCHEN** oder **DEFAULTCOLUMNS
-OBERFLÄCHEN** hinzugefügt werden können.
+ beinhaltet alle dynamischen Felder die zu **DYNAMISCHE FELDER OBERFLÄCHEN** oder **DEFAULTCOLUMNS OBERFLÄCHEN** hinzugefügt werden können.
 
 ![AdminDynamicFieldScreenEditDynamicField](doc/de/images/AdminDynamicFieldScreenEditDynamicField.png)
 
