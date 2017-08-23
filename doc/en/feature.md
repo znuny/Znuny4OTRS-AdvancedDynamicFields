@@ -6,7 +6,11 @@ With a default OTRS it is not possible to do central management of the dynamic f
 
 # GUI
 
+![Dynamic Fields Screens](doc/en/images/Admin.png)
+
 From now you can do this by with a new administration interface available via 'Admin' -> 'Dynamic Fields Screens'.
+
+![AdminDynamicFieldScreen](doc/en/images/AdminDynamicFieldScreen.png)
 
 The administration GUI shows the categories 'DYNAMIC FIELDS SCREENS', 'DEFAULT COLUMNS SCREENS'  und 'DYNAMIC FIELDS'.
 
@@ -15,6 +19,10 @@ The administration GUI shows the categories 'DYNAMIC FIELDS SCREENS', 'DEFAULT C
 'DEFAULT COLUMNS SCREENS' contains all screens / tables (overviews) where dynamic fields can be added as a column.
 
 'DYNAMIC FIELDS' contains all dynamic fields which can be added to 'DYNAMIC FIELDS SCREENS' and 'DEFAULT COLUMNS SCREENS'.
+
+![AdminDynamicFieldScreenEditDynamicField](doc/en/images/AdminDynamicFieldScreenEditDynamicField.png)
+
+![AdminDynamicFieldScreenEditScreen](doc/en/images/AdminDynamicFieldScreenEditScreen.png)
 
 The configuration is easy done by drag and drop.
 
@@ -52,7 +60,7 @@ Example:
 bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove DynamicField_Test
 ```
 
-## Management of Dynamic Fields in screens
+## Management of 'Dynamic Fields Screens' via console
 
 With a default OTRS you have to configure each screen in single step to manage dynamic fields via the SysConfig. The new console command "Znuny4OTRS::DynamicFieldScreen::Add" supports to do this job. The given dynamic fields are configured to all screens with the given state.
 By using the parameter screen it is possible to configure specific screens. By default all available screens are configured.
