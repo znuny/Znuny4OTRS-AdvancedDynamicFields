@@ -34,8 +34,8 @@ The configuration is easy done by drag and drop.
 
 ## Management of Default Columns
 
-To manage the OTRS ticket attributes of a dashboard widget you have to configure the one by one via the SysConfig.
-The new console command "Znuny4OTRS::DashboardColumn::Add" supports you with this by configure the given attribute to all dashboards.
+With a default OTRS you have to configure each **default columns** screen in single step to manage dynamic fields via the SysConfig.
+The new console command "Znuny4OTRS::DefaultColumnsScreen ::Add" supports you with this by configure the given dynamic fields to all **default columns** screen.
 
 ### Add
 
@@ -56,7 +56,7 @@ bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Add --dynamicfield=FieldNa
 
 ### Delete
 
-For deletion the command "Znuny4OTRS::DashboardColumn::Remove" could be used in the same way.
+For deletion the command "Znuny4OTRS::DefaultColumnsScreen ::Remove" could be used in the same way.
 
 With the following command a help screen is shown:
 ```
@@ -76,7 +76,7 @@ bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Remove --dynamicfield=Fiel
 
 ## Management of 'Dynamic Fields Screens' via console
 
-With a default OTRS you have to configure each screen in single step to manage dynamic fields via the SysConfig. The new console command "Znuny4OTRS::DynamicFieldScreen::Add" supports to do this job. The given dynamic fields are configured to all screens with the given state.
+With a default OTRS you have to configure each **dynamic fields** screen in single step to manage dynamic fields via the SysConfig. The new console command "Znuny4OTRS::DynamicFieldScreen::Add" supports to do this job. The given dynamic fields are configured to all **dynamic fields** screens with the given state.
 By using the parameter screen it is possible to configure specific screens. By default all available screens are configured.
 
 ### Add
