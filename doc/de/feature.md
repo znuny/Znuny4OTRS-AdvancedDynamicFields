@@ -33,7 +33,7 @@ Die Administration der einzelnen Elemente kann einfach mittels 'Drag and Drop' d
 
 ## Verwaltung von DefaultColumns
 
-Um im OTRS Standard Ticket-Attribute in allen Dashboard-Konfigurationen hinzuzufügen, bearbeiten oder zu löschen muss jeder Konfigurationseintrag manuell über die SysConfig Oberfläche angepasst werden. Das neue OTRS Konsolenkommando "Znuny4OTRS::DefaultColumnsScreen::Add" erleichtert diese Arbeit, indem das übergebene Ticket-Attribut in allen entsprechenden Dashboard-Konfigurationen mit dem übergebenen Wert gesetzt wird.
+Um im OTRS Standard dynamische Felder in allen möglichen **DefaultColumns** Oberflächen hinzuzufügen, bearbeiten oder zu löschen muss jeder Konfigurationseintrag manuell über die SysConfig Oberfläche angepasst werden. Das neue OTRS Konsolenkommando "Znuny4OTRS::DefaultColumnsScreen::Add" erleichtert diese Arbeit, indem das übergebene dynamische Felder in allen entsprechenden **DefaultColumns**-Konfigurationen mit dem übergebenen Wert gesetzt wird.
 
 ### Hinzufügen
 
@@ -74,7 +74,7 @@ bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Remove --dynamicfield=Fiel
 
 ## Verwaltung von 'Dynamische Felder Oberflächen' via Konsole
 
-Um im OTRS Standard dynamische Felder in allen möglichen Oberflächen hinzuzufügen, bearbeiten oder zu löschen muss jeder Konfigurationseintrag manuell über die SysConfig Oberfläche angepasst werden. Das neue OTRS Konsolenkommando "Znuny4OTRS::DynamicFieldScreen::Add" erleichtert diese Arbeit, indem das übergebene dynamische Felder in allen entsprechenden Oberflächen mit dem übergebenen Wert gesetzt wird.
+Um im OTRS Standard dynamische Felder in allen möglichen **Dynamische Felder** Oberflächen hinzuzufügen, bearbeiten oder zu löschen muss jeder Konfigurationseintrag manuell über die SysConfig Oberfläche angepasst werden. Das neue OTRS Konsolenkommando "Znuny4OTRS::DynamicFieldScreen::Add" erleichtert diese Arbeit, indem das übergebene dynamische Felder in allen entsprechenden **Dynamische Felder** Oberflächen mit dem übergebenen Wert gesetzt wird.
 Es können bestimmte / mehrere Oberflächen mit dem Parameter screen gesetzten werden.
 Default werden alle mögliche Oberflächen verwendet.
 
