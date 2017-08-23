@@ -12,14 +12,17 @@ Die Administration der dynamischen Felder über die GUI ist via Admin -> 'Dynami
 
 ![AdminDynamicFieldScreen](doc/de/images/AdminDynamicFieldScreen.png)
 
-Die Oberfläche ist kategorisiert in 'DYNAMISCHE FELDER OBERFLÄCHEN', 'DEFAULTCOLUMNS OBERFLÄCHEN'  und 'DYNAMISCHE FELDER'.
+Die Oberfläche ist kategorisiert in **DYNAMISCHE FELDER OBERFLÄCHEN**, **DEFAULTCOLUMNS OBERFLÄCHEN**  und **DYNAMISCHE FELDER**.
 
-'DYNAMISCHE FELDER OBERFLÄCHEN' beinhaltet alle Oberflächen in denen ein dynamisches Feld angezeigt werden kann.
+ * **DYNAMISCHE FELDER OBERFLÄCHEN**
+ beinhaltet alle Oberflächen in denen ein dynamisches Feld angezeigt werden kann.
 
-'DEFAULTCOLUMNS OBERFLÄCHEN' beinhaltet alle Oberflächen / Tabellen (Overviews) in denen ein dynamisches Feld als Spalte hinzugefügt werden kann.
+ * **DEFAULTCOLUMNS OBERFLÄCHEN**
+ beinhaltet alle Oberflächen / Tabellen (Overviews) in denen ein dynamisches Feld als Spalte hinzugefügt werden kann.
 
-'DYNAMISCHE FELDER' beinhaltet alle dynamischen Felder die zu 'DYNAMISCHE FELDER OBERFLÄCHEN' oder 'DEFAULTCOLUMNS
-OBERFLÄCHEN' hinzugefügt werden können.
+ * **DYNAMISCHE FELDER**
+ beinhaltet alle dynamischen Felder die zu **DYNAMISCHE FELDER OBERFLÄCHEN** oder **DEFAULTCOLUMNS
+OBERFLÄCHEN** hinzugefügt werden können.
 
 ![AdminDynamicFieldScreenEditDynamicField](doc/de/images/AdminDynamicFieldScreenEditDynamicField.png)
 
@@ -29,7 +32,7 @@ Die Administration der einzelnen Elemente kann einfach mittels 'Drag and Drop' d
 
 # Konsole
 
-## Verwaltung von Dashboard DefaultColumns
+## Verwaltung von DefaultColumns
 
 Um im OTRS Standard Ticket-Attribute in allen Dashboard-Konfigurationen hinzuzufügen, bearbeiten oder zu löschen muss jeder Konfigurationseintrag manuell über die SysConfig Oberfläche angepasst werden. Das neue OTRS Konsolenkommando "Znuny4OTRS::DefaultColumnsScreen::Add" erleichtert diese Arbeit, indem das übergebene Ticket-Attribut in allen entsprechenden Dashboard-Konfigurationen mit dem übergebenen Wert gesetzt wird.
 
@@ -45,7 +48,7 @@ Beispielaufruf:
 bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1
 ```
 
-Screen ist optional
+Screen ist optional:
 ```
 bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1 --screen='DashboardBackend###0130-TicketOpen' --screen='Ticket::Frontend::AgentTicketQueue###DefaultColumns'
 ```
@@ -64,7 +67,7 @@ Beispielaufruf:
 bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2
 ```
 
-Screen ist optional
+Screen ist optional:
 ```
 bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2 --screen='DashboardBackend###0130-TicketOpen' --screen='Ticket::Frontend::AgentTicketQueue###DefaultColumns'
 ```
@@ -93,7 +96,7 @@ Beispielaufruf:
 bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1
 ```
 
-Screen ist optional
+Screen ist optional:
 ```
 bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1 --screen=AgentTicketNote --screen=AgentTicketZoom
 ```
@@ -117,7 +120,7 @@ Beispielaufruf:
 bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2
 ```
 
-Screen ist optional
+Screen ist optional:
 ```
 bin/otrs.Console.pl Znuny4OTRS::DynamicFieldScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2 --screen=AgentTicketNote --screen=AgentTicketZoom
 ```

@@ -12,13 +12,16 @@ From now you can do this by with a new administration interface available via 'A
 
 ![AdminDynamicFieldScreen](doc/en/images/AdminDynamicFieldScreen.png)
 
-The administration GUI shows the categories 'DYNAMIC FIELDS SCREENS', 'DEFAULT COLUMNS SCREENS'  und 'DYNAMIC FIELDS'.
+The administration GUI shows the categories **DYNAMIC FIELDS SCREENS**, **DEFAULT COLUMNS SCREENS**  und **DYNAMIC FIELDS**.
 
-'DYNAMIC FIELDS SCREENS' contains all screen where dynamic fields can be configured to be displayed.
+ * **DYNAMIC FIELDS SCREENS**
+ contains all screen where dynamic fields can be configured to be displayed.
 
-'DEFAULT COLUMNS SCREENS' contains all screens / tables (overviews) where dynamic fields can be added as a column.
+ * **DEFAULT COLUMNS SCREENS**
+ contains all screens / tables (overviews) where dynamic fields can be added as a column.
 
-'DYNAMIC FIELDS' contains all dynamic fields which can be added to 'DYNAMIC FIELDS SCREENS' and 'DEFAULT COLUMNS SCREENS'.
+ * **DYNAMIC FIELDS**
+ contains all dynamic fields which can be added to **DYNAMIC FIELDS SCREENS** and **DEFAULT COLUMNS SCREENS**.
 
 ![AdminDynamicFieldScreenEditDynamicField](doc/en/images/AdminDynamicFieldScreenEditDynamicField.png)
 
@@ -29,7 +32,7 @@ The configuration is easy done by drag and drop.
 
 # Console commands
 
-## Management of Dashboard Default Columns
+## Management of Default Columns
 
 To manage the OTRS ticket attributes of a dashboard widget you have to configure the one by one via the SysConfig.
 The new console command "Znuny4OTRS::DashboardColumn::Add" supports you with this by configure the given attribute to all dashboards.
@@ -38,12 +41,17 @@ The new console command "Znuny4OTRS::DashboardColumn::Add" supports you with thi
 
 With the following command a help screen is shown:
 ```
-bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add
+bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Add
 ```
 
 Example:
 ```
-bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Add DynamicField_Test 2
+bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1
+```
+
+Screen is optional:
+```
+bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Add --dynamicfield=FieldName --dynamicfield=FieldName2 --state 1 --screen='DashboardBackend###0130-TicketOpen' --screen='Ticket::Frontend::AgentTicketQueue###DefaultColumns'
 ```
 
 ### Delete
@@ -52,13 +60,19 @@ For deletion the command "Znuny4OTRS::DashboardColumn::Remove" could be used in 
 
 With the following command a help screen is shown:
 ```
-bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove
+bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Remove
 ```
 
 Example:
 ```
-bin/otrs.Console.pl Znuny4OTRS::DashboardColumn::Remove DynamicField_Test
+bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2
 ```
+
+Screen is optional:
+```
+bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Remove --dynamicfield=FieldName --dynamicfield=FieldName2 --screen='DashboardBackend###0130-TicketOpen' --screen='Ticket::Frontend::AgentTicketQueue###DefaultColumns'
+```
+
 
 ## Management of 'Dynamic Fields Screens' via console
 
