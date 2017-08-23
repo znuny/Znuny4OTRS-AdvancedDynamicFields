@@ -6,7 +6,11 @@ Im OTRS Standard ist es nicht möglich zentral die Konfiguration der dynamischen
 
 # GUI
 
+![Dynamische Felder Oberflächen](doc/de/images/Admin.png)
+
 Die Administration der dynamischen Felder über die GUI ist via Admin -> 'Dynamische Felder Oberflächen' durchzuführen.
+
+![AdminDynamicFieldScreen](doc/de/images/AdminDynamicFieldScreen.png)
 
 Die Oberfläche ist kategorisiert in 'DYNAMISCHE FELDER OBERFLÄCHEN', 'DEFAULTCOLUMNS OBERFLÄCHEN'  und 'DYNAMISCHE FELDER'.
 
@@ -16,6 +20,10 @@ Die Oberfläche ist kategorisiert in 'DYNAMISCHE FELDER OBERFLÄCHEN', 'DEFAULTC
 
 'DYNAMISCHE FELDER' beinhaltet alle dynamischen Felder die zu 'DYNAMISCHE FELDER OBERFLÄCHEN' oder 'DEFAULTCOLUMNS
 OBERFLÄCHEN' hinzugefügt werden können.
+
+![AdminDynamicFieldScreenEditDynamicField](doc/de/images/AdminDynamicFieldScreenEditDynamicField.png)
+
+![AdminDynamicFieldScreenEditScreen](doc/de/images/AdminDynamicFieldScreenEditScreen.png)
 
 Die Administration der einzelnen Elemente kann einfach mittels 'Drag and Drop' durchgeführt werden.
 
@@ -62,7 +70,7 @@ bin/otrs.Console.pl Znuny4OTRS::DefaultColumnsScreen::Remove --dynamicfield=Fiel
 ```
 
 
-## Verwaltung von DynamicFields im Frontend
+## Verwaltung von 'Dynamische Felder Oberflächen' via Konsole
 
 Um im OTRS Standard dynamische Felder in allen möglichen Oberflächen hinzuzufügen, bearbeiten oder zu löschen muss jeder Konfigurationseintrag manuell über die SysConfig Oberfläche angepasst werden. Das neue OTRS Konsolenkommando "Znuny4OTRS::DynamicFieldScreen::Add" erleichtert diese Arbeit, indem das übergebene dynamische Felder in allen entsprechenden Oberflächen mit dem übergebenen Wert gesetzt wird.
 Es können bestimmte / mehrere Oberflächen mit dem Parameter screen gesetzten werden.
