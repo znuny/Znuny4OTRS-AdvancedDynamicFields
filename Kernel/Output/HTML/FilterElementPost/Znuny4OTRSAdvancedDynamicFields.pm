@@ -12,7 +12,6 @@ use strict;
 use warnings;
 
 our @ObjectDependencies = (
-    'Kernel::Language',
     'Kernel::Output::HTML::Layout',
 );
 
@@ -34,7 +33,7 @@ sub Run {
     # check needed stuff
     return if !defined $Param{Data};
 
-    my $LayoutObject   = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     my $Output = $LayoutObject->Output(
         TemplateFile => 'AdminDynamicFieldAdvanced',

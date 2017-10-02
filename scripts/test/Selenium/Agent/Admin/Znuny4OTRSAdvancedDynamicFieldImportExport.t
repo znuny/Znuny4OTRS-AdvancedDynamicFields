@@ -59,9 +59,7 @@ my $SeleniumTest = sub {
         );
     }
 
-# ---
     # GUI AdminDynamicFieldScreen
-# ---
 
     # create test user and login
     my %TestUser = $SeleniumObject->AgentLogin(
