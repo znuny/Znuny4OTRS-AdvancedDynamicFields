@@ -17,7 +17,7 @@
         <ul class='ActionList SpacingTop'>
             <li>
                 <form action='[% Env("CGIHandle") %]' method='post' enctype='multipart/form-data' class='Validate PreventMultipleSubmits'>
-                    <input type='hidden' name='ChallengeToken' value='[% Env("ChallengeTokenParam") | html %]'>
+                    <input type='hidden' name='ChallengeToken' value=[% Env("UserChallengeToken") | JSON %]>
                     <input type='hidden' name='Action' value='AdminDynamicFieldImportExport'/>
                     <input type='hidden' name='Subaction' value='Import'/>
                     <input name='FileUpload' id='FileUpload' type='file' size='18' class='Fixed W100pc Validate_Required [% Data.FileUploadInvalid | html %]'/>
