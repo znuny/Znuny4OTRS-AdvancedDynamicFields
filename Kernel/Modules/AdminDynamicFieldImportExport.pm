@@ -333,10 +333,10 @@ sub _Mask {
 sub _DynamicFieldShow {
     my ( $Self, %Param ) = @_;
 
-    my $LayoutObject       = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $FieldTypeConfig    = $Kernel::OM->Get('Kernel::Config')->Get('DynamicFields::Driver');
-    my $ValidObject        = $Kernel::OM->Get('Kernel::System::Valid');
     my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
+    my $LayoutObject       = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $FieldTypeConfig    = $ConfigObject->Get('DynamicFields::Driver');
+    my $ValidObject        = $Kernel::OM->Get('Kernel::System::Valid');
     my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
 
     # check if at least 1 dynamic field is registered in the system

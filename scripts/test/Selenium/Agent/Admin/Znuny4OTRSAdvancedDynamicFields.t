@@ -59,9 +59,7 @@ my $SeleniumTest = sub {
         );
     }
 
-# ---
     # GUI AdminDynamicFieldScreen
-# ---
 
     # create test user and login
     my %TestUser = $SeleniumObject->AgentLogin(
@@ -118,10 +116,6 @@ my $SeleniumTest = sub {
         $SeleniumObject->find_element( '#AgentTicketNote', 'css' )->is_displayed(),
         "DynamicFieldScreen 'AgentTicketNote' is visible",
     );
-
-# ---
-    # test
-# ---
 
     my %ScreenMapping = (
         AgentTicketNote  => 'DynamicField',
