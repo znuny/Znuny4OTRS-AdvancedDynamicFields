@@ -29,6 +29,7 @@ Fixed small bug - if no DF is selected - you get all fields while export.</Chang
         <File Permission="644" Location="Kernel/Modules/AdminDynamicFieldImportExport.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminDynamicFieldScreen.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/Znuny4OTRSAdvancedDynamicFields.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldAdvanced.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldImportExport.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldScreen.tt"/>
         <File Permission="644" Location="Kernel/System/AdvancedDynamicFields.pm"/>
