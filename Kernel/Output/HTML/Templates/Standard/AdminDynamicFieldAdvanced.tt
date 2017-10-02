@@ -1,0 +1,76 @@
+# --
+# Copyright (C) 2012-2017 Znuny GmbH, http://znuny.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<div class='WidgetSimple' id='DynamicFieldImportExportWidget'>
+    <div class='Header'>
+        <h2>[% Translate('Import / Export') | html %]</h2>
+    </div>
+    <div class='Content'>
+        <p class='FieldExplanation'>
+            [% Translate('Here you can upload a configuration file to import dynamic fields to your system. The file needs to be in .yml format as exported by dynamic field management module.') | html %]
+        </p>
+        <ul class='ActionList SpacingTop'>
+            <li>
+                <form action='[% Env("CGIHandle") %]' method='post' enctype='multipart/form-data' class='Validate PreventMultipleSubmits'>
+                    <input type='hidden' name='ChallengeToken' value='[% Env("ChallengeTokenParam") | html %]'>
+                    <input type='hidden' name='Action' value='AdminDynamicFieldImportExport'/>
+                    <input type='hidden' name='Subaction' value='Import'/>
+                    <input name='FileUpload' id='FileUpload' type='file' size='18' class='Fixed W100pc Validate_Required [% Data.FileUploadInvalid | html %]'/>
+                    <div id='FileUploadError' class='TooltipErrorMessage'>
+                        <p>
+                            [% Translate('This field is required.') | html %]
+                        </p>
+                    </div>
+                    <div id='FileUploadServerError' class='TooltipErrorMessage'>
+                        <p>
+                            % Translate('This field is required.') | html %]
+                        </p>
+                    </div>
+                    <fieldset class='SpacingTop'>
+                        <input type='checkbox' id='OverwriteExistingEntitiesExample' name='OverwriteExistingEntities' value='1'/>
+                        <label for='OverwriteExistingEntitiesExample'>
+                            [% Translate('Overwrite existing entities') | html %]
+                        </label>
+                    </fieldset>
+                    <button class='CallForAction Fullsize Center SpacingTop' id='DynamicFieldImport' type='submit'>
+                        <span><i class='fa fa-upload'></i>
+                            [% Translate('DynamicFields Import') | html %]
+                        </span>
+                    </button>
+                </form>
+            </li>
+            <li>
+                <a href='[% Env("Baselink") %]Action=AdminDynamicFieldImportExport;Subaction=Export' id='DynamicFieldExport' class='CallForAction Fullsize Center'>
+                    <span><i class='fa fa-download'></i>
+                        [% Translate('DynamicFields Export') | html %]
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class='WidgetSimple'>
+    <div class='Header'>
+        <h2>[% Translate('Dynamic Fields Screens') | html %]</h2>
+    </div>
+    <div class='Content'>
+        <p class='FieldExplanation'>
+            [% Translate('Here you can manage the dynamic fields in the respective screens.') | html %]
+        </p>
+        <ul class='ActionList SpacingTop'>
+            <li>
+                <a href='[% Env("Baselink") %]Action=AdminDynamicFieldScreen' class='CallForAction Fullsize Center'>
+                    <span><i class='fa fa-plus-square'></i>
+                        [% Translate('Dynamic Fields Screens') | html %]
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
