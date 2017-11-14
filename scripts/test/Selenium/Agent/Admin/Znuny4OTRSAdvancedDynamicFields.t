@@ -15,12 +15,6 @@ use Kernel::System::VariableCheck qw(:all);
 use vars (qw($Self));
 
 # create configuration backup
-$Kernel::OM->ObjectParamAdd(
-    'Kernel::System::UnitTest::Helper' => {
-        RestoreSystemConfiguration => 1,
-    },
-);
-
 # get the Znuny4OTRS Selenium object
 my $SeleniumObject = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
@@ -160,7 +154,7 @@ my $SeleniumTest = sub {
         sleep(5);
 
         # use PackageSetupInit to rebuild Config
-        $ZnunyHelperObject->_PackageSetupInit();
+        $ZnunyHelperObject->_RebuildConfig();
 
         # make sure to use a new config object
         $Kernel::OM->ObjectsDiscard(

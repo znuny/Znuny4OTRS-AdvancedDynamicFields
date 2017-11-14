@@ -15,33 +15,33 @@ Fixed small bug - if no DF is selected - you get all fields while export.</Chang
     <ChangeLog Version="5.0.1" Date="2016-09-14 20:04:16 +0200">Rebuild _GetDefaultColumnsScreenConfig and fixed typo.</ChangeLog>
     <ChangeLog Version="5.0.0" Date="2016-08-23 10:02:49 +0200">First Release.</ChangeLog>
     <ChangeLog Version="1.0.1" Date="2016-04-12 14:37:40 UTC">Initial release.</ChangeLog>
-    <Framework>5.0.x</Framework>
-    <PackageRequired Version="5.0.22">Znuny4OTRS-Repo</PackageRequired>
+    <Framework>6.0.x</Framework>
+    <PackageRequired Version="6.0.4">Znuny4OTRS-Repo</PackageRequired>
     <Vendor>Znuny GmbH</Vendor>
     <URL>http://znuny.com/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">This package contains the advanced DynamicFields functionalities.</Description>
     <Description Lang="de">Dieses Paket enthält erweiterten Funktionalitäten für die dynamischen Felder.</Description>
     <Filelist>
-        <File Permission="644" Location="Kernel/Config/Files/Znuny4OTRSAdvancedDynamicFields.xml"/>
-        <File Permission="644" Location="Kernel/Language/de_Znuny4OTRSAdvancedDynamicFields.pm"/>
-        <File Permission="644" Location="Kernel/Language/pt_BR_Znuny4OTRSAdvancedDynamicFields.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AdminDynamicFieldImportExport.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AdminDynamicFieldScreen.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/Znuny4OTRSAdvancedDynamicFields.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldAdvanced.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldImportExport.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldScreen.tt"/>
-        <File Permission="644" Location="Kernel/System/AdvancedDynamicFields.pm"/>
-        <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DefaultColumnsScreen/Add.pm"/>
-        <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DefaultColumnsScreen/Remove.pm"/>
-        <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DynamicFieldScreen/Add.pm"/>
-        <File Permission="644" Location="Kernel/System/Console/Command/Znuny4OTRS/DynamicFieldScreen/Remove.pm"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFieldImportExport.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFields.t"/>
-        <File Permission="644" Location="scripts/test/Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDefaultColumnsScreen.t"/>
-        <File Permission="644" Location="scripts/test/Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDynamicFieldScreen.t"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/Core.Agent.Admin.Znuny4OTRSDynamicFieldImportExport.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen.js"/>
+        <File Permission="660" Location="Kernel/Config/Files/XML/Znuny4OTRSAdvancedDynamicFields.xml"/>
+        <File Permission="660" Location="Kernel/Language/de_Znuny4OTRSAdvancedDynamicFields.pm"/>
+        <File Permission="660" Location="Kernel/Language/pt_BR_Znuny4OTRSAdvancedDynamicFields.pm"/>
+        <File Permission="660" Location="Kernel/Modules/AdminDynamicFieldImportExport.pm"/>
+        <File Permission="660" Location="Kernel/Modules/AdminDynamicFieldScreen.pm"/>
+        <File Permission="660" Location="Kernel/Output/HTML/FilterElementPost/Znuny4OTRSAdvancedDynamicFields.pm"/>
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldAdvanced.tt"/>
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldImportExport.tt"/>
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldScreen.tt"/>
+        <File Permission="660" Location="Kernel/System/AdvancedDynamicFields.pm"/>
+        <File Permission="660" Location="Kernel/System/Console/Command/Znuny4OTRS/DefaultColumnsScreen/Add.pm"/>
+        <File Permission="660" Location="Kernel/System/Console/Command/Znuny4OTRS/DefaultColumnsScreen/Remove.pm"/>
+        <File Permission="660" Location="Kernel/System/Console/Command/Znuny4OTRS/DynamicFieldScreen/Add.pm"/>
+        <File Permission="660" Location="Kernel/System/Console/Command/Znuny4OTRS/DynamicFieldScreen/Remove.pm"/>
+        <File Permission="660" Location="scripts/test/Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFieldImportExport.t"/>
+        <File Permission="660" Location="scripts/test/Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFields.t"/>
+        <File Permission="660" Location="scripts/test/Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDefaultColumnsScreen.t"/>
+        <File Permission="660" Location="scripts/test/Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDynamicFieldScreen.t"/>
+        <File Permission="660" Location="var/httpd/htdocs/js/Core.Agent.Admin.Znuny4OTRSDynamicFieldImportExport.js"/>
+        <File Permission="660" Location="var/httpd/htdocs/js/Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen.js"/>
     </Filelist>
 </otrs_package>

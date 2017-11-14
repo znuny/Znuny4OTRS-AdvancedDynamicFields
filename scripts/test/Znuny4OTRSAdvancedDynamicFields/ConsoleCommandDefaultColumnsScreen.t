@@ -16,8 +16,7 @@ use Kernel::System::VariableCheck qw(:all);
 
 $Kernel::OM->ObjectParamAdd(
     'Kernel::System::UnitTest::Helper' => {
-        RestoreSystemConfiguration => 1,
-        RestoreDatabase            => 1,
+        RestoreDatabase => 1,
     },
 );
 
@@ -198,7 +197,7 @@ for my $Test (@Tests) {
     next TEST if $ExitCode != $Test->{ExpectedExitCode};
 
     # use PackageSetupInit to rebuild Config
-    $ZnunyHelperObject->_PackageSetupInit();
+    $ZnunyHelperObject->_RebuildConfig();
 
     # check is everthing is set correctly
     for my $DefaultColumnsScreens ( @{ $Test->{Data}->{DefaultColumnsScreens} } ) {

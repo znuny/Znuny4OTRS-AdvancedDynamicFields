@@ -102,3 +102,5 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
 
     return TargetNS;
 }(Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen || {}));
+
+Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen.Init();
