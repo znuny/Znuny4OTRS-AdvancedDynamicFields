@@ -29,11 +29,7 @@ All AdvancedDynamicFields functions.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item new()
+=head2 new()
 
 create an object. Do not use it directly, instead use:
 
@@ -53,7 +49,7 @@ sub new {
     return $Self;
 }
 
-=item GetValidDynamicFields()
+=head2 GetValidDynamicFields()
 
 Returns a list of valid dynamic fields.
 
@@ -82,7 +78,7 @@ sub GetValidDynamicFields {
         Valid      => $DynamicFieldValid,
     );
 
-    my $DynamicFields //= {};
+    my $DynamicFields = {};
 
     DYNAMICFIELD:
     for my $DynamicField ( @{$DynamicFieldList} ) {
@@ -100,8 +96,6 @@ sub GetValidDynamicFields {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

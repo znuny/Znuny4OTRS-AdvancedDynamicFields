@@ -18,7 +18,7 @@ our @ObjectDependencies = (
     'Kernel::System::AuthSession',
     'Kernel::System::DynamicField',
     'Kernel::System::Log',
-    'Kernel::System::Time',
+    'Kernel::System::ZnunyTime',
     'Kernel::System::Valid',
     'Kernel::System::Web::Request',
     'Kernel::System::YAML',
@@ -45,7 +45,7 @@ sub Run {
     my $LogObject                   = $Kernel::OM->Get('Kernel::System::Log');
     my $LayoutObject                = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $ParamObject                 = $Kernel::OM->Get('Kernel::System::Web::Request');
-    my $TimeObject                  = $Kernel::OM->Get('Kernel::System::Time');
+    my $TimeObject                  = $Kernel::OM->Get('Kernel::System::ZnunyTime');
     my $YAMLObject                  = $Kernel::OM->Get('Kernel::System::YAML');
     my $ZnunyHelperObject           = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
     my $AdvancedDynamicFieldsObject = $Kernel::OM->Get('Kernel::System::AdvancedDynamicFields');
@@ -280,6 +280,8 @@ sub Run {
 
         return $HTML;
     }
+
+    return;
 }
 
 sub _Mask {

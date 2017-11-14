@@ -105,7 +105,7 @@ sub Run {
             %Config = %{ $ConfigItemConfig{ $Param{Element} } || {} };
         }
 
-        $Self->_ShowEdit(
+        return $Self->_ShowEdit(
             %Param,
             Data => \%Config,
         );
@@ -190,8 +190,22 @@ sub Run {
             return $Self->_ShowOverview();
         }
 
-        $SysConfigObject->ConfigItemReset(
-            Name => $Param{Element},
+        my %Setting = $SysConfigObject->SettingGet(
+            Name         => $Param{Element},
+            TargetUserID => $Self->{UserID},
+        );
+
+        my $ExclusiveLockGUID = $Setting{ExclusiveLockGUID};
+
+        use Data::Dumper;
+        print STDERR 'Debug Dump  - %Setting = ' . Dumper(\%Setting) . "\n";
+        print STDERR 'Debug Dump  - $ExclusiveLockGUID = ' . Dumper(\$ExclusiveLockGUID) . "\n";
+        print STDERR 'Debug Dump  - $Self->{UserID} = ' . Dumper(\$Self->{UserID}) . "\n";
+
+        my $Success = $SysConfigObject->SettingReset(
+            Name              => $Param{Element},
+            ExclusiveLockGUID => $ExclusiveLockGUID,
+            UserID            => $Self->{UserID},
         );
 
         $Param{Element} = $LayoutObject->LinkEncode( $Param{Element} );
@@ -208,6 +222,8 @@ sub Run {
     else {
         return $Self->_ShowOverview();
     }
+
+    return;
 }
 
 sub _ShowOverview {
@@ -221,8 +237,6 @@ sub _ShowOverview {
     my %DefaultColumnsScreens = %{ $Self->{DefaultColumnsScreens} };
 
     # show output
-    $LayoutObject->Block( Name => 'ActionList' );
-    $LayoutObject->Block( Name => 'ActionOverview' );
     $LayoutObject->Block( Name => 'Overview' );
 
     for my $DynamicFieldScreen ( sort keys %DynamicFieldScreens ) {
@@ -233,7 +247,7 @@ sub _ShowOverview {
             Data => {
                 DynamicFieldScreen => $DynamicFieldScreen,
                 Name               => $DynamicFieldScreens{$DynamicFieldScreen},
-                }
+            },
         );
     }
 
@@ -245,7 +259,7 @@ sub _ShowOverview {
             Data => {
                 DefaultColumnsScreen => $DefaultColumnsScreen,
                 Name                 => $DefaultColumnsScreens{$DefaultColumnsScreen},
-                }
+            },
         );
     }
 
@@ -264,7 +278,7 @@ sub _ShowOverview {
                 Data => {
                     DynamicField => $DynamicField,
                     Name         => $DynamicFields{$DynamicField},
-                    }
+                },
             );
         }
     }
@@ -327,25 +341,6 @@ sub _ShowEdit {
         %OtherElements = %DynamicFieldScreens;
     }
 
-    # show button
-    $LayoutObject->Block( Name => 'ActionList' );
-    $LayoutObject->Block( Name => 'ActionOverview' );
-    $LayoutObject->Block( Name => 'ActionOverviewList' );
-
-    # shows sidebar selection
-    for my $Element ( sort keys %OtherElements ) {
-
-        # output row
-        $LayoutObject->Block(
-            Name => 'ActionOverviewRow',
-            Data => {
-                Element    => $OtherElements{$Element},
-                ElementKey => $Element,
-                Type       => $Param{Type},
-                }
-        );
-    }
-
     # output input page
     $LayoutObject->Block(
         Name => 'Edit',
@@ -354,6 +349,21 @@ sub _ShowEdit {
             %Data,
         },
     );
+
+    # shows sidebar selection
+    for my $Element ( sort keys %OtherElements ) {
+
+        # output row
+        $LayoutObject->Block(
+            Name => 'ActionOverviewRowEdit',
+            Data => {
+                Element    => $OtherElements{$Element},
+                ElementKey => $Element,
+                Type       => $Param{Type},
+            },
+        );
+    }
+
 
     # get used fields by the dynamic field group
     if (%Data) {
