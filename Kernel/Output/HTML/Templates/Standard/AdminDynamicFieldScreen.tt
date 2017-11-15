@@ -155,7 +155,7 @@
             <div class="Content">
                 <form id='Form' action="[% Env("CGIHandle") %]" method="post" class="Validate PreventMultipleSubmits">
                     <input type="hidden" name="Action" value="[% Env("Action") %]"/>
-                    <input type="hidden" name="Subaction" value="[% Env("Subaction") %]Action"/>
+                    <input type="hidden" name="Subaction" value="[% Data.Action | html %]Action"/>
                     <input type="hidden" name="Type" value="[% Data.Type | html %]"/>
                     <input type="hidden" name="Element" value="[% Data.Element | html %]"/>
                     <input type="hidden" name="Fields" value=""/>

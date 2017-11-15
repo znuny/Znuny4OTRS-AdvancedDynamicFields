@@ -89,7 +89,7 @@ sub Run {
             Value     => $PerlStructure,
         );
 
-        $Self->_Mask(
+        return $Self->_Mask(
             Data                      => $PerlStructure,
             Type                      => $Self->{Subaction},
             OverwriteExistingEntities => $OverwriteExistingEntities || 0,
@@ -205,7 +205,7 @@ sub Run {
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Export' ) {
 
-        $Self->_Mask(
+        return $Self->_Mask(
             %Param,
             Type => $Self->{Subaction},
         );

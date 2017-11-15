@@ -43,6 +43,12 @@ sub Data {
 
     $Self->{Translation}->{'Manage dynamic field in screens.'} = 'Verwaltung von dynamischen Feldern in Oberflächen.';
 
+    $Self->{Translation}->{'Settings were reset.'} = 'Einstellungen wurden zurückgesetzt.';
+    $Self->{Translation}->{'Settings were saved.'} = 'Einstellungen wurden gespeichert.';
+
+    $Self->{Translation}->{'System was not able to save the setting!'}  = 'Das System konnte die Einstellung nicht speichern!';
+    $Self->{Translation}->{'System was not able to reset the setting!'} = 'Das System konnte die Einstellung nicht zurücksetzen!';
+
     # Elements
     $Self->{Translation}->{'Management of Dynamic Fields <-> Screens'} = 'Verwaltung von Dynamische Feldern <-> Oberflächen';
 
