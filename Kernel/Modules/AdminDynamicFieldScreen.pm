@@ -13,6 +13,7 @@ use warnings;
 
 our @ObjectDependencies = (
     'Kernel::Config',
+    'Kernel::Language',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::AdvancedDynamicFields',
     'Kernel::System::Log',
@@ -55,6 +56,7 @@ sub Run {
     my $ZnunyHelperObject           = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
     my $LayoutObject                = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $ParamObject                 = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LanguageObject              = $Kernel::OM->Get('Kernel::Language');
     my $AdvancedDynamicFieldsObject = $Kernel::OM->Get('Kernel::System::AdvancedDynamicFields');
 
     $Self->{Subaction} = $ParamObject->GetParam( Param => 'Subaction' ) || '';
@@ -69,41 +71,14 @@ sub Run {
 
         $Param{$Needed} = $ParamObject->GetParam( Param => $Needed );
         next NEEDED if $Param{$Needed};
-
-        $Self->{Subaction} = '';
     }
+
+    my %Config = $Self->_GetConfig(%Param);
 
     # ------------------------------------------------------------ #
     # Edit
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'Edit' ) {
-
-        my %Config;
-
-        # get config of element
-        if ( $Param{Type} eq 'DynamicField' ) {
-            my %ConfigItemConfig = $ZnunyHelperObject->_DynamicFieldsScreenConfigExport(
-                DynamicFields => [ $Param{Element} ],
-            );
-
-            %Config = %{ $ConfigItemConfig{ $Param{Element} } || {} };
-        }
-        elsif ( $Param{Type} eq 'DynamicFieldScreen' ) {
-
-            my %ConfigItemConfig = $ZnunyHelperObject->_DynamicFieldsScreenGet(
-                ConfigItems => [ $Param{Element} ],
-            );
-
-            %Config = %{ $ConfigItemConfig{ $Param{Element} } || {} };
-        }
-        elsif ( $Param{Type} eq 'DefaultColumnsScreen' ) {
-
-            my %ConfigItemConfig = $ZnunyHelperObject->_DynamicFieldsDefaultColumnsGet(
-                ConfigItems => [ $Param{Element} ],
-            );
-
-            %Config = %{ $ConfigItemConfig{ $Param{Element} } || {} };
-        }
 
         return $Self->_ShowEdit(
             %Param,
@@ -140,6 +115,7 @@ sub Run {
             %AssignedRequiredElements,
         );
 
+        my $Success;
         my %ScreenConfig;
         $ScreenConfig{ $Param{Element} } ||= {};
 
@@ -148,7 +124,7 @@ sub Run {
 
             $ScreenConfig{ $Param{Element} } = \%Config;
 
-            $ZnunyHelperObject->_DynamicFieldsScreenConfigImport(
+            $Success = $ZnunyHelperObject->_DynamicFieldsScreenConfigImport(
                 Config => \%ScreenConfig,
             );
         }
@@ -158,7 +134,7 @@ sub Run {
                 $ScreenConfig{ $Param{Element} }->{$DynamicField} = $Config{$DynamicField};
             }
 
-            $ZnunyHelperObject->_DynamicFieldsScreenEnable(%ScreenConfig);
+            $Success = $ZnunyHelperObject->_DynamicFieldsScreenEnable(%ScreenConfig);
         }
         elsif ( $Param{Type} eq 'DefaultColumnsScreen' ) {
 
@@ -166,14 +142,24 @@ sub Run {
                 $ScreenConfig{ $Param{Element} }->{ 'DynamicField_' . $DynamicField } = $Config{$DynamicField};
             }
 
-            $ZnunyHelperObject->_DefaultColumnsEnable(%ScreenConfig);
+            $Success = $ZnunyHelperObject->_DefaultColumnsEnable(%ScreenConfig);
         }
 
-        $Param{Element} = $LayoutObject->LinkEncode( $Param{Element} );
+        $Param{Priority} = 'Info';
+        $Param{Message}  = $LanguageObject->Translate(
+            "Settings were saved.",
+        );
 
-        # redirect to the same view
-        return $LayoutObject->Redirect(
-            OP => "Action=$Self->{Action};Subaction=Edit;Type=$Param{Type};Element=$Param{Element};"
+        if ( !$Success ) {
+            $Param{Priority} = 'Error';
+            $Param{Message}  = $LanguageObject->Translate(
+                "System was not able to save the setting!",
+            );
+        }
+
+        return $Self->_ShowEdit(
+            %Param,
+            Data => \%Config,
         );
     }
 
@@ -181,6 +167,8 @@ sub Run {
     # Reset
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Reset' ) {
+
+        $Self->{Subaction} = 'Edit';
 
         if (
             $Param{Type} ne 'DynamicFieldScreen'
@@ -190,17 +178,37 @@ sub Run {
             return $Self->_ShowOverview();
         }
 
+        my $ExclusiveLockGUID;
         my %Setting = $SysConfigObject->SettingGet(
-            Name         => $Param{Element},
-            TargetUserID => $Self->{UserID},
+            Name => $Param{Element},
         );
 
-        my $ExclusiveLockGUID = $Setting{ExclusiveLockGUID};
+        if ( !$Setting{ExclusiveLockGUID} ) {
 
-        use Data::Dumper;
-        print STDERR 'Debug Dump  - %Setting = ' . Dumper(\%Setting) . "\n";
-        print STDERR 'Debug Dump  - $ExclusiveLockGUID = ' . Dumper(\$ExclusiveLockGUID) . "\n";
-        print STDERR 'Debug Dump  - $Self->{UserID} = ' . Dumper(\$Self->{UserID}) . "\n";
+            # Setting is not locked yet.
+            $ExclusiveLockGUID = $SysConfigObject->SettingLock(
+                UserID    => $Self->{UserID},
+                DefaultID => $Setting{DefaultID},
+            );
+        }
+        elsif ( $Setting{ExclusiveLockUserID} != $Self->{UserID} ) {
+
+            # Someone else locked the setting.
+            $Param{Priority} = 'Error';
+            $Param{Message}  = $LanguageObject->Translate(
+                "Setting is locked by another user!",
+            );
+
+            return $Self->_ShowEdit(
+                %Param,
+                Data => \%Config,
+            );
+        }
+        else {
+
+            # Already locked to this user.
+            $ExclusiveLockGUID = $Setting{ExclusiveLockGUID};
+        }
 
         my $Success = $SysConfigObject->SettingReset(
             Name              => $Param{Element},
@@ -208,11 +216,43 @@ sub Run {
             UserID            => $Self->{UserID},
         );
 
-        $Param{Element} = $LayoutObject->LinkEncode( $Param{Element} );
+        if ( !$Success ) {
 
-        # redirect to the same view
-        return $LayoutObject->Redirect(
-            OP => "Action=$Self->{Action};Subaction=Edit;Type=$Param{Type};Element=$Param{Element}"
+            $Param{Priority} = 'Error';
+            $Param{Message}  = $LanguageObject->Translate(
+                "System was not able to reset the setting!",
+            );
+
+            return $Self->_ShowEdit(
+                %Param,
+                Data => \%Config,
+            );
+        }
+
+        $SysConfigObject->SettingUnlock(
+            DefaultID => $Setting{DefaultID},
+        );
+
+        $Success = $ZnunyHelperObject->_RebuildConfig();
+
+        $Param{Priority} = 'Info';
+        $Param{Message}  = $LanguageObject->Translate(
+            "Settings were reset.",
+        );
+
+        if ( !$Success ) {
+            $Param{Priority} = 'Error';
+            $Param{Message}  = $LanguageObject->Translate(
+                "System was not able to reset the setting!",
+            );
+        }
+
+        # get new config
+        %Config = $Self->_GetConfig(%Param);
+
+        return $Self->_ShowEdit(
+            %Param,
+            Data => \%Config,
         );
     }
 
@@ -302,6 +342,8 @@ sub _ShowEdit {
 
     my $NoAssignedRequiredFieldRow;
 
+    $Param{Action} = 'Edit';
+
     my %Data                  = %{ $Param{Data} || {} };
     my %DynamicFields         = %{ $Self->{DynamicFields} };
     my %DynamicFieldScreens   = %{ $Self->{DynamicFieldScreens} };
@@ -363,7 +405,6 @@ sub _ShowEdit {
             },
         );
     }
-
 
     # get used fields by the dynamic field group
     if (%Data) {
@@ -433,6 +474,14 @@ sub _ShowEdit {
     # output header
     my $Output = $LayoutObject->Header();
     $Output .= $LayoutObject->NavigationBar();
+
+    if ( $Param{Message} && $Param{Priority} ) {
+        $Output .= $LayoutObject->Notify(
+            Priority => $Param{Priority} || 'Info',
+            Info => $Param{Message},
+        );
+    }
+
     $Output .= $LayoutObject->Output(
         TemplateFile => 'AdminDynamicFieldScreen',
     );
@@ -440,6 +489,42 @@ sub _ShowEdit {
     $Output .= $LayoutObject->Footer();
 
     return $Output;
+}
+
+sub _GetConfig {
+    my ( $Self, %Param ) = @_;
+
+    my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
+
+    my %Config;
+
+    # get config of element
+    if ( $Param{Type} eq 'DynamicField' ) {
+        my %ConfigItemConfig = $ZnunyHelperObject->_DynamicFieldsScreenConfigExport(
+            DynamicFields => [ $Param{Element} ],
+        );
+
+        %Config = %{ $ConfigItemConfig{ $Param{Element} } || {} };
+    }
+    elsif ( $Param{Type} eq 'DynamicFieldScreen' ) {
+
+        my %ConfigItemConfig = $ZnunyHelperObject->_DynamicFieldsScreenGet(
+            ConfigItems => [ $Param{Element} ],
+        );
+
+        %Config = %{ $ConfigItemConfig{ $Param{Element} } || {} };
+    }
+    elsif ( $Param{Type} eq 'DefaultColumnsScreen' ) {
+
+        my %ConfigItemConfig = $ZnunyHelperObject->_DynamicFieldsDefaultColumnsGet(
+            ConfigItems => [ $Param{Element} ],
+        );
+
+        %Config = %{ $ConfigItemConfig{ $Param{Element} } || {} };
+    }
+
+    return %Config;
+
 }
 
 1;
