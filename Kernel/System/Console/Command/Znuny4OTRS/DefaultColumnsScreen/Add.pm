@@ -144,6 +144,8 @@ sub Run {
 
             $Screens{$Screen}->{"DynamicField_$DynamicField"} = $DynamicFieldState;
         }
+
+        # no GuardClause :)
     }
 
     $ZnunyHelperObject->_DefaultColumnsEnable(%Screens);

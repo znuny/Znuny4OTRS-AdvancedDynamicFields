@@ -138,6 +138,8 @@ sub Run {
 
             $Screens{$Screen}->{"DynamicField_$DynamicField"} = 1;
         }
+
+        # no GuardClause :)
     }
 
     $ZnunyHelperObject->_DefaultColumnsDisable(%Screens);
