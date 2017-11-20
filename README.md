@@ -9,7 +9,7 @@ This package contains the functionality easy configure the shown dynamic fields.
 
 - Znuny4OTRS-Repo
 
-- OTRS 5
+- OTRS 6
 
 **Installation**
 
