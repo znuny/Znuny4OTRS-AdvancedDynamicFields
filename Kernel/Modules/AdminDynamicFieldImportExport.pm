@@ -287,10 +287,10 @@ sub Run {
 sub _Mask {
     my ( $Self, %Param ) = @_;
 
-    my $LayoutObject       = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
-    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
-    my $LogObject          = $Kernel::OM->Get('Kernel::System::Log');
+    my $LayoutObject                = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $ConfigObject                = $Kernel::OM->Get('Kernel::Config');
+    my $LogObject                   = $Kernel::OM->Get('Kernel::System::Log');
+    my $AdvancedDynamicFieldsObject = $Kernel::OM->Get('Kernel::System::AdvancedDynamicFields');
 
     $LayoutObject->Block( Name => 'ActionOverview' );
 
@@ -305,12 +305,9 @@ sub _Mask {
     if ( !$Param{Data} ) {
 
         # export
-        my $DynamicFieldsList = $DynamicFieldObject->DynamicFieldList(
-            Valid      => 0,
-            ResultType => 'HASH',
-        );
+        my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields();
 
-        %{ $Param{Data}->{DynamicFields} } = reverse %{$DynamicFieldsList};
+        %{ $Param{Data}->{DynamicFields} } = reverse %{$DynamicFields};
     }
 
     # print the list of dynamic fields
@@ -337,9 +334,10 @@ sub _DynamicFieldShow {
 
     my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
     my $LayoutObject       = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $FieldTypeConfig    = $ConfigObject->Get('DynamicFields::Driver');
     my $ValidObject        = $Kernel::OM->Get('Kernel::System::Valid');
     my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+
+    my $FieldTypeConfig = $ConfigObject->Get('DynamicFields::Driver');
 
     # check if at least 1 dynamic field is registered in the system
     if (
@@ -362,7 +360,7 @@ sub _DynamicFieldShow {
             }
             else {
                 $DynamicFieldData = $DynamicFieldObject->DynamicFieldGet(
-                    ID => $Param{Data}->{DynamicFields}->{$DynamicField},
+                    Name => $Param{Data}->{DynamicFields}->{$DynamicField},
                 );
             }
 
