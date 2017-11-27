@@ -233,7 +233,7 @@ sub _ShowOverview {
             Data => {
                 DynamicFieldScreen => $DynamicFieldScreen,
                 Name               => $DynamicFieldScreens{$DynamicFieldScreen},
-                }
+            },
         );
     }
 
@@ -245,7 +245,7 @@ sub _ShowOverview {
             Data => {
                 DefaultColumnsScreen => $DefaultColumnsScreen,
                 Name                 => $DefaultColumnsScreens{$DefaultColumnsScreen},
-                }
+            },
         );
     }
 
