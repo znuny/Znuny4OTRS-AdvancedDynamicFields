@@ -77,7 +77,7 @@ sub GetValidDynamicFields {
     my $DynamicFieldValid = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldValid');
 
     my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet(
-        ObjectType => 'Ticket',
+        ObjectType => [ 'Ticket', 'Article' ],    #'Ticket',
         ResultType => 'HASH',
         Valid      => $DynamicFieldValid,
     );
