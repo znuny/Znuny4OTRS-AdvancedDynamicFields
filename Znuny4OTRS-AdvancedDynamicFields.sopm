@@ -22,7 +22,7 @@ Fixed small bug - if no DF is selected - you get all fields while export.</Chang
     <URL>http://znuny.com/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">This package contains the advanced DynamicFields functionalities.</Description>
-    <Description Lang="de">Dieses Paket enthält erweiterten Funktionalitäten für die dynamischen Felder.</Description>
+    <Description Lang="de">Dieses Paket enthält erweiterte Funktionalitäten für die dynamischen Felder.</Description>
     <Filelist>
         <File Permission="660" Location="Kernel/Config/Files/XML/Znuny4OTRSAdvancedDynamicFields.xml"/>
         <File Permission="660" Location="Kernel/Language/de_Znuny4OTRSAdvancedDynamicFields.pm"/>

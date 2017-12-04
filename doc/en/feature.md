@@ -1,8 +1,8 @@
 # Advanced DynamicFields
 
-This package add an easy way to configure dynamic fields.
+This package adds an easy way to configure dynamic fields.
 
-With a default OTRS it is not possible to do central management of the dynamic fields shown in each screen. You have to configure each view independent via the SysConfig.
+With a default OTRS it is not possible to do central management of the dynamic fields shown in each screen. You have to configure each view independently via the SysConfig.
 
 # GUI
 
