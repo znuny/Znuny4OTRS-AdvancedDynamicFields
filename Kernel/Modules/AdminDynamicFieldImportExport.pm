@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2012-2017 Znuny GmbH, http://znuny.com/
+# Copyright (C) 2012-2018 Znuny GmbH, http://znuny.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -334,10 +334,10 @@ sub _DynamicFieldShow {
     my ( $Self, %Param ) = @_;
 
     my $LayoutObject       = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $FieldTypeConfig    = $Kernel::OM->Get('Kernel::Config')->Get('DynamicFields::Driver');
     my $ValidObject        = $Kernel::OM->Get('Kernel::System::Valid');
     my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
     my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+    my $FieldTypeConfig    = $ConfigObject->Get('DynamicFields::Driver');
 
     # check if at least 1 dynamic field is registered in the system
     if (
