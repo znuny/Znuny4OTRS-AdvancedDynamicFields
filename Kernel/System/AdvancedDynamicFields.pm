@@ -89,10 +89,6 @@ sub GetValidDynamicFields {
 
         next DYNAMICFIELD if !IsHashRefWithData($DynamicField);
 
-        # do not show internal fields for process management
-        next DYNAMICFIELD if $DynamicField->{Name} eq 'ProcessManagementProcessID';
-        next DYNAMICFIELD if $DynamicField->{Name} eq 'ProcessManagementActivityID';
-
         $DynamicFields->{ $DynamicField->{Name} } = $DynamicField->{Label};
     }
 
