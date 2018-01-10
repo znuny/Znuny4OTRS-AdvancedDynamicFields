@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_package version="1.0">
     <Name>Znuny4OTRS-AdvancedDynamicFields</Name>
-    <Version>6.0.1</Version>
+    <Version>6.0.2</Version>
+    <ChangeLog Version="6.0.2" Date="2018-01-10 11:50:32 +0100">ProcessManagement fields are now available.</ChangeLog>
     <ChangeLog Version="6.0.1" Date="2017-11-28 15:43:12 +0100">Ported to OTRS 6.</ChangeLog>
     <ChangeLog Version="5.0.10" Date="2017-08-15 14:27:38 +0200">Fixed small bug - removed redirect after attachment generation.&#13;
 Fixed small bug - if no DF is selected - you get all fields while export.</ChangeLog>
