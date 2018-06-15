@@ -310,14 +310,15 @@ sub _Mask {
         %{ $Param{Data}->{DynamicFields} } = reverse %{$DynamicFields};
     }
 
+    my $Output = $LayoutObject->Header();
+    $Output .= $LayoutObject->NavigationBar();
+
     # print the list of dynamic fields
     $Self->_DynamicFieldShow(
         %Param,
     );
 
     # output header
-    my $Output = $LayoutObject->Header();
-    $Output .= $LayoutObject->NavigationBar();
     $Output .= $LayoutObject->Output(
         TemplateFile => 'AdminDynamicFieldImportExport',
         Data         => {
@@ -338,6 +339,8 @@ sub _DynamicFieldShow {
     my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
 
     my $FieldTypeConfig = $ConfigObject->Get('DynamicFields::Driver');
+
+    my $InvalidCounter = 0;
 
     # check if at least 1 dynamic field is registered in the system
     if (
@@ -392,13 +395,33 @@ sub _DynamicFieldShow {
                 ObjectTypeName => $ObjectTypeName,
             );
 
+            if ( !$ConfigDialog ) {
+                if ( $InvalidCounter eq 0 ) {
+
+                    $LayoutObject->Block(
+                        Name => 'DynamicFieldsInvalidBackend',
+                    );
+                }
+
+                # print each dynamic field row
+                $LayoutObject->Block(
+                    Name => 'DynamicFieldsRowInvalidBackend',
+                    Data => {
+                        %DynamicFieldData,
+                    },
+                );
+
+                $InvalidCounter++;
+                next DYNAMICFIELD;
+            }
+
             for my $Blocks ( 'DynamicFieldsRow', 'DynamicFieldCheckbox', $Param{Type} ) {
 
                 # print each dynamic field row
                 $LayoutObject->Block(
                     Name => $Blocks,
                     Data => {
-                        %DynamicFieldData
+                        %DynamicFieldData,
                     },
                 );
             }

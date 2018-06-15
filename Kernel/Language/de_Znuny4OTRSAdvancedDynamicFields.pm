@@ -28,6 +28,8 @@ sub Data {
 
     $Self->{Translation}->{'Here you can manage the dynamic fields in the respective screens.'} = 'Hier können Sie die dynamischen Felder in den jeweiligen Oberflächen verwalten.';
 
+    $Self->{Translation}->{'The following dynamic fields can not be imported because of an invalid backend.'} = 'Die folgenden dynamischen Felder können aufgrund eines ungültigen Backends nicht importiert werden.';
+
     $Self->{Translation}->{'DynamicFields Import'} = 'Dynamische Felder importieren';
     $Self->{Translation}->{'DynamicFields Export'} = 'Dynamische Felder exportieren';
 

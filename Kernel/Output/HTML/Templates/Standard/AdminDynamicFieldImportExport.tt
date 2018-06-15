@@ -76,8 +76,41 @@
                 <h2>[% Translate("Dynamic Fields List") | html %]</h2>
             </div>
             <div class="Clear"></div>
-
             <div class="Content LayoutGrid ColumnsWithSpacing">
+
+[% RenderBlockStart("DynamicFieldsInvalidBackend") %]
+                <h2 style="color:#ff0000;">[% Translate("The following dynamic fields can not be imported because of an invalid backend.") | html %]</h2>
+                <table class="DataTable SpacingBottom id="DynamicFieldsInvalidBackend" style="border-color:#ff0000;" summary="List of all Dynamic Fields with an invalid backend">
+                    <thead>
+                        <tr>
+
+                            <th>[% Translate("Name") | html %]</th>
+                            <th>[% Translate("Label") | html %]</th>
+                            <th>[% Translate("Type") | html %]</th>
+                            <th>[% Translate("Object") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+[% RenderBlockStart("DynamicFieldsRowInvalidBackend") %]
+                        <tr id="DynamicFieldID_[% Data.ID | html %]">
+                            <td>
+                                [% Data.Name %]
+                            </td>
+                            <td>
+                                <div>[% Translate(Data.Label) | html %]</div>
+                            </td>
+                            <td>
+                                <div>[% Translate(Data.FieldTypeName) | html %]</div>
+                            </td>
+                            <td>
+                                <div>[% Translate(Data.ObjectTypeName) | html %]</div>
+                            </td>
+                        </tr>
+[% RenderBlockEnd("DynamicFieldsRowInvalidBackend") %]
+                    </tbody>
+                </table >
+[% RenderBlockEnd("DynamicFieldsInvalidBackend") %]
+
                 <form id='Form' action="[% Env("CGIHandle") %]" method="post" class="Validate PreventMultipleSubmits">
                     <input type="hidden" name="Action" value="[% Env("Action") %]"/>
                     <input type="hidden" name="Subaction" value="[% Env("Subaction") %]Action"/>
