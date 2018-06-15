@@ -15,14 +15,14 @@ our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::AdvancedDynamicFields',
-    'Kernel::System::AuthSession',
+    'Kernel::System::Cache',
     'Kernel::System::DynamicField',
     'Kernel::System::Log',
-    'Kernel::System::ZnunyTime',
     'Kernel::System::Valid',
     'Kernel::System::Web::Request',
     'Kernel::System::YAML',
     'Kernel::System::ZnunyHelper',
+    'Kernel::System::ZnunyTime',
 );
 
 use Kernel::System::VariableCheck qw(:all);
@@ -49,7 +49,7 @@ sub Run {
     my $YAMLObject                  = $Kernel::OM->Get('Kernel::System::YAML');
     my $ZnunyHelperObject           = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
     my $AdvancedDynamicFieldsObject = $Kernel::OM->Get('Kernel::System::AdvancedDynamicFields');
-    my $SessionObject               = $Kernel::OM->Get('Kernel::System::AuthSession');
+    my $CacheObject                 = $Kernel::OM->Get('Kernel::System::Cache');
 
     my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields();
     $Self->{DynamicFields} = $DynamicFields;
@@ -83,10 +83,11 @@ sub Run {
             Data => $UploadStuff{Content},
         );
 
-        my $SessionUpdate = $SessionObject->UpdateSessionID(
-            SessionID => $Self->{SessionID},
-            Key       => 'AdminDynamicFieldImportExport',
-            Value     => $PerlStructure,
+        $CacheObject->Set(
+            Type  => 'AdminDynamicFieldImportExport',
+            Key   => 'AdminDynamicFieldImportExport::' . $Self->{UserID},
+            Value => $PerlStructure,
+            TTL   => 60 * 60,
         );
 
         return $Self->_Mask(
@@ -101,11 +102,12 @@ sub Run {
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'ImportAction' ) {
 
-        my %Data = $SessionObject->GetSessionIDData(
-            SessionID => $Self->{SessionID},
+        my $ImportData = $CacheObject->Get(
+            Type => 'AdminDynamicFieldImportExport',
+            Key  => 'AdminDynamicFieldImportExport::' . $Self->{UserID},
         );
 
-        if ( !IsHashRefWithData( $Data{AdminDynamicFieldImportExport} ) ) {
+        if ( !IsHashRefWithData($ImportData) ) {
 
             # redirect to AdminDynamicField
             my $HTML = $LayoutObject->Redirect(
@@ -120,12 +122,9 @@ sub Run {
         my @DynamicFieldForScreensSelected = $ParamObject->GetArray( Param => 'DynamicFieldScreens' );
         my $OverwriteExistingEntities = $ParamObject->GetParam( Param => 'OverwriteExistingEntities' ) || 0;
 
-        my $ImportData = $Data{AdminDynamicFieldImportExport};
-
-        my $SessionUpdate = $SessionObject->UpdateSessionID(
-            SessionID => $Self->{SessionID},
-            Key       => 'AdminDynamicFieldImportExport',
-            Value     => undef,
+        $CacheObject->Delete(
+            Type => 'AdminDynamicFieldImportExport',
+            Key  => 'AdminDynamicFieldImportExport::' . $Self->{UserID},
         );
 
         # ------------------------------------------------------------ #
@@ -437,20 +436,6 @@ sub _DynamicFieldShow {
                         %DynamicFieldData
                     },
                 );
-
-                #                 TODO
-                #                 # DynamicFieldsScreens Configs
-                #                 my $DynamicFieldsScreensData = $Param{Data}->{DynamicFieldsScreens}->{$DynamicField};
-                #                 for my $DynamicFieldsScreens ( sort keys %{ $DynamicFieldsScreensData } ) {
-                #                     $LayoutObject->Block(
-                #                         Name => 'DynamicFieldScreens',
-                #                         Data => {
-                #                             SysConfig => $DynamicFieldsScreens,
-                #                             Screen    => $DynamicFieldsScreensData->{$DynamicFieldsScreens},
-                #                             %DynamicFieldData,
-                #                         },
-                #                     );
-                #                 }
             }
 
         }
@@ -478,19 +463,6 @@ sub _DynamicFieldShow {
                     },
                 );
             }
-
-            #             TODO
-            #             # DynamicFieldsScreens Configs
-            #             for my $DynamicFieldsScreens ( sort keys %{ $DynamicFieldsScreensData } ) {
-            #                 $LayoutObject->Block(
-            #                     Name => 'DynamicFieldScreens',
-            #                     Data => {
-            #                         SysConfig => $DynamicFieldsScreens,
-            #                         Screen    => $DynamicFieldsScreensData->{$DynamicFieldsScreens},
-            #                         %DynamicFieldData,
-            #                     },
-            #                 );
-            #             }
         }
     }
 
