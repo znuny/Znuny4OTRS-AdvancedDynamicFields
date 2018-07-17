@@ -497,6 +497,7 @@ sub _GetConfig {
     my $ZnunyHelperObject = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
 
     my %Config;
+    return %Config if !defined $Param{Type};
 
     # get config of element
     if ( $Param{Type} eq 'DynamicField' ) {
