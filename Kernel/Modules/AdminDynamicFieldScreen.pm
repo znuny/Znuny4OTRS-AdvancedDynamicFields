@@ -342,7 +342,7 @@ sub _ShowEdit {
                 Element    => $OtherElements{$Element},
                 ElementKey => $Element,
                 Type       => $Param{Type},
-                }
+            },
         );
     }
 

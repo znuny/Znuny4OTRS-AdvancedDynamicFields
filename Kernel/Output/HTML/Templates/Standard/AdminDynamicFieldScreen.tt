@@ -44,7 +44,10 @@
                     <tbody>
 [% RenderBlockStart("ActionOverviewRow") %]
                         <tr>
-                            <td title="[% Data.Element | html %]"><a class="AsBlock" id="[% Translate(Data.Element) | uri %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=[% Data.Type | uri %];Element=[% Data.ElementKey | uri %]">[% Data.Element | truncate(80) | html %]</a></td>
+                            <td title="[% Data.Element | html %][% IF !DynamicFieldSelected %] ([% Data.ElementKey | html %])[% END %]">
+                                <a class="AsBlock" id="[% Translate(Data.Element) | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=[% Data.Type | uri %];Element=[% Data.ElementKey | uri %]">[% Data.Element | html %][% IF DynamicFieldSelected %] (<strong>[% Data.ElementKey | html %]</strong>)[% END %]
+                                </a>
+                            </td>
                         </tr>
 [% RenderBlockEnd("ActionOverviewRow") %]
                     </tbody>
@@ -68,7 +71,7 @@
                         <li class="FilterMessage Hidden">[% Translate("No matches found.") | html %]</li>
 [% RenderBlockStart("DynamicFieldScreenOverviewRow") %]
                         <li>
-                            <a class="AsBlock" id="[% Data.Name | uri %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=DynamicFieldScreen;Element=[% Data.DynamicFieldScreen | uri %]">[% Data.Name | truncate(80) | html %]</a>
+                            <a class="AsBlock" id="[% Data.Name | uri %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=DynamicFieldScreen;Element=[% Data.DynamicFieldScreen | uri %]">[% Data.Name | html %]</a>
                         </li>
 [% RenderBlockEnd("DynamicFieldScreenOverviewRow") %]
                     </ul>
@@ -79,7 +82,7 @@
                         <li class="FilterMessage Hidden">[% Translate("No matches found.") | html %]</li>
 [% RenderBlockStart("DefaultColumnsScreenOverviewRow") %]
                         <li>
-                            <a class="AsBlock" id="[% Data.Name | uri %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=DefaultColumnsScreen;Element=[% Data.DefaultColumnsScreen | uri %]">[% Data.Name | truncate(80) | html %]</a>
+                            <a class="AsBlock" id="[% Data.Name | uri %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=DefaultColumnsScreen;Element=[% Data.DefaultColumnsScreen | uri %]">[% Data.Name | html %]</a>
                         </li>
 [% RenderBlockEnd("DefaultColumnsScreenOverviewRow") %]
                     </ul>
@@ -94,7 +97,7 @@
 [% RenderBlockEnd("NoDataFoundMsg") %]
 [% RenderBlockStart("DynamicFieldOverviewRow") %]
                         <li>
-                            <a class="AsBlock" id="[% Data.Name | uri %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=DynamicField;Element=[% Data.DynamicField | uri %]">[% Data.Name | truncate(80) | html %]</a>
+                            <a class="AsBlock" id="[% Data.Name | uri %]" title="[% Data.Name | html %] ([% Data.DynamicField | html %])" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Type=DynamicField;Element=[% Data.DynamicField | uri %]">[% Data.Name | html %] (<strong>[% Data.DynamicField | html %]</strong>)</a>
                         </li>
 [% RenderBlockEnd("DynamicFieldOverviewRow") %]
                     </ul>
@@ -135,9 +138,9 @@
                             </ul>
                             <ul class="AllocationList Tablelike W90pc" style="max-height: inherit;" id="AvailableElements">
 [% RenderBlockStart("AvailableFieldRow") %]
-                                <li title="[% Translate(Data.Label) | html %]" id="[% Data.ID | html %]">
+                                <li title="[% Translate(Data.Label) | html %][% IF !DynamicFieldSelected %] ([% Translate(Data.Element) | html %])[% END %]" id="[% Data.ID | html %]">
                                     <input type="checkbox" name="SelectAllAvailableElements" value="[% Data.ID | html %]"/>
-                                    [% Translate(Data.Label) | html %]
+                                    [% Translate(Data.Label) | html %][% IF !DynamicFieldSelected %] (<strong>[% Translate(Data.Element) | html %]</strong>)[% END %]
                                     <input type="hidden" name="AvailableElements"  value="[% Data.Element | html %]">
                                 </li>
 [% RenderBlockEnd("AvailableFieldRow") %]
@@ -156,9 +159,9 @@
                             </ul>
                             <ul class="AllocationList Tablelike W90pc" style="max-height: inherit;" id="DisabledElements">
 [% RenderBlockStart("DisabledFieldRow") %]
-                                <li title="[% Translate(Data.Label) | html %]" id="[% Data.ID | html %]">
+                                <li title="[% Translate(Data.Label) | html %][% IF !DynamicFieldSelected %] ([% Translate(Data.Element) | html %])[% END %]" id="[% Data.ID | html %]">
                                     <input type="checkbox" name="SelectAllDisabledElements" value="[% Data.ID | html %]"/>
-                                    [% Translate(Data.Label) | html %]
+                                    [% Translate(Data.Label) | html %][% IF !DynamicFieldSelected %] (<strong>[% Translate(Data.Element) | html %]</strong>)[% END %]
                                     <input type="hidden" name="DisabledElements" value="[% Data.Element | html %]">
                                 </li>
 [% RenderBlockEnd("DisabledFieldRow") %]
@@ -177,9 +180,9 @@
                             </ul>
                             <ul class="AllocationList Tablelike W90pc" style="max-height: inherit;" id="AssignedElements">
 [% RenderBlockStart("AssignedFieldRow") %]
-                                <li title="[% Translate(Data.Label) | html %]" id="[% Data.ID | html %]">
+                                <li title="[% Translate(Data.Label) | html %][% IF !DynamicFieldSelected %] ([% Translate(Data.Element) | html %])[% END %]" id="[% Data.ID | html %]">
                                     <input type="checkbox" name="SelectAllAssignedElements" value="[% Data.ID | html %]"/>
-                                    [% Translate(Data.Label) | html %]
+                                    [% Translate(Data.Label) | html %][% IF !DynamicFieldSelected %] (<strong>[% Translate(Data.Element) | html %]</strong>)[% END %]
                                     <input type="hidden" name="AssignedElements" value="[% Data.Element | html %]">
                                 </li>
 [% RenderBlockEnd("AssignedFieldRow") %]
@@ -198,10 +201,10 @@
                             </ul>
                              <ul class="AllocationList Tablelike W90pc" style="max-height: inherit;" id="AssignedRequiredElements">
 [% RenderBlockStart("AssignedRequiredFieldRow") %]
-                                <li title="[% Translate(Data.Label) | html %]" id="[% Data.ID | html %]">
-                                    <input type="checkbox" name="SelectAllAssignedRequiredElements" value="[% Data.ID | html %]"/>
-                                    [% Translate(Data.Label) | html %]
-                                    <input type="hidden" name="AssignedRequiredElements" value="[% Data.Element | html %]">
+                                <li title="[% Translate(Data.Label) | html %][% IF !DynamicFieldSelected %] ([% Translate(Data.Element) | html %])[% END %]" id="[% Data.ID | html %]">
+                                    <input type="checkbox" name="SelectAllAssignedRequiredElements" value="[% Data.ID | html %]" />
+                                    [% Translate(Data.Label) | html %][% IF !DynamicFieldSelected %] (<strong>[% Translate(Data.Element) | html %]</strong>)[% END %]
+                                    <input type="hidden" name="AssignedRequiredElements" value="[% Data.Element | html %]" />
                                 </li>
 [% RenderBlockEnd("AssignedRequiredFieldRow") %]
                             </ul>
