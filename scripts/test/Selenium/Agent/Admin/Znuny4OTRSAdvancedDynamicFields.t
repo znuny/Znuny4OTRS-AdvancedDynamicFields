@@ -66,19 +66,10 @@ my $SeleniumTest = sub {
         WaitForAJAX => 0,
     );
 
-    # check elements
-    $Self->True(
-        $SeleniumObject->find_element( '#Row2 > div:nth-child(2) > div > div.Content > ul > li:nth-child(13)', 'css' )
-            ->is_displayed(),
-        "DynamicFieldScreen is visible",
-    );
 
-    $Self->True(
-        $SeleniumObject->find_element(
-            '#Row2 > div:nth-child(2) > div > div.Content > ul > li:nth-child(13) > h4 > a',
-            'css'
-        )->is_displayed(),
-        "DynamicFieldScreen link is visible",
+    $SeleniumObject->ElementExists(
+        Selector     => '[data-module="AdminDynamicFieldScreen"]',
+        SelectorType => 'css',
     );
 
     # navigate to AdminDynamicFieldScreen page
@@ -138,14 +129,18 @@ my $SeleniumTest = sub {
         # set UnitTestText0 to DISABLED ELEMENTS
         $SeleniumObject->find_element( "#UnitTestText0 > input[type='checkbox']:nth-child(1)", 'css' )->click();
         $SeleniumObject->find_element( '#AllSelectedDisabledElements',                         'css' )->click();
+        $SeleniumObject->find_element( "#UnitTestText0 > input[type='checkbox']:nth-child(1)", 'css' )->click();
 
         # set UnitTestText1 to ASSIGNED ELEMENTS
         $SeleniumObject->find_element( "#UnitTestText1 > input[type='checkbox']:nth-child(1)", 'css' )->click();
         $SeleniumObject->find_element( '#AllSelectedAssignedElements',                         'css' )->click();
+        $SeleniumObject->find_element( "#UnitTestText1 > input[type='checkbox']:nth-child(1)", 'css' )->click();
 
         # set UnitTestText2 to ASSIGNED REQUIRED ELEMENTS
         $SeleniumObject->find_element( "#UnitTestText2 > input[type='checkbox']:nth-child(1)", 'css' )->click();
         $SeleniumObject->find_element( '#AllSelectedAssignedRequiredElements',                 'css' )->click();
+        $SeleniumObject->find_element( "#UnitTestText2 > input[type='checkbox']:nth-child(1)", 'css' )->click();
+
 
         # submit form
         $SeleniumObject->find_element( '#Form > div.Field.SpacingTop > button', 'css' )->click();
