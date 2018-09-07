@@ -66,7 +66,6 @@ my $SeleniumTest = sub {
         WaitForAJAX => 0,
     );
 
-
     $SeleniumObject->ElementExists(
         Selector     => '[data-module="AdminDynamicFieldScreen"]',
         SelectorType => 'css',
@@ -140,7 +139,6 @@ my $SeleniumTest = sub {
         $SeleniumObject->find_element( "#UnitTestText2 > input[type='checkbox']:nth-child(1)", 'css' )->click();
         $SeleniumObject->find_element( '#AllSelectedAssignedRequiredElements',                 'css' )->click();
         $SeleniumObject->find_element( "#UnitTestText2 > input[type='checkbox']:nth-child(1)", 'css' )->click();
-
 
         # submit form
         $SeleniumObject->find_element( '#Form > div.Field.SpacingTop > button', 'css' )->click();

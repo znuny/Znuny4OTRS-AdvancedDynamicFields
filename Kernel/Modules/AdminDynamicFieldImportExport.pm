@@ -305,8 +305,7 @@ sub _Mask {
 
         # export
         my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields();
-
-        %{ $Param{Data}->{DynamicFields} } = reverse %{$DynamicFields};
+        %{ $Param{Data}->{DynamicFields} } = %{$DynamicFields};
     }
 
     my $Output = $LayoutObject->Header();
@@ -362,7 +361,7 @@ sub _DynamicFieldShow {
             }
             else {
                 $DynamicFieldData = $DynamicFieldObject->DynamicFieldGet(
-                    Name => $Param{Data}->{DynamicFields}->{$DynamicField},
+                    Name => $DynamicField,
                 );
             }
 
