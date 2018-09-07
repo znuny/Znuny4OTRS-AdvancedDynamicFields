@@ -305,7 +305,7 @@ sub _Mask {
         # export
         my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields();
 
-        %{ $Param{Data}->{DynamicFields} } = reverse %{$DynamicFields};
+        %{ $Param{Data}->{DynamicFields} } = %{$DynamicFields};
     }
 
     # print the list of dynamic fields
@@ -358,7 +358,7 @@ sub _DynamicFieldShow {
             }
             else {
                 $DynamicFieldData = $DynamicFieldObject->DynamicFieldGet(
-                    Name => $Param{Data}->{DynamicFields}->{$DynamicField},
+                    Name => $DynamicField,
                 );
             }
 
