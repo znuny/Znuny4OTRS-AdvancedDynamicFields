@@ -308,7 +308,7 @@ sub _Mask {
             ResultType => 'HASH',
         );
 
-        %{ $Param{Data}->{DynamicFields} } = reverse %{$DynamicFieldsList};
+        %{ $Param{Data}->{DynamicFields} } = %{$DynamicFieldsList};
     }
 
     # print the list of dynamic fields
@@ -360,7 +360,7 @@ sub _DynamicFieldShow {
             }
             else {
                 $DynamicFieldData = $DynamicFieldObject->DynamicFieldGet(
-                    ID => $Param{Data}->{DynamicFields}->{$DynamicField},
+                    ID => $DynamicField,
                 );
             }
 
