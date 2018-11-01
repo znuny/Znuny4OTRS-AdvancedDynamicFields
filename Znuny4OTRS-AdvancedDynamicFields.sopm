@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_package version="1.0">
     <Name>Znuny4OTRS-AdvancedDynamicFields</Name>
-    <Version>5.0.13</Version>
+    <Version>5.0.14</Version>
+    <ChangeLog Version="5.0.14" Date="2018-11-01 10:38:26 +0100">Fixed export bug.</ChangeLog>
     <ChangeLog Version="5.0.13" Date="2018-08-15 10:59:29 +0200">Adding output of dynamic field name (in addition to its label) to dynamic field lists.</ChangeLog>
     <ChangeLog Version="5.0.12" Date="2018-01-10 11:50:46 +0100">ProcessManagement fields are now available.</ChangeLog>
     <ChangeLog Version="5.0.11" Date="2017-11-28 15:43:53 +0100">Improved documentation.</ChangeLog>
