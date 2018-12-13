@@ -179,7 +179,7 @@ sub Run {
 
                 # check if dynamic field screen was selected
                 my $Selected = grep { $DynamicField eq $_ } @DynamicFieldForScreensSelected;
-                next DYNAMICFIELD if !$Selected;
+                next DYNAMICFIELDSCREEN if !$Selected;
 
                 $DynamicFieldsScreensImport{$DynamicField} = $ImportData->{DynamicFieldsScreens}->{$DynamicField};
             }
