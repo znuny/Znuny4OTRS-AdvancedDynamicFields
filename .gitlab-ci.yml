@@ -1,9 +1,6 @@
 image: registry.znuny.com/znuny/docker-otrs5ci:latest
 
-services:
-  - name: docker.io/elgalu/selenium:latest
-  - name: registry.znuny.com/znuny/docker-mysql-utf8:latest
-    alias: mysql
+
 
 stages:
   - test
@@ -11,6 +8,10 @@ stages:
 
 job_unit_otrs_Znuny4OTRSAdvancedDynamicFields:
   stage: test
+  services:
+    - name: docker.io/elgalu/selenium:latest
+    - name: registry.znuny.com/znuny/docker-mysql-utf8:latest
+      alias: mysql
   script:
     - env
     - pwd
