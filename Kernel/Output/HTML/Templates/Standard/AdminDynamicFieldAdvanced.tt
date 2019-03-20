@@ -8,8 +8,20 @@
 
 <div class='WidgetSimple' id='DynamicFieldImportExportWidget'>
     <div class='Header'>
-        <h2>[% Translate('Import / Export') | html %]</h2>
+        <h1 class="InvisibleText">
+            [% Translate("Import / Export") | html %]
+        </h1>
     </div>
+
+    [% BreadcrumbPath = [
+            {
+                Name => Translate('Import / Export'),
+            },
+        ]
+    %]
+
+    [% INCLUDE "Breadcrumb.tt" Path = BreadcrumbPath %]
+
     <div class='Content'>
         <p class='FieldExplanation'>
             [% Translate('Here you can upload a configuration file to import dynamic fields to your system. The file needs to be in .yml format as exported by dynamic field management module.') | html %]
