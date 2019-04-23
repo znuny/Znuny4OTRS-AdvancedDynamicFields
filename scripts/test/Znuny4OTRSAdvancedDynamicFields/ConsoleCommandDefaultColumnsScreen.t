@@ -96,15 +96,6 @@ my @Tests = (
         ExpectedExitCode => 0
     },
     {
-        Name   => 'Trying to add DynamicField Test1 to all Screen with State 3',
-        Action => 'Add',
-        Data   => {
-            DynamicFields => \@DynamicFields,
-            State         => 3,
-        },
-        ExpectedExitCode => 0,
-    },
-    {
         Name   => 'Trying to remove DynamicField Test1 from DashboardBackend###0120-TicketNew.',
         Action => 'Remove',
         Data   => {
