@@ -141,4 +141,35 @@
             </Item>
         </Value>
     </Setting>
+    <!-- ITSMIncidentProblemManagement -->
+    <!-- Znuny4OTRSAdvancedDynamicFields DynamicFieldScreens registration-->
+    <Setting Name="DynamicFieldScreens###ITSMIncidentProblemManagement" Required="1" Valid="1">
+        <Description Translatable="1">This configuration defines all possible screens to enable or disable dynamic fields.</Description>
+        <Navigation>Frontend::Base::DynamicFieldScreens</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Ticket::Frontend::AgentTicketAddtlITSMField###DynamicField">AgentTicketAddtlITSMField</Item>
+                <Item Key="Ticket::Frontend::AgentTicketDecision###DynamicField">AgentTicketDecision</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <!-- ITSMChangeManagement -->
+    <!-- Znuny4OTRSAdvancedDynamicFields DynamicFieldScreens registration-->
+    <Setting Name="DynamicFieldScreens###ITSMChangeManagement" Required="1" Valid="1">
+        <Description Translatable="1">This configuration defines all possible screens to enable or disable dynamic fields.</Description>
+        <Navigation>Frontend::Base::DynamicFieldScreens</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="ITSMChange::Frontend::AgentITSMChangeAdd###DynamicField">AgentITSMChangeAdd</Item>
+                <Item Key="ITSMChange::Frontend::AgentITSMChangeEdit###DynamicField">AgentITSMChangeEdit</Item>
+                <Item Key="ITSMChange::Frontend::AgentITSMChangePrint###DynamicField">AgentITSMChangePrint</Item>
+                <Item Key="ITSMChange::Frontend::AgentITSMChangeSearch###DynamicField">AgentITSMChangeSearch</Item>
+                <Item Key="ITSMChange::Frontend::AgentITSMChangeZoom###DynamicField">AgentITSMChangeZoom</Item>
+                <Item Key="ITSMChange::Frontend::AgentITSMWorkOrderAdd###DynamicField">AgentITSMWorkOrderAdd</Item>
+                <Item Key="ITSMWorkOrder::Frontend::AgentITSMWorkOrderEdit###DynamicField">AgentITSMWorkOrderEdit</Item>
+                <Item Key="ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport###DynamicField">AgentITSMWorkOrderReport</Item>
+                <Item Key="ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###DynamicField">AgentITSMWorkOrderZoom</Item>
+            </Hash>
+        </Value>
+    </Setting>
 </otrs_config>
