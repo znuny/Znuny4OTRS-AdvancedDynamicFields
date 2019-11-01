@@ -197,7 +197,6 @@ my $SeleniumTest = sub {
             WaitForAJAX => 0,
         );
 
-        # TODO drag'n drop
         if ( $ScreenMapping{$Screen} eq 'DefaultColumns' ) {
             last SCREEN;
         }
@@ -209,8 +208,6 @@ my $SeleniumTest = sub {
                 $SeleniumObject->find_element( "#LabelDynamicField_UnitTestText$Count", 'css' )->is_displayed(),
                 "DynamicField 'UnitTestText$Count' is visible",
             );
-
-            # TODO check 'class="Mandatory"'
         }
     }
 };
