@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_package version="1.0">
     <Name>Znuny4OTRS-AdvancedDynamicFields</Name>
-    <Version>5.0.15</Version>
+    <Version>5.0.16</Version>
+    <ChangeLog Version="5.0.16" Date="2019-12-16 10:29:10 +0100">Updated README.md.</ChangeLog>
     <ChangeLog Version="5.0.15" Date="2018-12-13 18:13:08 +0100">Fixed import bug  - wrong looplable.</ChangeLog>
     <ChangeLog Version="5.0.14" Date="2018-11-01 10:38:26 +0100">Fixed export bug.</ChangeLog>
     <ChangeLog Version="5.0.13" Date="2018-08-15 10:59:29 +0200">Adding output of dynamic field name (in addition to its label) to dynamic field lists.</ChangeLog>
