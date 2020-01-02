@@ -1,8 +1,10 @@
 # Funktionalität
 
-Diese Erweiterung erleichtet die Administration der dynamischen Felder im System.
+Diese Erweiterung erweitert die Administration der dynamischen Felder und ermöglicht das Importieren und Exportieren dieser.
 
-Im OTRS Standard ist es nicht möglich zentral die Konfiguration der dynamischen Felder in den jeweiligen Oberflächen durchzuführen. Für jede Oberfläche muss die entsprechende SysConfig gesucht und angepasst werden.
+Um in OTRS einem dynamischen Feldern eine Oberfläche zuzuweisen, muss für jede Oberfläche die entsprechende Systemkonfiguration gesucht und angepasst werden. Dies ist sehr umständlich, fehleranfällig und zeitintensiv. Mit dieser Erweiterung gibt es eine zentralle Maske, in der die Zuweisungen vorgenommen werden können.
+
+Weiterhin wird die Standard Maske der dynamischen Felder (AdminDynamicField) um das Importieren und Exportieren der dynamischen Felder erweitert. Dabei können nur die Felder oder auch die entsprechenden Oberflächen, in denen Sie angezeigt werden, mit importiert oder exportiert werden.
 
 # GUI
 
