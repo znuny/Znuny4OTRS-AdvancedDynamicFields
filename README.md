@@ -1,4 +1,7 @@
-![Znuny logo](http://znuny.com/assets/images/logo_small.png)
+![Znuny logo](https://www.znuny.com/assets/images/logo_small.png)
+
+
+![Build status](https://badge.proxy.znuny.com/Znuny4OTRS-AdvancedDynamicFields/master)
 
 AdvancedDynamicFields
 =================
@@ -23,7 +26,7 @@ Download the [latest version](https://addons.znuny.com/api/addon_repos/public/10
 
 **Commercial Support**
 
-For this extension and for OTRS in general visit [https://www.znuny.com](https://www.znuny.com). Looking forward to hear from you!
+For this add-on and for OTRS in general visit [https://www.znuny.com](https://www.znuny.com). Looking forward to hear from you!
 
 Enjoy!
 
