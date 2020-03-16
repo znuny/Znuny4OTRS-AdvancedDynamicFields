@@ -5,7 +5,7 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-
+## nofilter(TidyAll::Plugin::OTRS::Znuny4OTRS::Perl::ZnunyHelper)
 package Kernel::System::Console::Command::Znuny4OTRS::DynamicFieldScreen::Remove;
 
 use strict;
@@ -130,13 +130,3 @@ sub Run {
 }
 
 1;
-
-=head1 TERMS AND CONDITIONS
-
-This software is part of the OTRS project (L<http://otrs.org/>).
-
-This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut

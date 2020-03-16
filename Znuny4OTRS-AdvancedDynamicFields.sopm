@@ -51,6 +51,7 @@ Fixed small bug - if no DF is selected - you get all fields while export.</Chang
         <File Permission="660" Location="scripts/test/Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFields.t"/>
         <File Permission="660" Location="scripts/test/Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDefaultColumnsScreen.t"/>
         <File Permission="660" Location="scripts/test/Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDynamicFieldScreen.t"/>
+        <File Permission="660" Location="scripts/test/Znuny4OTRSAdvancedDynamicFields/System/AdvancedDynamicFields.t"/>
         <File Permission="660" Location="var/httpd/htdocs/js/Core.Agent.Admin.Znuny4OTRSDynamicFieldImportExport.js"/>
         <File Permission="660" Location="var/httpd/htdocs/js/Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen.js"/>
     </Filelist>

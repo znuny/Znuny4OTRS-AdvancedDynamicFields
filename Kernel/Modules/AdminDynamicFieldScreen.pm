@@ -115,6 +115,11 @@ sub Run {
             %AssignedRequiredElements,
         );
 
+        %Config = $AdvancedDynamicFieldsObject->ValidateShowID(
+            Config  => \%Config,
+            Element => $Param{Element},
+        );
+
         my $Success;
         my %ScreenConfig;
         $ScreenConfig{ $Param{Element} } ||= {};

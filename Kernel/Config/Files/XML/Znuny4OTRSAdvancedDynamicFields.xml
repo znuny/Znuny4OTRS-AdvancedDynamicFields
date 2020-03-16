@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_config version="2.0" init="Config">
 <!-- nofilter(TidyAll::Plugin::OTRS::Znuny4OTRS::Config::ACLKeysLevel3Actions) -->
+    <Setting Name="Znuny4OTRSAdvancedDynamicFields::DynamicFieldValid" Required="1" Valid="1">
+        <Description Translatable="1">This configuration defines if only valids or all (invalids) dynamic fields should be shown.</Description>
+        <Navigation>Core</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="1">
+                <Item ValueType="Option" Value="1">valid</Item>
+                <Item ValueType="Option" Value="0">invalid</Item>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="DynamicFieldNonRequiredScreens###Framework" Required="1" Valid="1">
+        <Description Translatable="1">This configuration defines all possible screens to enable or disable dynamic fields.</Description>
+        <Navigation>Frontend::Base::DynamicFieldScreens</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Ticket::Frontend::OverviewMedium###DynamicField">OverviewMedium</Item>
+                <Item Key="Ticket::Frontend::OverviewPreview###DynamicField">OverviewPreview</Item>
+                <Item Key="Ticket::Frontend::OverviewSmall###DynamicField">OverviewSmall</Item>
+                <Item Key="Ticket::Frontend::CustomerTicketOverview###DynamicField">CustomerTicketOverview</Item>
+                <Item Key="Ticket::Frontend::AgentTicketZoom###DynamicField">AgentTicketZoom</Item>
+                <Item Key="Ticket::Frontend::AgentTicketZoom###ProcessWidgetDynamicField">ProcessWidgetDynamicField</Item>
+                <Item Key="Ticket::Frontend::CustomerTicketZoom###DynamicField">CustomerTicketZoom</Item>
+                <Item Key="Ticket::Frontend::AgentTicketPrint###DynamicField">AgentTicketPrint</Item>
+                <Item Key="Ticket::Frontend::CustomerTicketPrint###DynamicField">CustomerTicketPrint</Item>
+                <Item Key="Ticket::Frontend::CustomerTicketSearch###DynamicField">CustomerTicketSearch</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <!-- ITSMIncidentProblemManagement -->
+    <!-- Znuny4OTRSAdvancedDynamicFields DynamicFieldScreens registration-->
+    <Setting Name="DynamicFieldScreens###ITSMIncidentProblemManagement" Required="1" Valid="1">
+        <Description Translatable="1">This configuration defines all possible screens to enable or disable dynamic fields.</Description>
+        <Navigation>Frontend::Base::DynamicFieldScreens</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Ticket::Frontend::AgentTicketAddtlITSMField###DynamicField">AgentTicketAddtlITSMField</Item>
+                <Item Key="Ticket::Frontend::AgentTicketDecision###DynamicField">AgentTicketDecision</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <!-- ITSMChangeManagement -->
+    <!-- Znuny4OTRSAdvancedDynamicFields DynamicFieldScreens registration-->
+    <Setting Name="DynamicFieldScreens###ITSMChangeManagement" Required="1" Valid="1">
+        <Description Translatable="1">This configuration defines all possible screens to enable or disable dynamic fields.</Description>
+        <Navigation>Frontend::Base::DynamicFieldScreens</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="ITSMChange::Frontend::AgentITSMChangeAdd###DynamicField">AgentITSMChangeAdd</Item>
+                <Item Key="ITSMChange::Frontend::AgentITSMChangeEdit###DynamicField">AgentITSMChangeEdit</Item>
+                <Item Key="ITSMChange::Frontend::AgentITSMChangePrint###DynamicField">AgentITSMChangePrint</Item>
+                <Item Key="ITSMChange::Frontend::AgentITSMChangeSearch###DynamicField">AgentITSMChangeSearch</Item>
+                <Item Key="ITSMChange::Frontend::AgentITSMChangeZoom###DynamicField">AgentITSMChangeZoom</Item>
+                <Item Key="ITSMChange::Frontend::AgentITSMWorkOrderAdd###DynamicField">AgentITSMWorkOrderAdd</Item>
+                <Item Key="ITSMWorkOrder::Frontend::AgentITSMWorkOrderEdit###DynamicField">AgentITSMWorkOrderEdit</Item>
+                <Item Key="ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport###DynamicField">AgentITSMWorkOrderReport</Item>
+                <Item Key="ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###DynamicField">AgentITSMWorkOrderZoom</Item>
+            </Hash>
+        </Value>
+    </Setting>
 <!-- AdminDynamicFieldImportExport -->
     <Setting Name="Frontend::Module###AdminDynamicFieldImportExport" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the admin interface.</Description>
@@ -128,47 +187,6 @@
                 <Item Key="Description" Translatable="1">Manage dynamic field in screens.</Item>
                 <Item Key="IconBig">fa-align-left</Item>
                 <Item Key="IconSmall"></Item>
-            </Hash>
-        </Value>
-    </Setting>
-    <Setting Name="Znuny4OTRSAdvancedDynamicFields::DynamicFieldValid" Required="1" Valid="1">
-        <Description Translatable="1">This configuration defines if only valids or all (invalids) dynamic fields should be shown.</Description>
-        <Navigation>Core</Navigation>
-        <Value>
-            <Item ValueType="Select" SelectedID="1">
-                <Item ValueType="Option" Value="1">valid</Item>
-                <Item ValueType="Option" Value="0">invalid</Item>
-            </Item>
-        </Value>
-    </Setting>
-    <!-- ITSMIncidentProblemManagement -->
-    <!-- Znuny4OTRSAdvancedDynamicFields DynamicFieldScreens registration-->
-    <Setting Name="DynamicFieldScreens###ITSMIncidentProblemManagement" Required="1" Valid="1">
-        <Description Translatable="1">This configuration defines all possible screens to enable or disable dynamic fields.</Description>
-        <Navigation>Frontend::Base::DynamicFieldScreens</Navigation>
-        <Value>
-            <Hash>
-                <Item Key="Ticket::Frontend::AgentTicketAddtlITSMField###DynamicField">AgentTicketAddtlITSMField</Item>
-                <Item Key="Ticket::Frontend::AgentTicketDecision###DynamicField">AgentTicketDecision</Item>
-            </Hash>
-        </Value>
-    </Setting>
-    <!-- ITSMChangeManagement -->
-    <!-- Znuny4OTRSAdvancedDynamicFields DynamicFieldScreens registration-->
-    <Setting Name="DynamicFieldScreens###ITSMChangeManagement" Required="1" Valid="1">
-        <Description Translatable="1">This configuration defines all possible screens to enable or disable dynamic fields.</Description>
-        <Navigation>Frontend::Base::DynamicFieldScreens</Navigation>
-        <Value>
-            <Hash>
-                <Item Key="ITSMChange::Frontend::AgentITSMChangeAdd###DynamicField">AgentITSMChangeAdd</Item>
-                <Item Key="ITSMChange::Frontend::AgentITSMChangeEdit###DynamicField">AgentITSMChangeEdit</Item>
-                <Item Key="ITSMChange::Frontend::AgentITSMChangePrint###DynamicField">AgentITSMChangePrint</Item>
-                <Item Key="ITSMChange::Frontend::AgentITSMChangeSearch###DynamicField">AgentITSMChangeSearch</Item>
-                <Item Key="ITSMChange::Frontend::AgentITSMChangeZoom###DynamicField">AgentITSMChangeZoom</Item>
-                <Item Key="ITSMChange::Frontend::AgentITSMWorkOrderAdd###DynamicField">AgentITSMWorkOrderAdd</Item>
-                <Item Key="ITSMWorkOrder::Frontend::AgentITSMWorkOrderEdit###DynamicField">AgentITSMWorkOrderEdit</Item>
-                <Item Key="ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport###DynamicField">AgentITSMWorkOrderReport</Item>
-                <Item Key="ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###DynamicField">AgentITSMWorkOrderZoom</Item>
             </Hash>
         </Value>
     </Setting>
