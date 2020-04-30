@@ -91,6 +91,9 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'This configuration defines if only valids or all (invalids) dynamic fields should be shown.'} = 'Diese Konfiguration definiert ob nur gültige oder alle (ungültige) dynamischen Felder angezeigt werden sollen.';
 
+    $Self->{Translation}->{'This configuration defines all screens that do not allow dynamic field input to be required.'} = 'Diese Konfiguration definiert alle Oberflächen, in denen dynamische Felder keine Pflichteingaben erfordern dürfen.';
+    $Self->{Translation}->{'Contains dynamic field screen config keys and their action, grouped by object type.'}
+        = 'Enthält die Config-Keys zur Aktivierung von dynamischen Feldern in den verschiedenen Dialogen, inkl. zugehöriger Action, gruppiert nach Objekttyp.';
     $Self->{Translation}->{'This configuration defines all possible screens to enable or disable default columns.'} = 'Diese Konfiguration definiert alle möglichen Oberflächen in denen dynamische Felder als DefaultColumns aktiviert/deaktiviert werden können.';
 
     $Self->{Translation}->{'This configuration defines all possible screens to enable or disable dynamic fields.'} = 'Diese Konfiguration definiert alle möglichen Oberflächen in denen dynamische Felder als DynamicFields aktiviert/deaktiviert werden können.';

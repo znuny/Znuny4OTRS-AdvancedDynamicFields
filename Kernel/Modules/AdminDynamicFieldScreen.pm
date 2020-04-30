@@ -16,6 +16,7 @@ our @ObjectDependencies = (
     'Kernel::Language',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::AdvancedDynamicFields',
+    'Kernel::System::DynamicField',
     'Kernel::System::Log',
     'Kernel::System::SysConfig',
     'Kernel::System::Web::Request',
@@ -32,6 +33,7 @@ sub new {
 
     my $AdvancedDynamicFieldsObject = $Kernel::OM->Get('Kernel::System::AdvancedDynamicFields');
     my $ZnunyHelperObject           = $Kernel::OM->Get('Kernel::System::ZnunyHelper');
+    my $DynamicFieldObject          = $Kernel::OM->Get('Kernel::System::DynamicField');
 
     my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields();
     $Self->{DynamicFields} = $DynamicFields;
@@ -40,6 +42,7 @@ sub new {
         Result => 'HASH',
     );
 
+    $Self->{DynamicFieldList}      = $DynamicFieldObject->DynamicFieldListGet();
     $Self->{DynamicFieldScreens}   = $ValidDynamicFieldScreenList->{DynamicFieldScreens};
     $Self->{DefaultColumnsScreens} = $ValidDynamicFieldScreenList->{DefaultColumnsScreens};
 
@@ -343,7 +346,9 @@ sub _ShowOverview {
 sub _ShowEdit {
     my ( $Self, %Param ) = @_;
 
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $LayoutObject                = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $AdvancedDynamicFieldsObject = $Kernel::OM->Get('Kernel::System::AdvancedDynamicFields');
+    my $ConfigObject                = $Kernel::OM->Get('Kernel::Config');
 
     my $NoAssignedRequiredFieldRow;
 
@@ -369,9 +374,18 @@ sub _ShowEdit {
 
     if ( $Param{Type} eq 'DynamicField' ) {
 
-        %AvailableElements = %Screens;
-        %OtherElements     = %DynamicFields;
+        my @DynamicField = grep { $Param{Element} eq $_->{Name} } @{ $Self->{DynamicFieldList} };
+        my %DynamicField = %{ $DynamicField[0] };
 
+        %AvailableElements = %Screens;
+        if ( $DynamicField{ObjectType} ) {
+            %AvailableElements = $AdvancedDynamicFieldsObject->GetDynamicFieldObjectTypeScreens(
+                ObjectType => $DynamicField{ObjectType},
+                Screens    => \%Screens
+            );
+        }
+
+        %OtherElements      = %DynamicFields;
         $Param{Header}      = 'Screens for this Dynamic Field';
         $Param{HiddenReset} = 'Hidden';
     }
@@ -386,6 +400,17 @@ sub _ShowEdit {
             $Param{HiddenRequired}      = 'Hidden';
         }
         %OtherElements = %DynamicFieldScreens;
+    }
+
+    if ( $Param{Type} ne 'DynamicField' ) {
+        my @ObjectType = $AdvancedDynamicFieldsObject->GetDynamicFieldObjectTypes(
+            Screen => $Param{Element},
+        );
+
+        my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields(
+            ObjectType => \@ObjectType
+        );
+        %AvailableElements = %{$DynamicFields};
     }
 
     # output input page

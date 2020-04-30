@@ -56,7 +56,9 @@ sub new {
 
 Returns a list of valid dynamic fields.
 
-    my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields();
+    my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields(
+        ObjectType => [ 'Ticket', ], # optional
+    );
 
 Returns:
 
@@ -74,10 +76,16 @@ sub GetValidDynamicFields {
     my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
 
     my $DynamicFieldValid = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldValid');
+    my @ObjectType        = $Self->GetDynamicFieldObjectTypes();
+
+    if ( $Param{ObjectType} && IsArrayRefWithData( $Param{ObjectType} ) ) {
+        @ObjectType = @{ $Param{ObjectType} };
+    }
 
     my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet(
         ResultType => 'HASH',
         Valid      => $DynamicFieldValid,
+        ObjectType => \@ObjectType,
     );
 
     my $DynamicFields = {};
@@ -93,12 +101,142 @@ sub GetValidDynamicFields {
     return $DynamicFields;
 }
 
-=head2 DynamicFieldNonRequiredScreensListGet()
+=head2 GetDynamicFieldObjectTypes()
+
+Returns all possible dynamic field ObjectTypes.
+
+    my @GetDynamicFieldObjectTypes = $AdvancedDynamicFieldsObject->GetDynamicFieldObjectTypes(
+        Screen => 'Ticket::Frontend::AgentTicketMove###DynamicField'        # optional, return ObjectTypes for this screen
+    );
+
+Returns:
+
+    my @GetDynamicFieldObjectTypes = (
+        'Ticket',
+        'Article',
+    );
+
+=cut
+
+sub GetDynamicFieldObjectTypes {
+    my ( $Self, %Param ) = @_;
+
+    my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
+    my $PackageObject = $Kernel::OM->Get('Kernel::System::Package');
+
+    my $DynamicFieldTypeScreenRegistrations = $ConfigObject->Get('DynamicFieldTypeScreens');
+
+    my %GetDynamicFieldObjectTypes;
+    REGISTRATION:
+    for my $Registration ( sort keys %{$DynamicFieldTypeScreenRegistrations} ) {
+        if ( $Registration =~ m{\AITSM} ) {
+            my $IsInstalled = $PackageObject->PackageIsInstalled(
+                Name => $Registration,
+            );
+            next REGISTRATION if !$IsInstalled;
+        }
+
+        my %Registration = %{ $DynamicFieldTypeScreenRegistrations->{$Registration} };
+        OBJECTTYPE:
+        for my $ObjectType ( sort keys %Registration ) {
+
+            next OBJECTTYPE if !IsHashRefWithData( $Registration{$ObjectType} );
+
+            if ( $Param{Screen} ) {
+                next OBJECTTYPE if !$Registration{$ObjectType}->{ $Param{Screen} };
+            }
+            $GetDynamicFieldObjectTypes{$ObjectType} = $Registration{$ObjectType};
+        }
+    }
+
+    my @GetDynamicFieldObjectTypes = sort keys %GetDynamicFieldObjectTypes;
+
+    return @GetDynamicFieldObjectTypes;
+}
+
+=head2 GetDynamicFieldObjectTypeScreens()
+
+Returns all possible dynamic field screen of given ObjectType.
+
+    my %DynamicFieldObjectTypeScreens = $AdvancedDynamicFieldsObject->GetDynamicFieldObjectTypeScreens(
+        ObjectType => 'Ticket',
+        Screens    => \%Screens        # optional -  return these screen but only with the correct ObjectType
+    );
+
+Returns:
+
+    my %DynamicFieldObjectTypeScreens = (
+        'Ticket::Frontend::AgentTicketPrint###DynamicField' => 'AgentTicketPrint',
+        'Ticket::Frontend::AgentTicketZoom###DynamicField'  => 'AgentTicketZoom',
+    );
+
+=cut
+
+sub GetDynamicFieldObjectTypeScreens {
+    my ( $Self, %Param ) = @_;
+
+    my $LogObject     = $Kernel::OM->Get('Kernel::System::Log');
+    my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
+    my $PackageObject = $Kernel::OM->Get('Kernel::System::Package');
+
+    NEEDED:
+    for my $Needed (qw(ObjectType)) {
+
+        next NEEDED if defined $Param{$Needed};
+        $LogObject->Log(
+            Priority => 'error',
+            Message  => "Parameter '$Needed' is needed in !",
+        );
+        return;
+    }
+
+    my %DynamicFieldObjectTypeScreens;
+    my $DynamicFieldTypeScreenRegistrations = $ConfigObject->Get('DynamicFieldTypeScreens');
+
+    REGISTRATION:
+    for my $Registration ( sort keys %{$DynamicFieldTypeScreenRegistrations} ) {
+        if ( $Registration =~ m{^ITSM.*}xmsi ) {
+            my $IsInstalled = $PackageObject->PackageIsInstalled(
+                Name => $Registration,
+            );
+            next REGISTRATION if !$IsInstalled;
+        }
+
+        my %Registration = %{ $DynamicFieldTypeScreenRegistrations->{$Registration} };
+        for my $ObjectType ( sort keys %Registration ) {
+
+            $DynamicFieldObjectTypeScreens{$ObjectType} ||= {};
+
+            %{ $DynamicFieldObjectTypeScreens{$ObjectType} } = (
+                %{ $DynamicFieldObjectTypeScreens{$ObjectType} },
+                %{ $Registration{$ObjectType} },
+            );
+        }
+    }
+
+    my %Screens = %{ $DynamicFieldObjectTypeScreens{ $Param{ObjectType} } };
+    if ( IsHashRefWithData( $Param{Screens} ) ) {
+
+        my %ObjectTypeScreens = %Screens;
+        %Screens = ();
+        SCREEN:
+        for my $Screen ( sort keys %{ $Param{Screens} } ) {
+
+            next SCREEN if !$ObjectTypeScreens{$Screen};
+            $Screens{$Screen} = $Param{Screens}->{$Screen};
+        }
+
+    }
+
+    return %Screens;
+}
+
+=head2 GetDynamicFieldNonRequiredScreensList()
 
 Returns a list of non required screens for dynamic fields.
 'Ticket::Frontend::AgentTicketZoom###DynamicField' has no option '2'
 
-    my $DynamicFieldNonRequiredScreensList = $AdvancedDynamicFieldsObject->DynamicFieldNonRequiredScreensListGet(
+    my $DynamicFieldNonRequiredScreensList = $AdvancedDynamicFieldsObject->GetDynamicFieldNonRequiredScreensList(
         Result => 'ARRAY', # HASH or ARRAY, defaults to ARRAY
     );
 
@@ -121,7 +259,7 @@ Returns as ARRAY:
 
 =cut
 
-sub DynamicFieldNonRequiredScreensListGet {
+sub GetDynamicFieldNonRequiredScreensList {
     my ( $Self, %Param ) = @_;
 
     my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
@@ -212,7 +350,7 @@ sub ValidateShowID {
     }
 
     my @NonRequiredScreens = @{
-        $Self->DynamicFieldNonRequiredScreensListGet(
+        $Self->GetDynamicFieldNonRequiredScreensList(
             Result => 'ARRAY',
             )
     };
