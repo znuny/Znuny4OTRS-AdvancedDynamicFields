@@ -1,12 +1,12 @@
 # --
 # Copyright (C) 2017 Edicarlos Lopes dos Santos <edicarlos.lds@gmail.com>
-# Copyright (C) 2012-2018 Znuny GmbH, http://znuny.com/
+# Copyright (C) 2012-2020 Znuny GmbH, http://znuny.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-## nofilter(TidyAll::Plugin::OTRS::Znuny4OTRS::TODOCheck)
+## nofilter(TidyAll::Plugin::OTRS::Znuny4OTRS::CodeStyle::TODOCheck)
 
 package Kernel::Language::pt_BR_Znuny4OTRSAdvancedDynamicFields;
 
