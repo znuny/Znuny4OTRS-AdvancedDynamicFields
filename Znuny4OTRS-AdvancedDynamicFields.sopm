@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_package version="1.0">
     <Name>Znuny4OTRS-AdvancedDynamicFields</Name>
-    <Version>4.0.12</Version>
+    <Version>4.0.13</Version>
     <Framework>4.0.x</Framework>
     <PackageRequired Version="4.0.13">Znuny4OTRS-Repo</PackageRequired>
     <Vendor>Znuny GmbH</Vendor>
@@ -9,6 +9,7 @@
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">This package contains the advanced DynamicFields functionalities.</Description>
     <Description Lang="de">Dieses Paket enthält erweiterten Funktionalitäten für die dynamischen Felder.</Description>
+    <ChangeLog Version="4.0.13" Date="2020-09-08 12:28:55 +0200">Removed incorrect note and tidied code.</ChangeLog>
     <ChangeLog Version="4.0.12" Date="2019-10-17 23:18:09 +0200">Updated README.md</ChangeLog>
     <ChangeLog Version="4.0.11" Date="2018-11-01 10:38:14 +0100">Fixed export bug.</ChangeLog>
     <ChangeLog Version="4.0.10" Date="2018-01-10 11:58:32 +0100">ProcessManagement fields are now available.</ChangeLog>
