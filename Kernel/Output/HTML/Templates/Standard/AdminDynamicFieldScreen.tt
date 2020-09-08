@@ -166,7 +166,6 @@
                         <div class="Size1of1 SpacingBottom">
                             <p>
                     [% Translate("You can assign elements to this Screen/Field by dragging the elements with the mouse from the left list to the right list.") | html %]
-                    [% Translate("Ordering the elements within the list is also possible by drag 'n' drop.") | html %]
                             </p>
                         </div>
                     </div>
