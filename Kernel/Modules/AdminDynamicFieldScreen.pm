@@ -508,7 +508,7 @@ sub _ShowEdit {
     if ( $Param{Message} && $Param{Priority} ) {
         $Output .= $LayoutObject->Notify(
             Priority => $Param{Priority} || 'Info',
-            Info => $Param{Message},
+            Info     => $Param{Message},
         );
     }
 

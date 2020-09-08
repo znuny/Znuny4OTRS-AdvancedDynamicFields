@@ -352,7 +352,7 @@ sub ValidateShowID {
     my @NonRequiredScreens = @{
         $Self->GetDynamicFieldNonRequiredScreensList(
             Result => 'ARRAY',
-            )
+        )
     };
 
     my %NewConfig = %{ $Param{Config} };
