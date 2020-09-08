@@ -1,4 +1,4 @@
-# Advanced DynamicFields
+# Funktionalität
 
 Diese Erweiterung erleichtet die Administration der dynamischen Felder im System.
 

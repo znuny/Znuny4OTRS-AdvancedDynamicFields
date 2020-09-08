@@ -1,16 +1,15 @@
-image: registry.znuny.com/znuny/docker-otrs5ci:latest
-
-
+image: registry.znuny.com/znuny/internal/docker-otrs5ci:$OTRS_TAG
 
 stages:
   - test
   - deploy
 
-job_unit_otrs_Znuny4OTRSAdvancedDynamicFields:
+mysql:
   stage: test
   services:
+    - name: docker.io/elgalu/selenium:stable
     - name: docker.io/elgalu/selenium:latest
-    - name: registry.znuny.com/znuny/docker-mysql-utf8:latest
+    - name: registry.znuny.com/znuny/internal/docker-mysql:$MYSQL_TAG
       alias: mysql
   script:
     - env
@@ -22,9 +21,8 @@ job_unit_otrs_Znuny4OTRSAdvancedDynamicFields:
     - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --verbose --test Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDefaultColumnsScreen" -s /bin/bash otrs
     - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --verbose --test Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDynamicFieldScreen" -s /bin/bash otrs
 
-job_deploy_otrs_Znuny4OTRSAdvancedDynamicFields:
+deploy:
   stage: deploy
   script:
     - sh /sync_repo.sh git@github.com:znuny/Znuny4OTRS-AdvancedDynamicFields.git
-
 

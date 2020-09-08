@@ -2,6 +2,13 @@
 <otrs_package version="1.0">
     <Name>Znuny4OTRS-AdvancedDynamicFields</Name>
     <Version>5.0.16</Version>
+    <Framework>5.0.x</Framework>
+    <PackageRequired Version="5.0.30">Znuny4OTRS-Repo</PackageRequired>
+    <Vendor>Znuny GmbH</Vendor>
+    <URL>http://znuny.com/</URL>
+    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
+    <Description Lang="en">This package contains the advanced DynamicFields functionalities.</Description>
+    <Description Lang="de">Dieses Paket enthält erweiterten Funktionalitäten für die dynamischen Felder.</Description>
     <ChangeLog Version="5.0.16" Date="2019-12-16 10:29:10 +0100">Updated README.md.</ChangeLog>
     <ChangeLog Version="5.0.15" Date="2018-12-13 18:13:08 +0100">Fixed import bug  - wrong looplable.</ChangeLog>
     <ChangeLog Version="5.0.14" Date="2018-11-01 10:38:26 +0100">Fixed export bug.</ChangeLog>
@@ -21,13 +28,6 @@ Fixed small bug - if no DF is selected - you get all fields while export.</Chang
     <ChangeLog Version="5.0.1" Date="2016-09-14 20:04:16 +0200">Rebuild _GetDefaultColumnsScreenConfig and fixed typo.</ChangeLog>
     <ChangeLog Version="5.0.0" Date="2016-08-23 10:02:49 +0200">First Release.</ChangeLog>
     <ChangeLog Version="1.0.1" Date="2016-04-12 14:37:40 UTC">Initial release.</ChangeLog>
-    <Framework>5.0.x</Framework>
-    <PackageRequired Version="5.0.30">Znuny4OTRS-Repo</PackageRequired>
-    <Vendor>Znuny GmbH</Vendor>
-    <URL>http://znuny.com/</URL>
-    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
-    <Description Lang="en">This package contains the advanced DynamicFields functionalities.</Description>
-    <Description Lang="de">Dieses Paket enthält erweiterten Funktionalitäten für die dynamischen Felder.</Description>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/Znuny4OTRSAdvancedDynamicFields.xml"/>
         <File Permission="644" Location="Kernel/Language/de_Znuny4OTRSAdvancedDynamicFields.pm"/>
