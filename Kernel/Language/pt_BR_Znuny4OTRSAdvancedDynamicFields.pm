@@ -27,7 +27,6 @@ sub Data {
 
     # Telas
     $Self->{Translation}->{'You can assign elements to this Screen/Field by dragging the elements with the mouse from the left list to the right list.'} = 'Você pode atribuir elementos a esta Tela/Campo arrastando os elementos com o mouse da lista da esquerda para a lista da direita.';
-    $Self->{Translation}->{"Ordering the elements within the list is also possible by drag 'n' drop."} = "Também é possível ordenar os elementos na lista através de arrastar e soltar.";
     $Self->{Translation}->{'Manage dynamic field in screens.'} = 'Gerenciar campo dinâmico em telas.';
 
     # Elementos
