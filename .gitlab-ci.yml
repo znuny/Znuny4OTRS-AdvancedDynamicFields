@@ -1,27 +1,12 @@
 image: registry.znuny.com/znuny/internal/docker-otrs5ci:$OTRS_TAG
 
-stages:
-  - test
-  - deploy
+include:
+  - project: 'Znuny/Internal/Znuny'
+    file: '/templates/gitlab/default/default-db.yml'
 
-mysql:
-  stage: test
-  services:
-    - name: docker.io/elgalu/selenium:latest
-    - name: registry.znuny.com/znuny/internal/docker-mysql:$MYSQL_TAG
-      alias: mysql
-  script:
-    - env
-    - pwd
+default:
+  before_script:
     - /run.sh
-    - su -c "perl /opt/otrs/bin/otrs.Console.pl Znuny4OTRS::AdvancedPackageManager::InstallSOPM /opt/otrs/Znuny4OTRS-AdvancedDynamicFields.sopm" -s /bin/bash otrs
-    - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --verbose --test Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFieldImportExport" -s /bin/bash otrs
-    - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --verbose --test Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFields" -s /bin/bash otrs
-    - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --verbose --test Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDefaultColumnsScreen" -s /bin/bash otrs
-    - su -c "perl /opt/otrs/bin/otrs.Console.pl Dev::UnitTest::Run --verbose --test Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDynamicFieldScreen" -s /bin/bash otrs
-
-deploy:
-  stage: deploy
-  script:
-    - sh /sync_repo.sh git@github.com:znuny/Znuny4OTRS-AdvancedDynamicFields.git
-
+    - su -c "perl /opt/otrs/bin/otrs.Console.pl Znuny4OTRS::AdvancedPackageManager::InstallSOPM /opt/otrs/$CI_PROJECT_NAME.sopm" -s /bin/bash otrs
+  after_script:
+    - /unittest.sh
