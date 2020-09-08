@@ -1,27 +1,5 @@
 image: registry.znuny.com/znuny/internal/docker-otrs4ci:$OTRS_TAG
 
-services:
-  - name: docker.io/elgalu/selenium:latest
-  - name: registry.znuny.com/znuny/internal/docker-mysql:$MYSQL_TAG
-    alias: mysql
-
-stages:
-  - test
-  - deploy
-
-mysql:
-  stage: test
-  script:
-    - env
-    - pwd
-    - /run.sh
-    - su -c "perl /opt/otrs/bin/znuny.AdvancedPackageManagerInstallSOPM.pl /opt/otrs/Znuny4OTRS-AdvancedDynamicFields.sopm" -s /bin/bash otrs
-    # - su -c "perl /opt/otrs/bin/otrs.UnitTest.pl -n Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFields" -s /bin/bash otrs
-    # - su -c "perl /opt/otrs/bin/otrs.UnitTest.pl -n Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFieldImportExport" -s /bin/bash otrs
-    - su -c "perl /opt/otrs/bin/otrs.UnitTest.pl -n Selenium/Agent/Admin/Znuny4OTRSAdvancedDynamicFields" -s /bin/bash otrs
-    - su -c "perl /opt/otrs/bin/otrs.UnitTest.pl -n Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDefaultColumnsScreen" -s /bin/bash otrs
-    - su -c "perl /opt/otrs/bin/otrs.UnitTest.pl -n Znuny4OTRSAdvancedDynamicFields/ConsoleCommandDynamicFieldScreen" -s /bin/bash otrs
-
 deploy:
   stage: deploy
   script:
