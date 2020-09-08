@@ -7,7 +7,6 @@ stages:
 mysql:
   stage: test
   services:
-    - name: docker.io/elgalu/selenium:stable
     - name: docker.io/elgalu/selenium:latest
     - name: registry.znuny.com/znuny/internal/docker-mysql:$MYSQL_TAG
       alias: mysql
