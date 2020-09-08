@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2012-2018 Znuny GmbH, http://znuny.com/
+# Copyright (C) 2012-2020 Znuny GmbH, http://znuny.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -233,7 +233,7 @@ sub _ShowOverview {
             Data => {
                 DynamicFieldScreen => $DynamicFieldScreen,
                 Name               => $DynamicFieldScreens{$DynamicFieldScreen},
-                }
+            }
         );
     }
 
@@ -245,7 +245,7 @@ sub _ShowOverview {
             Data => {
                 DefaultColumnsScreen => $DefaultColumnsScreen,
                 Name                 => $DefaultColumnsScreens{$DefaultColumnsScreen},
-                }
+            }
         );
     }
 
@@ -264,7 +264,7 @@ sub _ShowOverview {
                 Data => {
                     DynamicField => $DynamicField,
                     Name         => $DynamicFields{$DynamicField},
-                    }
+                }
             );
         }
     }
@@ -342,7 +342,7 @@ sub _ShowEdit {
                 Element    => $OtherElements{$Element},
                 ElementKey => $Element,
                 Type       => $Param{Type},
-                }
+            }
         );
     }
 

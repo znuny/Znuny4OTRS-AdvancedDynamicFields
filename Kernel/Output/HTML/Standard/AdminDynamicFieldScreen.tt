@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2012-2018 Znuny GmbH, http://znuny.com/
+# Copyright (C) 2012-2020 Znuny GmbH, http://znuny.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -117,7 +117,6 @@
                         <div class="Size1of1 SpacingBottom">
                             <p>
                     [% Translate("You can assign elements to this Screen/Field by dragging the elements with the mouse from the left list to the right list.") | html %]
-                    [% Translate("Ordering the elements within the list is also possible by drag 'n' drop.") | html %]
                             </p>
                         </div>
                     </div>

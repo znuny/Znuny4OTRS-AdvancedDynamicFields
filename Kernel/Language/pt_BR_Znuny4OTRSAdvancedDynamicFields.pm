@@ -1,12 +1,12 @@
 # --
 # Copyright (C) 2017 Edicarlos Lopes dos Santos <edicarlos.lds@gmail.com>
-# Copyright (C) 2012-2018 Znuny GmbH, http://znuny.com/
+# Copyright (C) 2012-2020 Znuny GmbH, http://znuny.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-## nofilter(TidyAll::Plugin::OTRS::Znuny4OTRS::TODOCheck)
+## nofilter(TidyAll::Plugin::OTRS::Znuny4OTRS::CodeStyle::TODOCheck)
 
 package Kernel::Language::pt_BR_Znuny4OTRSAdvancedDynamicFields;
 
@@ -27,7 +27,6 @@ sub Data {
 
     # Telas
     $Self->{Translation}->{'You can assign elements to this Screen/Field by dragging the elements with the mouse from the left list to the right list.'} = 'Você pode atribuir elementos a esta Tela/Campo arrastando os elementos com o mouse da lista da esquerda para a lista da direita.';
-    $Self->{Translation}->{"Ordering the elements within the list is also possible by drag 'n' drop."} = "Também é possível ordenar os elementos na lista através de arrastar e soltar.";
     $Self->{Translation}->{'Manage dynamic field in screens.'} = 'Gerenciar campo dinâmico em telas.';
 
     # Elementos

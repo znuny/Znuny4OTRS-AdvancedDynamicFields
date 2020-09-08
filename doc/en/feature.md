@@ -1,4 +1,4 @@
-# Advanced DynamicFields
+# Functionality
 
 This package add an easy way to configure dynamic fields.
 
