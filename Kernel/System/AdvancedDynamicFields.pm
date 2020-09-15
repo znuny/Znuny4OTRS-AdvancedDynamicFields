@@ -76,16 +76,21 @@ sub GetValidDynamicFields {
     my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
 
     my $DynamicFieldValid = $ConfigObject->Get('Znuny4OTRSAdvancedDynamicFields::DynamicFieldValid');
-    my @ObjectType        = $Self->GetDynamicFieldObjectTypes();
 
+    my $ObjectType;
+    @{$ObjectType} = $Self->GetDynamicFieldObjectTypes();
+
+    if ( IsStringWithData( $Param{ObjectType} ) && $Param{ObjectType} eq 'All' ) {
+        $ObjectType = 'All';
+    }
     if ( $Param{ObjectType} && IsArrayRefWithData( $Param{ObjectType} ) ) {
-        @ObjectType = @{ $Param{ObjectType} };
+        @{$ObjectType} = @{ $Param{ObjectType} };
     }
 
     my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet(
         ResultType => 'HASH',
         Valid      => $DynamicFieldValid,
-        ObjectType => \@ObjectType,
+        ObjectType => $ObjectType,
     );
 
     my $DynamicFields = {};

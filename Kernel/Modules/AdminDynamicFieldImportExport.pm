@@ -51,7 +51,9 @@ sub Run {
     my $AdvancedDynamicFieldsObject = $Kernel::OM->Get('Kernel::System::AdvancedDynamicFields');
     my $CacheObject                 = $Kernel::OM->Get('Kernel::System::Cache');
 
-    my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields();
+    my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields(
+        ObjectType => 'All',
+    );
     $Self->{DynamicFields} = $DynamicFields;
 
     my $ValidDynamicFieldScreenList = $ZnunyHelperObject->_ValidDynamicFieldScreenListGet(
@@ -304,7 +306,9 @@ sub _Mask {
     if ( !$Param{Data} ) {
 
         # export
-        my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields();
+        my $DynamicFields = $AdvancedDynamicFieldsObject->GetValidDynamicFields(
+            ObjectType => 'All',
+        );
         %{ $Param{Data}->{DynamicFields} } = %{$DynamicFields};
     }
 
