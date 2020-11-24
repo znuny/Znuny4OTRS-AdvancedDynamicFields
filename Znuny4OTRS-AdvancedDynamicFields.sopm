@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_package version="1.0">
     <Name>Znuny4OTRS-AdvancedDynamicFields</Name>
-    <Version>6.0.12</Version>
+    <Version>6.0.13</Version>
     <Framework>6.0.x</Framework>
     <PackageRequired Version="6.0.69">Znuny4OTRS-Repo</PackageRequired>
     <Vendor>Znuny GmbH</Vendor>
@@ -9,6 +9,7 @@
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">This package contains the advanced DynamicFields functionalities.</Description>
     <Description Lang="de">Dieses Paket enthält erweiterte Funktionalitäten für die dynamischen Felder.</Description>
+    <ChangeLog Version="6.0.13" Date="2020-11-24 10:48:16 +0100">Tidied code. Removed Breadcrumb in Import/Export widget.</ChangeLog>
     <ChangeLog Version="6.0.12" Date="2020-09-15 09:53:33 +0200">No export of dynamic fields for object types customer and customer user.</ChangeLog>
     <ChangeLog Version="6.0.11" Date="2020-09-08 16:03:57 +0200">Removed incorrect note and tidied code.</ChangeLog>
     <ChangeLog Version="6.0.10" Date="2020-05-11 11:58:42 +0200">Added DynamicFieldTypeScreens, so that only the correct screens are displayed.</ChangeLog>
