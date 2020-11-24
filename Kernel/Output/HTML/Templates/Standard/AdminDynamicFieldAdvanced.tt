@@ -5,23 +5,14 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+## nofilter(TidyAll::Plugin::OTRS::Znuny4OTRS::TT::Breadcrumb)
 
 <div class='WidgetSimple' id='DynamicFieldImportExportWidget'>
     <div class='Header'>
-        <h1 class="InvisibleText">
+        <h2>
             [% Translate("Import / Export") | html %]
-        </h1>
+        </h2>
     </div>
-
-    [% BreadcrumbPath = [
-            {
-                Name => Translate('Import / Export'),
-            },
-        ]
-    %]
-
-    [% INCLUDE "Breadcrumb.tt" Path = BreadcrumbPath %]
-
     <div class='Content'>
         <p class='FieldExplanation'>
             [% Translate('Here you can upload a configuration file to import dynamic fields to your system. The file needs to be in .yml format as exported by dynamic field management module.') | html %]

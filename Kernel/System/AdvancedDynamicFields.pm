@@ -6,6 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 ## nofilter(TidyAll::Plugin::OTRS::Legal::OTRSAGCopyright)
+## nofilter(TidyAll::Plugin::OTRS::Znuny4OTRS::Perl::ZnunyHelper)
 
 package Kernel::System::AdvancedDynamicFields;
 
@@ -220,17 +221,15 @@ sub GetDynamicFieldObjectTypeScreens {
     }
 
     my %Screens = %{ $DynamicFieldObjectTypeScreens{ $Param{ObjectType} } };
-    if ( IsHashRefWithData( $Param{Screens} ) ) {
+    return %Screens if !IsHashRefWithData( $Param{Screens} );
 
-        my %ObjectTypeScreens = %Screens;
-        %Screens = ();
-        SCREEN:
-        for my $Screen ( sort keys %{ $Param{Screens} } ) {
+    my %ObjectTypeScreens = %Screens;
+    %Screens = ();
+    SCREEN:
+    for my $Screen ( sort keys %{ $Param{Screens} } ) {
 
-            next SCREEN if !$ObjectTypeScreens{$Screen};
-            $Screens{$Screen} = $Param{Screens}->{$Screen};
-        }
-
+        next SCREEN if !$ObjectTypeScreens{$Screen};
+        $Screens{$Screen} = $Param{Screens}->{$Screen};
     }
 
     return %Screens;
