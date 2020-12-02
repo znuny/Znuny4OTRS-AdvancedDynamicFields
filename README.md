@@ -18,8 +18,6 @@ This package contains the functionality easy configure the shown dynamic fields.
 
 Download the [package](https://addons.znuny.com/api/addon_repos/public/1086/latest) and install it via admin interface -> package manager or use [Znuny4OTRS-Repo](https://www.znuny.com/add-ons/znuny4otrs-repository).
 
-
-
 **Download**
 
 Download the [latest version](https://addons.znuny.com/api/addon_repos/public/1086/latest).
