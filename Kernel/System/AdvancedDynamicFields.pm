@@ -387,7 +387,9 @@ sub ValidateShowID {
 
         return %NewConfig if !$IsScreenNonRequiredScreen;
 
-        my %ChangedConfig = map { $_ => 1 } grep { $Param{Config}->{$_} eq 2 } sort keys %{ $Param{Config} };
+        my %ChangedConfig = map { $_ => 1 }
+            grep { defined $Param{Config}->{$_} && $Param{Config}->{$_} eq 2 }
+            sort keys %{ $Param{Config} };
 
         %NewConfig = (
             %{ $Param{Config} },
@@ -397,7 +399,6 @@ sub ValidateShowID {
     }
 
     if ( $ElementType eq 'DynamicField' ) {
-
         my %ChangedConfig;
 
         SCREEN:
@@ -405,7 +406,8 @@ sub ValidateShowID {
 
             my $IsScreenNonRequiredScreen = grep { $Screen eq $_ } @NonRequiredScreens;
 
-            next SCREEN if !$IsScreenNonRequiredScreen || $Param{Config}->{$Screen} ne 2;
+            next SCREEN if !$IsScreenNonRequiredScreen;
+            next SCREEN if !defined $Param{Config}->{$Screen} || $Param{Config}->{$Screen} ne 2;
             $ChangedConfig{$Screen} = 1;
         }
 
