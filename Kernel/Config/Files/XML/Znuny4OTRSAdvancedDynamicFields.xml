@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_config version="2.0" init="Config">
-<!-- nofilter(TidyAll::Plugin::OTRS::Znuny4OTRS::Config::ACLKeysLevel3Actions) -->
+<!-- nofilter(TidyAll::Plugin::Znuny4OTRS::Config::ACLKeysLevel3Actions) -->
     <Setting Name="Znuny4OTRSAdvancedDynamicFields::DynamicFieldValid" Required="1" Valid="1">
         <Description Translatable="1">This configuration defines if only valids or all (invalids) dynamic fields should be shown.</Description>
         <Navigation>Core</Navigation>

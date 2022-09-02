@@ -1,5 +1,5 @@
 // --
-// Copyright (C) 2012-2021 Znuny GmbH, http://znuny.com/
+// Copyright (C) 2012-2022 Znuny GmbH, http://znuny.com/
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -53,6 +53,10 @@ Core.Agent.Admin.Znuny4OTRSDynamicFieldScreen = (function (TargetNS) {
                         $('li#'+Element).appendTo('#'+ ParameterName);
                         $('li#'+Element).find('input[type="hidden"]').attr('name', ParameterName);
                         $('#'+Element).find('input[type="checkbox"]').attr('name', 'SelectAll'+ ParameterName);
+
+                        // Regardless of filters: Show the elements that have been moved
+                        // so the user knows what is happening.
+                        $('li#' + Element).show();
                     }
                 });
 
